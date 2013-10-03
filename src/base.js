@@ -11,8 +11,7 @@ var SOSI = window.SOSI || {};
     }
 
     function getString (data, key) {
-        var string = data[key];
-        return string.replace(/"/g, "");
+        return data[key].replace(/"/g, "");
     }
 
     function getNumber (data, key) {
@@ -27,16 +26,24 @@ var SOSI = window.SOSI || {};
         throw new Error("KOORDSYS = " + koordsys + " not found!");
     }
 
-    var qualityShorthand = [
-        "maalemetode",
-        "noyaktighet",
-        "synbarhet",
-        "h-maalemetode",
-        "h-noyaktighet",
-        "max-avvik"
-        ];
+    function cleanupLine(line) {
+        if (line.indexOf('!') !== -1) {
+            line = line.substring(0, line.indexOf('!'));
+        }
+        return line.replace(/\s\s*$/, '');
+    }
 
     function parseQuality(data) {
+
+        var qualityShorthand = [
+            "maalemetode",
+            "noyaktighet",
+            "synbarhet",
+            "h-maalemetode",
+            "h-noyaktighet",
+            "max-avvik"
+        ];
+
         if (_.isString(data)) {
             return _.reduce(data.split(" "), function (res, number, i) {
                 res[qualityShorthand[i]] = parseInt(number, 10);
@@ -73,12 +80,8 @@ var SOSI = window.SOSI || {};
         parse: function (data) {
             var parent;
             var immediate = _.reduce(data, function (res, line) {
-                var s = line;
-                if (s.indexOf('!') !== -1) {
-                    s = s.substring(0, s.indexOf('!'))
-                }
-                line = s.replace(/\s\s*$/, '');
-                if (numDots(line) === 2) {
+                line = cleanupLine(line);
+                if (countStartingDots(line) === 2) {
                     line = line.replace("..", "");
                     if (line.split(" ").length === 1) {
                         res[line] = [];
@@ -95,9 +98,7 @@ var SOSI = window.SOSI || {};
             return _.reduce(immediate, function (res, value, key) {
                 if (_.isArray(value)) {
                     res[key] = _.reduce(value, function (arr, line) {
-                        var val = parseLine(line.replace("...", ""));
-                        _.extend(arr, val);
-                        return arr;
+                        return _.extend(arr, parseLine(line.replace("...", "")));
                     },{});
                 } else {
                     res[key] = value;
@@ -150,7 +151,7 @@ var SOSI = window.SOSI || {};
         }
     });
 
-    function numDots(str) {
+    function countStartingDots(str) {
         var stop = false;
         return _.reduce(str, function(count, character) {
             if (character === "." && !stop) {
@@ -162,14 +163,21 @@ var SOSI = window.SOSI || {};
         }, 0)
     }
 
+    function isParent(line) {
+        return (countStartingDots(line) === 1);
+    }
+
+    function isComment(line) {
+        return !(line[0] && line[0] !== "!");
+    }
+
     ns.Parser = ns.Base.extend({
         parse: function (data) {
             var parent;
             var res =_.reduce(data.split("\n"), function (res, line) {
-                if (line[0] && line[0] !== "!") {
-                    if (numDots(line) === 1) {
-                        var s = line.replace(".", "");
-                        var key = s.substring(0, s.indexOf('!')).replace(/\s\s*$/, '');
+                if (!isComment(line)) {
+                    if (isParent(line)) {
+                        var key = cleanupLine(line.replace(".", ""));
                         res[key] = [];
                         parent = key;
                     } else if(parent){
@@ -178,10 +186,7 @@ var SOSI = window.SOSI || {};
                 }
                 return res;
             }, {});
-
             return new SosiData(res);
         }
     });
-
-
 }(SOSI));
