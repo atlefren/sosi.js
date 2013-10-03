@@ -6,7 +6,8 @@ var SOSI = window.SOSI || {};
     function createGeometry (geometryType, lines, origo, unit) {
 
         var geometryTypes = {
-            "PUNKT": ns.Point
+            "PUNKT": ns.Point,
+            "KURVE": ns.LineString
         };
 
         if (!geometryTypes[geometryType]) {
@@ -15,6 +16,10 @@ var SOSI = window.SOSI || {};
         }
         return new geometryTypes[geometryType](lines, origo, unit);
     }
+
+    var specialAttributes = {
+        "KVALITET": {"name": "kvalitet", "function": ns.util.parseQuality}
+    };
 
     ns.Feature = ns.Base.extend({
 
@@ -33,7 +38,8 @@ var SOSI = window.SOSI || {};
                 line = ns.util.cleanupLine(line).replace("..", "");
                 if (line === "NØ") {
                     foundGeom = true;
-                } else if (!foundGeom) {
+                }
+                if (!foundGeom) {
                     result.attributes.push(line);
                 } else {
                     result.geometry.push(line);
@@ -44,7 +50,12 @@ var SOSI = window.SOSI || {};
 
             this.attributes = _.reduce(parsed.attributes, function (attributes, line) {
                 line = line.split(" ");
-                attributes[line.shift()] = line.join(" ");
+                var key = line.shift();
+                if (!specialAttributes[key]) {
+                    attributes[key] = line.join(" ");
+                } else {
+                    attributes[specialAttributes[key].name] = specialAttributes[key].function(line.join(" "));
+                }
                 return attributes;
             }, {});
 

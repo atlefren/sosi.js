@@ -21,8 +21,29 @@ var SOSI = window.SOSI || {};
                 }
                 return count;
             }, 0)
-        }
-    };
+        },
+
+        parseQuality: function (data) {
+
+            var qualityShorthand = [
+                "maalemetode",
+                "noyaktighet",
+                "synbarhet",
+                "h-maalemetode",
+                "h-noyaktighet",
+                "max-avvik"
+            ];
+
+            if (_.isString(data)) {
+                return _.reduce(data.split(" "), function (res, number, i) {
+                    res[qualityShorthand[i]] = parseInt(number, 10);
+                    return res;
+                }, {});
+            }
+            throw new Error("Reading KVALITET as subfields not implemented!");
+    }
+
+};
 
     ns.koordsysMap = {
         1: "EPSG:27391",

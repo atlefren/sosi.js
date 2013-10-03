@@ -1,0 +1,37 @@
+.HODE                                           !SOSI-filas hode.
+..TRANSPAR
+...KOORDSYS 5
+...ORIGO-NØ 100000 10000
+...ENHET 0.010
+...VERT-DATUM NN54 SJØ0
+..OMRÅDE
+...MIN-NØ 100000 10000
+...MAX-NØ 102400 13200
+..SOSI-VERSJON 4.5
+..SOSI-NIVÅ    5
+!
+..VERIFISERINGSDATO 19890623
+..KVALITET 11 300
+!
+! data er bare delvis synfart.                  !Kommentar i hode
+!
+..EIER "Statens kartverk"
+..PRODUSENT "SØRKART A/S"
+..OBJEKTKATALOG Eksempel 4.5
+!
+.KURVE 250:                                     !Geometritype KURVE.
+..OBJTYPE EiendomsGrense
+..KVALITET 40 58
+..NØ
+23456 2345
+23460 2345
+23470 2346
+23480 2347
+23490 2350
+23500 2366
+23512 2345
+23565 2370
+23460 2356 ...KP 1                              !Knutepunkt
+..NØ
+23500 2350
+.SLUTT

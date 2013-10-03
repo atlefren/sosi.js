@@ -26,26 +26,6 @@ var SOSI = window.SOSI || {};
         throw new Error("KOORDSYS = " + koordsys + " not found!");
     }
 
-    function parseQuality(data) {
-
-        var qualityShorthand = [
-            "maalemetode",
-            "noyaktighet",
-            "synbarhet",
-            "h-maalemetode",
-            "h-noyaktighet",
-            "max-avvik"
-        ];
-
-        if (_.isString(data)) {
-            return _.reduce(data.split(" "), function (res, number, i) {
-                res[qualityShorthand[i]] = parseInt(number, 10);
-                return res;
-            }, {});
-        }
-        throw new Error("Reading KVALITET as subfields not implemented!");
-    }
-
     function parseBbox(data) {
         var ll = data["MIN-NØ"].split(" ");
         var ur = data["MAX-NØ"].split(" ");
@@ -109,7 +89,7 @@ var SOSI = window.SOSI || {};
             this.verifiseringsdato = getString(data, "VERIFISERINGSDATO");
             this.version = getNumber(data, "SOSI-VERSJON");
             this.level = getNumber(data, "SOSI-NIVÅ");
-            this.kvalitet = parseQuality(data["KVALITET"]);
+            this.kvalitet = ns.util.parseQuality(data["KVALITET"]);
             this.bbox = parseBbox(data["OMRÅDE"]);
             this.origo = parseOrigo(data["TRANSPAR"]["ORIGO-NØ"]);
             this.enhet = parseFloat(data["TRANSPAR"]["ENHET"]);
