@@ -27,8 +27,8 @@
             assert(sosidata.hode);
             assert(sosidata.def);
             assert(sosidata.objdef);
-            assert(sosidata.data);
-            assert.equals(sosidata.data.length(), 8);
+            assert(sosidata.features);
+            assert.equals(sosidata.features.length(), 8);
         },
 
         "should read header": function () {
@@ -74,6 +74,6 @@
             var sosidata = this.parser.parse(this.sosidata);
             assert.equals(sosidata.hode.srid, "EPSG:27395");
         }
-    });
+     });
 
 }(SOSI));

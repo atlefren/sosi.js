@@ -18,7 +18,8 @@ config["My tests"] = {
         "test/*-test.js"
     ],
     resources: [
-        {path: "/testfile1.sos", content: fs.readFileSync('data/testfile1.sos')}
+        {path: "/testfile1.sos", content: fs.readFileSync('data/testfile1.sos')},
+        {path: "/punkttest.sos", content: fs.readFileSync('data/punkttest.sos')}
     ]
 
 };
