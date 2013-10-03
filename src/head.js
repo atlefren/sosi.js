@@ -26,13 +26,6 @@ var SOSI = window.SOSI || {};
         throw new Error("KOORDSYS = " + koordsys + " not found!");
     }
 
-    function cleanupLine(line) {
-        if (line.indexOf('!') !== -1) {
-            line = line.substring(0, line.indexOf('!'));
-        }
-        return line.replace(/\s\s*$/, '');
-    }
-
     function parseQuality(data) {
 
         var qualityShorthand = [
@@ -72,7 +65,7 @@ var SOSI = window.SOSI || {};
         };
     }
 
-    var Head = ns.Base.extend({
+    ns.Head = ns.Base.extend({
         initialize: function (data) {
             this.setData(data);
         },
@@ -80,8 +73,8 @@ var SOSI = window.SOSI || {};
         parse: function (data) {
             var parent;
             var immediate = _.reduce(data, function (res, line) {
-                line = cleanupLine(line);
-                if (countStartingDots(line) === 2) {
+                line = ns.util.cleanupLine(line);
+                if (ns.util.countStartingDots(line) === 2) {
                     line = line.replace("..", "");
                     if (line.split(" ").length === 1) {
                         res[line] = [];
@@ -125,68 +118,4 @@ var SOSI = window.SOSI || {};
         }
     });
 
-    var Def = ns.Base.extend({
-    });
-
-    var Objdef = ns.Base.extend({
-    });
-
-    var Data = ns.Base.extend({
-        initialize: function (elements) {
-            this.elements = elements;
-        },
-
-        length: function () {
-            return _.keys(this.elements).length;
-        }
-
-    });
-
-    var SosiData = ns.Base.extend({
-        initialize: function (data) {
-            this.hode = new Head(data["HODE"]);
-            this.def = new Def(data["DEF"]);
-            this.objdef = new Objdef(data["OBJDEF"]);
-            this.data = new Data(_.omit(data, ["HODE", "DEF", "OBJDEF", "SLUTT"]));
-        }
-    });
-
-    function countStartingDots(str) {
-        var stop = false;
-        return _.reduce(str, function(count, character) {
-            if (character === "." && !stop) {
-                count++;
-            } else {
-                stop = true;
-            }
-            return count;
-        }, 0)
-    }
-
-    function isParent(line) {
-        return (countStartingDots(line) === 1);
-    }
-
-    function isComment(line) {
-        return !(line[0] && line[0] !== "!");
-    }
-
-    ns.Parser = ns.Base.extend({
-        parse: function (data) {
-            var parent;
-            var res =_.reduce(data.split("\n"), function (res, line) {
-                if (!isComment(line)) {
-                    if (isParent(line)) {
-                        var key = cleanupLine(line.replace(".", ""));
-                        res[key] = [];
-                        parent = key;
-                    } else if(parent){
-                        res[parent].push(line);
-                    }
-                }
-                return res;
-            }, {});
-            return new SosiData(res);
-        }
-    });
 }(SOSI));

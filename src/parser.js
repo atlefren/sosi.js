@@ -1,0 +1,57 @@
+var SOSI = window.SOSI || {};
+
+(function (ns, undefined) {
+    "use strict";
+
+    var Def = ns.Base.extend({
+    });
+
+    var Objdef = ns.Base.extend({
+    });
+
+    var Data = ns.Base.extend({
+        initialize: function (elements) {
+            this.elements = elements;
+        },
+
+        length: function () {
+            return _.keys(this.elements).length;
+        }
+    });
+
+    var SosiData = ns.Base.extend({
+        initialize: function (data) {
+            this.hode = new ns.Head(data["HODE"]);
+            this.def = new Def(data["DEF"]);
+            this.objdef = new Objdef(data["OBJDEF"]);
+            this.data = new Data(_.omit(data, ["HODE", "DEF", "OBJDEF", "SLUTT"]));
+        }
+    });
+
+    function isParent(line) {
+        return (ns.util.countStartingDots(line) === 1);
+    }
+
+    function isComment(line) {
+        return !(line[0] && line[0] !== "!");
+    }
+
+    ns.Parser = ns.Base.extend({
+        parse: function (data) {
+            var parent;
+            var res =_.reduce(data.split("\n"), function (res, line) {
+                if (!isComment(line)) {
+                    if (isParent(line)) {
+                        var key = ns.util.cleanupLine(line.replace(".", ""));
+                        res[key] = [];
+                        parent = key;
+                    } else if(parent){
+                        res[parent].push(line);
+                    }
+                }
+                return res;
+            }, {});
+            return new SosiData(res);
+        }
+    });
+}(SOSI));

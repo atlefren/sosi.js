@@ -8,9 +8,11 @@ config["My tests"] = {
         "lib/*.js"
     ],
     sources: [
+
         "src/class_system.js",
-        "src/koordsysmap.js",
-        "src/*.js"
+        "src/util.js",
+        "src/head.js",
+        "src/parser.js"
     ],
     tests: [
         "test/*-test.js"
