@@ -3,9 +3,7 @@ var SOSI = window.SOSI || {};
 (function (ns, undefined) {
     "use strict";
 
-    ns.Base = function(options) {
-        options || (options = {});
-        this.options = options;
+    ns.Base = function() {
         this.initialize.apply(this, arguments);
     };
 
