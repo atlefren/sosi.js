@@ -9,6 +9,7 @@ config["My tests"] = {
     ],
     sources: [
         "src/class_system.js",
+        "src/koordsysmap.js",
         "src/*.js"
     ],
     tests: [
