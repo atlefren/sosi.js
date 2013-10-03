@@ -8,10 +8,11 @@ config["My tests"] = {
         "lib/*.js"
     ],
     sources: [
-
         "src/class_system.js",
         "src/util.js",
         "src/head.js",
+        "src/geometry.js",
+        "src/feature.js",
         "src/parser.js"
     ],
     tests: [
