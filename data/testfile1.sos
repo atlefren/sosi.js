@@ -1,0 +1,90 @@
+.HODE                                           !SOSI-filas hode.
+..TRANSPAR
+...KOORDSYS 5
+...ORIGO-NØ 100000 10000
+...ENHET 0.010
+...VERT-DATUM NN54 SJØ0
+..OMRÅDE
+...MIN-NØ 100000 10000
+...MAX-NØ 102400 13200
+..SOSI-VERSJON 4.5
+..SOSI-NIVÅ    5
+!
+..VERIFISERINGSDATO 19890623
+..KVALITET 11 300
+!
+! data er bare delvis synfart.                  !Kommentar i hode
+!
+..EIER "Statens kartverk"
+..PRODUSENT "SØRKART A/S"
+..OBJEKTKATALOG Eksempel 4.5
+!
+.PUNKT 1:                                       !Geometritype PUNKT.
+..OBJTYPE Fastmerke
+! NB! Flere påkrevde egenskaper for Fastmerke er utelatt i dette eksempelet
+..NØ
+23456 2345
+!
+.KURVE 250:                                     !Geometritype KURVE.
+..OBJTYPE EiendomsGrense
+..KVALITET 40 58
+..NØ
+23456 2345
+23460 2345
+23470 2346
+23480 2347
+23490 2350
+23500 2366
+23512 2345
+23565 2370
+23460 2356 ...KP 1                              !Knutepunkt
+..NØ
+23500 2350
+!
+.KURVE 223:                                     !Geometritype KURVE.
+..OBJTYPE ElvBekk
+..VANNBR 1
+..KVALITET 51 200
+..NØH
+23456 2345 123    ...KP 1                       !den ene enden er knutepunkt.
+..NØ
+23460 2360 123
+!
+.BUEP 312:                                      !Geometritype BUEP.
+..OBJTYPE EiendomsGrense
+..NØ
+23470 2355
+..NØ
+23456 2345
+23480 2367
+!
+.TEKST 298:                                     !Kartografisk tekstelement TEKST
+..STRENG "Valbjørg-vatnet"
+..NØ
+23467 2350
+23400 2400                                      !Teksten definert med STRENG
+                                                !Skal skrives ved punkt 2.
+!
+.FLATE 305:                                     !Geometritype FLATE
+..OBJTYPE Eiendomsteig
+..KOMM 0612                                     !(Hole kommune)
+..EKODE 1
+..ARKODE 1
+..GID 202 27                                    !Gnr 202 Bnr 27
+..REF :3 :-5 :58
+..NØ                                            !m/sentralpunkt:
+23487 2365
+!
+.OBJEKT 505:                                    !Geometriløst objekt OBJEKT
+..OBJTYPE Eiendom                               !Fiktivt eksempel
+..KOMM 0612
+..GID 202 27
+..TEIG :305                                     !Forhold til sin geometri
+
+.OBJEKT 506:                                    !Geometriløst objekt
+..OBJTYPE Innehaver                             !Fiktivt eksempel
+..PERS-ID 04045537957
+..NAVN "Kent Jonsrud"
+..EIENDOM :505                                  !Logisk forhold
+
+.SLUTT                                          !Slutt på data
