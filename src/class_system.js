@@ -1,5 +1,10 @@
 var SOSI = window.SOSI || {};
 
+/**
+ * This is adopted from backbone.js which
+ * is available for use under the MIT software license.
+ * see http://github.com/jashkenas/backbone/blob/master/LICENSE
+ */
 (function (ns, undefined) {
     "use strict";
 
@@ -11,7 +16,7 @@ var SOSI = window.SOSI || {};
         initialize: function () {}
     });
 
-    var extend = function(protoProps, staticProps) {
+    ns.Base.extend = function(protoProps, staticProps) {
         var parent = this;
         var child;
 
@@ -30,5 +35,4 @@ var SOSI = window.SOSI || {};
         return child;
     };
 
-    ns.Base.extend = extend;
 }(SOSI));
