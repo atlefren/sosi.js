@@ -37,8 +37,8 @@ var SOSI = window.SOSI || {};
 
     function numDots(str) {
         var stop = false;
-        return _.reduce(str, function(count, char) {
-            if (char === "." && !stop) {
+        return _.reduce(str, function(count, character) {
+            if (character === "." && !stop) {
                 count++;
             } else {
                 stop = true;
