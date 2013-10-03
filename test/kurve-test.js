@@ -63,6 +63,18 @@
             assert.equals(kurve[8].y, 100234.60);
             assert.equals(kurve[9].x, 10023.50);
             assert.equals(kurve[9].y, 100235.00);
+        },
+
+        "should be able to read knutepunkter": function () {
+            var sosidata = this.parser.parse(this.sosidata);
+            var feature1 = sosidata.features.at(0);
+
+            var knutepunkter = feature1.geometry.knutepunkter;
+            assert.equals(knutepunkter.length, 1);
+
+            assert.equals(knutepunkter[0].knutepunktkode, 1);
+            assert.equals(knutepunkter[0].x, 10023.56);
+            assert.equals(knutepunkter[0].y, 100234.60);
         }
 
 
