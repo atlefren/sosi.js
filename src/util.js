@@ -64,12 +64,12 @@ var SOSI = window.SOSI || {};
         7: "EPSG:27397",
         8: "EPSG:27398",
         9: "EPSG:4273",
-        21 "EPSG:32631",
-        22 "EPSG:32632",
-        23 "EPSG:32633",
-        24 "EPSG:32634",
-        25 "EPSG:32635",
-        26 "EPSG:32636"
+        21: "EPSG:32631",
+        22: "EPSG:32632",
+        23: "EPSG:32633",
+        24: "EPSG:32634",
+        25: "EPSG:32635",
+        26: "EPSG:32636"
         //31 UTM-Sone 31 ED50 UTM 31
         //32 UTM-Sone 32 ED50 UTM 32
         //33 UTM-Sone 33 ED50 UTM 33
