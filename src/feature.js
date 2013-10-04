@@ -30,6 +30,7 @@ var SOSI = window.SOSI || {};
             }
             this.id = data.id;
             this.parseData(data, origo, unit, features);
+            this.geometryType = data.geometryType;
         },
 
         parseData: function (data, origo, unit, features) {

@@ -49,10 +49,29 @@ var SOSI = window.SOSI || {};
     ns.Polygon = ns.Base.extend({
         initialize: function (refs, features) {
 
-            refs = refs.replace(/:/g, "").split(" ");
+            var holeIdx = -1;
+            refs = _.reduce(refs.split(" "), function (res, ref) {
+                    ref = ref.replace(/:/g, "");
 
-            this.flate = _.flatten(_.map(refs, function(ref) {
-                ref = parseInt(ref);
+                    if (ref.indexOf("(") !== -1) {
+                        holeIdx += 1;
+                        res.holes.push([]);
+                        ref = ref.replace("(", "");
+                    }
+                    if (ref.indexOf(")") !== -1) {
+                        ref = ref.replace(")", "");
+                    }
+                    if (holeIdx === -1) {
+                        res.shell.push(parseInt(ref));
+                    } else {
+                        res.holes[holeIdx].push(parseInt(ref));
+                    }
+                return res;
+            }, {holes: [], "shell": []});
+
+            console.log(refs);
+
+            this.flate = _.flatten(_.map(refs.shell, function(ref) {
                 var id= Math.abs(ref);
                 var kurve = features.getById(id);
                 if (!kurve) {
@@ -65,6 +84,18 @@ var SOSI = window.SOSI || {};
                 }
                 return _.initial(geom);
             }));
+
+            this.islands = _.map(refs.holes, function (hole) {
+                if (hole.length === 1) {
+                    console.log(hole[0])
+                    var feature = features.getById(hole[0]);
+                    if (feature.geometryType === "FLATE") {
+                        return feature.geometry.flate;
+                    }
+                }
+                return null;
+            });
+
             this.flate.push(this.flate[0]);
         }
     });
