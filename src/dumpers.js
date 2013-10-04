@@ -27,6 +27,7 @@ var SOSI = window.SOSI || {};
         createGeoJsonFeature: function (sosifeature) {
             return {
                 "type": "Feature",
+                "id": sosifeature.id,
                 "properties": sosifeature.attributes,
                 "geometry": this.writeGeometry(sosifeature.geometry)
             };

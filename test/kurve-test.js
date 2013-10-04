@@ -88,6 +88,7 @@
             var feature1 = json.features[0];
 
             assert.equals(feature1.type, "Feature");
+            assert.equals(feature1.id, 250);
             assert.equals(feature1.properties.kvalitet.maalemetode, 40);
             assert.equals(feature1.properties.kvalitet.noyaktighet, 58);
 

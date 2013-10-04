@@ -50,6 +50,7 @@
             var feature1 = json.features[0];
 
             assert.equals(feature1.type, "Feature");
+            assert.equals(feature1.id, 1);
             assert.equals(feature1.properties["OBJTYPE"], "Fastmerke");
 
             var geom = feature1.geometry;

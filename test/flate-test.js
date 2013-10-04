@@ -74,6 +74,7 @@
             var feature1 = json.features[4];
 
             assert.equals(feature1.type, "Feature");
+            assert.equals(feature1.id, 651);
             assert.equals(feature1.properties["OBJTYPE"], "Tank");
             assert.equals(feature1.properties.kvalitet.maalemetode, 82);
 
