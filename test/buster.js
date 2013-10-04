@@ -17,7 +17,7 @@ config["My tests"] = {
         "src/parser.js"
     ],
     tests: [
-        "test/*-test.js"
+        "test/island-test.js"
     ],
     resources: [
         {path: "/testfile1.sos", content: fs.readFileSync('data/testfile1.sos')},

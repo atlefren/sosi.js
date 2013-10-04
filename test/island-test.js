@@ -74,7 +74,34 @@
             assert.equals(flate.geometry.islands.length, 1);
 
             var island = flate.geometry.islands[0];
+            assert.equals(island.length, 5);
+            assert.equals(island[0].x, 300010);
+            assert.equals(island[0].y, 7000010);
 
+            assert.equals(island[1].x, 300010);
+            assert.equals(island[1].y, 7000020);
+
+            assert.equals(island[2].x, 300020);
+            assert.equals(island[2].y, 7000020);
+
+            assert.equals(island[3].x, 300020);
+            assert.equals(island[3].y, 7000010);
+
+            assert.equals(island[4].x, 300010);
+            assert.equals(island[4].y, 7000010);
+        },
+
+        "should read island described by KURVE": function () {
+            var sosidata = this.parser.parse(this.sosidata);
+            var flate = sosidata.features.getById(600);
+            assert(flate.geometry instanceof ns.Polygon);
+
+            assert.equals(flate.geometry.flate.length, 5);
+            assert.equals(flate.geometry.islands.length, 1);
+
+            var island = flate.geometry.islands[0];
+
+            assert.equals(island.length, 5);
             assert.equals(island[0].x, 300010);
             assert.equals(island[0].y, 7000010);
 
@@ -90,7 +117,5 @@
             assert.equals(island[4].x, 300010);
             assert.equals(island[4].y, 7000010);
         }
-
-
     });
 }(SOSI));
