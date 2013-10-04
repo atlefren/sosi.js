@@ -99,6 +99,10 @@ var SOSI = window.SOSI || {};
             return _.find(this.features, function (feature) {
                 return (feature.id === id);
             })
+        },
+
+        all: function () {
+            return this.features;
         }
     });
 

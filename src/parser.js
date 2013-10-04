@@ -9,6 +9,10 @@ var SOSI = window.SOSI || {};
     var Objdef = ns.Base.extend({
     });
 
+    var dumpTypes = {
+        "geojson": ns.Sosi2GeoJSON
+    };
+
     var SosiData = ns.Base.extend({
         initialize: function (data) {
             this.hode = new ns.Head(data["HODE"]);
@@ -18,6 +22,13 @@ var SOSI = window.SOSI || {};
                 _.omit(data, ["HODE", "DEF", "OBJDEF", "SLUTT"]),
                 this.hode
             );
+        },
+
+        dumps: function(format) {
+            if (dumpTypes[format]) {
+                return new dumpTypes[format](this).dumps();
+            }
+            throw new Error("Outputformat " + format + " is not supported!");
         }
     });
 

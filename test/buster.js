@@ -13,6 +13,7 @@ config["My tests"] = {
         "src/head.js",
         "src/geometry.js",
         "src/feature.js",
+        "src/dumpers.js",
         "src/parser.js"
     ],
     tests: [

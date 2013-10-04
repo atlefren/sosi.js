@@ -13,6 +13,7 @@ module.exports = function(grunt) {
                     "src/head.js",
                     "src/geometry.js",
                     "src/feature.js",
+                    "src/dumpers.js",
                     "src/parser.js"
                 ],
                 dest: 'dist/<%= pkg.name %>.js'

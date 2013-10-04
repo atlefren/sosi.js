@@ -37,6 +37,25 @@
             assert(feature1.geometry instanceof ns.Point);
             assert.equals(feature1.geometry.x, 10023.45);
             assert.equals(feature1.geometry.y, 100234.56);
+        },
+
+        "should be able to write to geoJSON": function () {
+            var sosidata = this.parser.parse(this.sosidata);
+            var json =  sosidata.dumps("geojson");
+            assert(json);
+
+            assert.equals(json.type, "FeatureCollection");
+            assert.equals(json.features.length, 1);
+
+            var feature1 = json.features[0];
+
+            assert.equals(feature1.type, "Feature");
+            assert.equals(feature1.properties["OBJTYPE"], "Fastmerke");
+
+            var geom = feature1.geometry;
+            assert.equals(geom.type, "Point");
+            assert.equals(geom.coordinates, [10023.45, 100234.56]);
+
         }
 
     });
