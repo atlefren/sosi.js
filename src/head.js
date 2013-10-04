@@ -11,7 +11,8 @@ var SOSI = window.SOSI || {};
     }
 
     function getString (data, key) {
-        return data[key].replace(/"/g, "");
+        var str = data[key] || "";
+        return str.replace(/"/g, "");
     }
 
     function getNumber (data, key) {
@@ -38,7 +39,9 @@ var SOSI = window.SOSI || {};
     }
 
     function parseOrigo(data) {
-        data = data.split(" ");
+        data = _.filter(data.split(" "), function (element) {
+            return element !== "";
+        });
         return {
             "x": parseFloat(data[1]),
             "y": parseFloat(data[0])

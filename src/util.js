@@ -25,6 +25,10 @@ var SOSI = window.SOSI || {};
 
         parseQuality: function (data) {
 
+            if (!data) {
+                return null;
+            }
+
             var qualityShorthand = [
                 "maalemetode",
                 "noyaktighet",
@@ -41,9 +45,14 @@ var SOSI = window.SOSI || {};
                 }, {});
             }
             throw new Error("Reading KVALITET as subfields not implemented!");
-    }
+        },
 
-};
+        round: function (number, numDecimals) {
+            var pow = Math.pow(10, numDecimals);
+            return Math.round(number * pow) / pow;
+        }
+
+    };
 
     ns.koordsysMap = {
         1: "EPSG:27391",
@@ -54,7 +63,12 @@ var SOSI = window.SOSI || {};
         6: "EPSG:27396",
         7: "EPSG:27397",
         8: "EPSG:27398",
-        9: "EPSG:4273"
+        9: "EPSG:4273",
+        21: "EPSG:25831",
+        32: "EPSG:25832",
+        23: "EPSG:25833",
+        24: "EPSG:25834",
+        25: "EPSG:25835"
         //TODO: fill in rest of table from spec
     };
 

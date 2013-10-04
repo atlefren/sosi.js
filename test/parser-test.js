@@ -28,7 +28,7 @@
             assert(sosidata.def);
             assert(sosidata.objdef);
             assert(sosidata.features);
-            assert.equals(sosidata.features.length(), 8);
+            assert.equals(sosidata.features.length(), 5);
         },
 
         "should read header": function () {

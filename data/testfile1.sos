@@ -65,26 +65,4 @@
 23400 2400                                      !Teksten definert med STRENG
                                                 !Skal skrives ved punkt 2.
 !
-.FLATE 305:                                     !Geometritype FLATE
-..OBJTYPE Eiendomsteig
-..KOMM 0612                                     !(Hole kommune)
-..EKODE 1
-..ARKODE 1
-..GID 202 27                                    !Gnr 202 Bnr 27
-..REF :3 :-5 :58
-..NØ                                            !m/sentralpunkt:
-23487 2365
-!
-.OBJEKT 505:                                    !Geometriløst objekt OBJEKT
-..OBJTYPE Eiendom                               !Fiktivt eksempel
-..KOMM 0612
-..GID 202 27
-..TEIG :305                                     !Forhold til sin geometri
-
-.OBJEKT 506:                                    !Geometriløst objekt
-..OBJTYPE Innehaver                             !Fiktivt eksempel
-..PERS-ID 04045537957
-..NAVN "Kent Jonsrud"
-..EIENDOM :505                                  !Logisk forhold
-
 .SLUTT                                          !Slutt på data
