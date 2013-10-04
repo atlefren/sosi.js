@@ -43,7 +43,14 @@ var SOSI = window.SOSI || {};
             if (geom instanceof ns.LineString) {
                 return {
                     "type": "LineString",
-                    "coordinates":_.map(geom.kurve, writePoint)
+                    "coordinates": _.map(geom.kurve, writePoint)
+                };
+            }
+
+            if (geom instanceof ns.Polygon) {
+                return {
+                    "type": "Polygon",
+                    "coordinates": [_.map(geom.flate, writePoint)]
                 };
             }
 
