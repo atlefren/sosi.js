@@ -63,7 +63,7 @@ var SOSI = window.SOSI || {};
             if (data.geometryType === "FLATE") {
 
                 this.geometry = new ns.Polygon(this.attributes["REF"], features);
-                //this.geometry.center = new ns.Point(parsed.geometry, origo, unit);
+                this.geometry.center = new ns.Point(parsed.geometry, origo, unit);
                 this.attributes = _.omit(this.attributes, "REF")
             } else {
                 this.geometry = createGeometry(data.geometryType, parsed.geometry, origo, unit);

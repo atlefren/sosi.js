@@ -27,6 +27,14 @@
             assert.equals(feature1.attributes["REGISTRERINGSVERSJON"], '"FKB" "3.4 eller eldre"');
         },
 
+        "should get center point": function () {
+            var sosidata = this.parser.parse(this.sosidata);
+            var flate = sosidata.features.at(4);
+            var center = flate.geometry.center;
+            assert(center);
+            assert.equals(center.x, 341822.16);
+            assert.equals(center.y, 7661351.84);
+        },
 
         "should be able to read geometry": function () {
             var sosidata = this.parser.parse(this.sosidata);
