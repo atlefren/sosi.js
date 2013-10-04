@@ -3,6 +3,10 @@ var SOSI = window.SOSI || {};
 (function (ns, undefined) {
     "use strict";
 
+     function writePoint(point) {
+        return [point.x, point.y];
+    }
+
     ns.Sosi2GeoJSON = ns.Base.extend({
 
         initialize: function (sosidata) {
@@ -32,9 +36,18 @@ var SOSI = window.SOSI || {};
             if (geom instanceof ns.Point) {
                 return {
                     "type": "Point",
-                    "coordinates": [geom.x, geom.y]
+                    "coordinates": writePoint(geom)
                 };
             }
+
+            if (geom instanceof ns.LineString) {
+                return {
+                    "type": "LineString",
+                    "coordinates":_.map(geom.kurve, writePoint)
+                };
+            }
+
+            throw new Error("cannot write geometry!");
         }
     });
 

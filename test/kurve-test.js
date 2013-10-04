@@ -75,10 +75,31 @@
             assert.equals(knutepunkter[0].knutepunktkode, 1);
             assert.equals(knutepunkter[0].x, 10023.56);
             assert.equals(knutepunkter[0].y, 100234.60);
+        },
+
+        "should be able to write to geoJSON": function () {
+            var sosidata = this.parser.parse(this.sosidata);
+            var json =  sosidata.dumps("geojson");
+            assert(json);
+
+            assert.equals(json.type, "FeatureCollection");
+            assert.equals(json.features.length, 1);
+
+            var feature1 = json.features[0];
+
+            assert.equals(feature1.type, "Feature");
+            assert.equals(feature1.properties.kvalitet.maalemetode, 40);
+            assert.equals(feature1.properties.kvalitet.noyaktighet, 58);
+
+            var geom = feature1.geometry;
+            assert.equals(geom.type, "LineString");
+            assert.equals(geom.coordinates.length, 10);
+
+            assert.equals(geom.coordinates[0][0], 10023.45);
+            assert.equals(geom.coordinates[0][1], 100234.56);
+            assert.equals(geom.coordinates[9][0], 10023.50);
+            assert.equals(geom.coordinates[9][1], 100235.00);
+
         }
-
-
     });
-
-
 }(SOSI));
