@@ -57,8 +57,8 @@
             assert.equals(geom.type, "Point");
             assert.equals(geom.coordinates, [10023.45, 100234.56]);
 
+            assert(json.crs);
+            assert.equals(json.crs.properties.name, "EPSG:27395");
         }
-
     });
-
 }(SOSI));

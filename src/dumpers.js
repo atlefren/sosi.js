@@ -16,7 +16,8 @@ var SOSI = window.SOSI || {};
         dumps: function () {
             return {
                 "type": "FeatureCollection",
-                "features": this.getFeatures()
+                "features": this.getFeatures(),
+                "crs": this.writeCrs()
             };
         },
 
@@ -56,9 +57,16 @@ var SOSI = window.SOSI || {};
             }
 
             throw new Error("cannot write geometry!");
+        },
+
+        writeCrs: function () {
+            return {
+                "type": "name",
+                "properties": {
+                    "name": this.sosidata.hode.srid
+                }
+            }
         }
     });
-
-
 
 }(SOSI));
