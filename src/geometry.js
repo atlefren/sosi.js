@@ -16,9 +16,9 @@ var SOSI = window.SOSI || {};
 
             this.y = ns.util.round((parseInt(coords[0], 10) * unit) + origo.y, 2);
             this.x = ns.util.round((parseInt(coords[1], 10) * unit) + origo.x, 2);
-
+            
             if (coords[2] && !isNaN(coords[2])) {
-                    this.z = parseInt(parseInt(coords[1], 10) * unit)
+                    this.z = parseInt(parseInt(coords[2], 10) * unit)
             }
 
             if (line.indexOf(".KP") !== -1) {
