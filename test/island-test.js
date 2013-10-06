@@ -116,6 +116,36 @@
 
             assert.equals(island[4].x, 300010);
             assert.equals(island[4].y, 7000010);
+        },
+
+        "should be able to write to geoJSON": function () {
+            var sosidata = this.parser.parse(this.sosidata);
+            var json =  sosidata.dumps("geojson");
+            assert(json);
+
+            assert.equals(json.type, "FeatureCollection");
+            assert.equals(json.features.length, 11);
+
+            var feature1 = json.features[10];
+
+            assert.equals(feature1.type, "Feature");
+            assert.equals(feature1.id, 600);
+            assert.equals(feature1.properties["OBJTYPE"], "Mahogney");
+
+            assert.equals(feature1.properties.kvalitet.maalemetode, 82);
+
+            var geom = feature1.geometry;
+            assert.equals(geom.type, "Polygon");
+            assert.equals(geom.coordinates.length, 2);
+
+            assert.equals(geom.coordinates[0].length, 5);
+            assert.equals(geom.coordinates[1].length, 5);
+
+            assert.equals(geom.coordinates[0][0][0], 300000);
+            assert.equals(geom.coordinates[0][0][1], 7000000);
+
+            assert.equals(geom.coordinates[1][0][0], 300010);
+            assert.equals(geom.coordinates[1][0][1], 7000010);
         }
     });
 }(SOSI));

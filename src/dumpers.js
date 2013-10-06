@@ -50,9 +50,13 @@ var SOSI = window.SOSI || {};
             }
 
             if (geom instanceof ns.Polygon) {
+                var shell = _.map(geom.flate, writePoint);
+                var holes = _.map(geom.islands, function (island) {
+                    return _.map(island, writePoint);
+                });
                 return {
                     "type": "Polygon",
-                    "coordinates": [_.map(geom.flate, writePoint)]
+                    "coordinates": [shell].concat(holes)
                 };
             }
 
