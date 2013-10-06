@@ -49,7 +49,7 @@ var SOSI = window.SOSI || {};
                         var key = ns.util.cleanupLine(line.replace(".", ""));
                         res[key] = [];
                         parent = key;
-                    } else if(parent){
+                    } else if (parent) {
                         res[parent].push(line);
                     }
                 }

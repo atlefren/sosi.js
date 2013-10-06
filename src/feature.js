@@ -3,7 +3,7 @@ var SOSI = window.SOSI || {};
 (function (ns, undefined) {
     "use strict";
 
-    function createGeometry (geometryType, lines, origo, unit) {
+    function createGeometry(geometryType, lines, origo, unit) {
 
         var geometryTypes = {
             "PUNKT": ns.Point,
@@ -83,7 +83,7 @@ var SOSI = window.SOSI || {};
                     geometryType: key[0],
                     lines: value
                 };
-                 this.features.push(new ns.Feature(data, head.origo, head.enhet, this));
+                this.features.push(new ns.Feature(data, head.origo, head.enhet, this));
             }, this);
         },
 
@@ -98,7 +98,7 @@ var SOSI = window.SOSI || {};
         getById: function (id) {
             return _.find(this.features, function (feature) {
                 return (feature.id === id);
-            })
+            });
         },
 
         all: function () {

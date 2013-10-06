@@ -18,7 +18,7 @@ var SOSI = window.SOSI || {};
             this.x = ns.util.round((parseInt(coords[1], 10) * unit) + origo.x, 2);
 
             if (coords[2] && !isNaN(coords[2])) {
-                    this.z = parseInt(parseInt(coords[1], 10) * unit)
+                this.z = parseInt(coords[1], 10) * unit;
             }
 
             if (line.indexOf(".KP") !== -1) {
@@ -42,20 +42,20 @@ var SOSI = window.SOSI || {};
 
             this.knutepunkter = _.filter(this.kurve, function (punkt) {
                 return punkt.has_tiepoint;
-            })
+            });
         }
     });
 
-    function createPolygon (refs, features) {
-        var flate =  _.flatten(_.map(refs, function(ref) {
+    function createPolygon(refs, features) {
+        var flate =  _.flatten(_.map(refs, function (ref) {
             var id = Math.abs(ref);
             var kurve = features.getById(id);
             if (!kurve) {
-                throw new Error("Fant ikke KURVE " + id +" for FLATE");
+                throw new Error("Fant ikke KURVE " + id + " for FLATE");
             }
 
             var geom = kurve.geometry.kurve;
-            if(ref < 0) {
+            if (ref < 0) {
                 geom =  geom.reverse();
             }
             return _.initial(geom);
@@ -68,20 +68,20 @@ var SOSI = window.SOSI || {};
         initialize: function (refs, features) {
             var holeIdx = -1;
             refs = _.reduce(refs.split(" "), function (res, ref) {
-                    ref = ref.replace(/:/g, "");
-                    if (ref.indexOf("(") !== -1) {
-                        holeIdx += 1;
-                        res.holes.push([]);
-                        ref = ref.replace("(", "");
-                    }
-                    if (ref.indexOf(")") !== -1) {
-                        ref = ref.replace(")", "");
-                    }
-                    if (holeIdx === -1) {
-                        res.shell.push(parseInt(ref));
-                    } else {
-                        res.holes[holeIdx].push(parseInt(ref));
-                    }
+                ref = ref.replace(/:/g, "");
+                if (ref.indexOf("(") !== -1) {
+                    holeIdx += 1;
+                    res.holes.push([]);
+                    ref = ref.replace("(", "");
+                }
+                if (ref.indexOf(")") !== -1) {
+                    ref = ref.replace(")", "");
+                }
+                if (holeIdx === -1) {
+                    res.shell.push(parseInt(ref, 10));
+                } else {
+                    res.holes[holeIdx].push(parseInt(ref, 10));
+                }
                 return res;
             }, {holes: [], "shell": []});
 

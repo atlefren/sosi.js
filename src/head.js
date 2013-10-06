@@ -10,17 +10,17 @@ var SOSI = window.SOSI || {};
         return data;
     }
 
-    function getString (data, key) {
+    function getString(data, key) {
         var str = data[key] || "";
         return str.replace(/"/g, "");
     }
 
-    function getNumber (data, key) {
+    function getNumber(data, key) {
         return parseFloat(data[key]);
     }
 
     function getSrid(koordsys) {
-        koordsys = parseInt(koordsys);
+        koordsys = parseInt(koordsys, 10);
         if (ns.koordsysMap[koordsys]) {
             return ns.koordsysMap[koordsys];
         }
@@ -65,8 +65,7 @@ var SOSI = window.SOSI || {};
                     } else {
                         _.extend(res, parseLine(line));
                     }
-                }
-                else {
+                } else {
                     res[parent].push(line);
                 }
                 return res;
@@ -75,7 +74,7 @@ var SOSI = window.SOSI || {};
                 if (_.isArray(value)) {
                     res[key] = _.reduce(value, function (arr, line) {
                         return _.extend(arr, parseLine(line.replace("...", "")));
-                    },{});
+                    }, {});
                 } else {
                     res[key] = value;
                 }

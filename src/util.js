@@ -4,7 +4,7 @@ var SOSI = window.SOSI || {};
     "use strict";
 
     ns.util = {
-        cleanupLine: function  (line) {
+        cleanupLine: function (line) {
             if (line.indexOf('!') !== -1) {
                 line = line.substring(0, line.indexOf('!'));
             }
@@ -13,14 +13,14 @@ var SOSI = window.SOSI || {};
 
         countStartingDots: function (str) {
             var stop = false;
-            return _.reduce(str, function(count, character) {
+            return _.reduce(str, function (count, character) {
                 if (character === "." && !stop) {
-                    count++;
+                    count += 1;
                 } else {
                     stop = true;
                 }
                 return count;
-            }, 0)
+            }, 0);
         },
 
         parseQuality: function (data) {

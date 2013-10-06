@@ -3,7 +3,7 @@ var SOSI = window.SOSI || {};
 (function (ns, undefined) {
     "use strict";
 
-     function writePoint(point) {
+    function writePoint(point) {
         return [point.x, point.y];
     }
 
@@ -59,7 +59,6 @@ var SOSI = window.SOSI || {};
                     "coordinates": [shell].concat(holes)
                 };
             }
-
             throw new Error("cannot write geometry!");
         },
 
@@ -69,7 +68,7 @@ var SOSI = window.SOSI || {};
                 "properties": {
                     "name": this.sosidata.hode.srid
                 }
-            }
+            };
         }
     });
 
