@@ -17,14 +17,15 @@ config["My tests"] = {
         "src/parser.js"
     ],
     tests: [
-        "test/island-test.js"
+        "test/*-test.js"
     ],
     resources: [
         {path: "/testfile1.sos", content: fs.readFileSync('data/testfile1.sos')},
         {path: "/punkttest.sos", content: fs.readFileSync('data/punkttest.sos')},
         {path: "/kurvetest.sos", content: fs.readFileSync('data/kurvetest.sos')},
         {path: "/flatetest.sos", content: fs.readFileSync('data/flatetest.sos')},
-        {path: "/flate_oy.sos", content: fs.readFileSync('data/flate_oy.sos')}
+        {path: "/flate_oy.sos", content: fs.readFileSync('data/flate_oy.sos')},
+        {path: "/naturvernomraade.sos", content: fs.readFileSync('data/naturvernomraade.sos')}
     ]
 
 };
