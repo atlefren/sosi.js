@@ -62,7 +62,6 @@ var SOSI = window.SOSI || {};
             }, {});
 
             if (data.geometryType === "FLATE") {
-
                 this.geometry = new ns.Polygon(this.attributes["REF"], features);
                 this.geometry.center = new ns.Point(parsed.geometry, origo, unit);
                 this.attributes = _.omit(this.attributes, "REF")
@@ -74,8 +73,8 @@ var SOSI = window.SOSI || {};
 
     ns.Features = ns.Base.extend({
 
-        initialize: function (elements, hode) {
-            this.hode = hode;
+        initialize: function (elements, head) {
+            this.head = head;
             this.features = [];
             _.each(elements, function (value, key) {
                 key = key.replace(":", "").split(" ");
@@ -84,7 +83,7 @@ var SOSI = window.SOSI || {};
                     geometryType: key[0],
                     lines: value
                 };
-                 this.features.push(new ns.Feature(data, hode.origo, hode.enhet, this));
+                 this.features.push(new ns.Feature(data, head.origo, head.enhet, this));
             }, this);
         },
 

@@ -71,9 +71,9 @@
             assert(flate.geometry instanceof ns.Polygon);
 
             assert.equals(flate.geometry.flate.length, 5);
-            assert.equals(flate.geometry.islands.length, 1);
+            assert.equals(flate.geometry.holes.length, 1);
 
-            var island = flate.geometry.islands[0];
+            var island = flate.geometry.holes[0];
             assert.equals(island.length, 5);
             assert.equals(island[0].x, 300010);
             assert.equals(island[0].y, 7000010);
@@ -97,9 +97,9 @@
             assert(flate.geometry instanceof ns.Polygon);
 
             assert.equals(flate.geometry.flate.length, 5);
-            assert.equals(flate.geometry.islands.length, 1);
+            assert.equals(flate.geometry.holes.length, 1);
 
-            var island = flate.geometry.islands[0];
+            var island = flate.geometry.holes[0];
 
             assert.equals(island.length, 5);
             assert.equals(island[0].x, 300010);

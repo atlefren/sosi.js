@@ -22,12 +22,12 @@ var SOSI = window.SOSI || {};
             }
 
             if (line.indexOf(".KP") !== -1) {
-                this.setKnutepunkt(line.substring(line.indexOf(".KP"), line.length).split(" ")[1]);
+                this.setTiepoint(line.substring(line.indexOf(".KP"), line.length).split(" ")[1]);
             }
         },
 
-        setKnutepunkt: function (kode) {
-            this.knutepunkt = true;
+        setTiepoint: function (kode) {
+            this.has_tiepoint = true;
             this.knutepunktkode = parseInt(kode, 10);
         }
     });
@@ -41,12 +41,12 @@ var SOSI = window.SOSI || {};
             }));
 
             this.knutepunkter = _.filter(this.kurve, function (punkt) {
-                return punkt.knutepunkt;
+                return punkt.has_tiepoint;
             })
         }
     });
 
-    function createFlate (refs, features) {
+    function createPolygon (refs, features) {
         var flate =  _.flatten(_.map(refs, function(ref) {
             var id = Math.abs(ref);
             var kurve = features.getById(id);
@@ -66,11 +66,9 @@ var SOSI = window.SOSI || {};
 
     ns.Polygon = ns.Base.extend({
         initialize: function (refs, features) {
-
             var holeIdx = -1;
             refs = _.reduce(refs.split(" "), function (res, ref) {
                     ref = ref.replace(/:/g, "");
-
                     if (ref.indexOf("(") !== -1) {
                         holeIdx += 1;
                         res.holes.push([]);
@@ -87,18 +85,17 @@ var SOSI = window.SOSI || {};
                 return res;
             }, {holes: [], "shell": []});
 
-            this.flate = createFlate(refs.shell, features);
+            this.flate = createPolygon(refs.shell, features);
 
-            this.islands = _.map(refs.holes, function (hole) {
+            this.holes = _.map(refs.holes, function (hole) {
                 if (hole.length === 1) {
                     var feature = features.getById(hole[0]);
                     if (feature.geometryType === "FLATE") {
                         return feature.geometry.flate;
                     }
                 }
-                return createFlate(hole, features);
+                return createPolygon(hole, features);
             });
         }
     });
-
 }(SOSI));
