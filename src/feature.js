@@ -12,8 +12,7 @@ var SOSI = window.SOSI || {};
         };
 
         if (!geometryTypes[geometryType]) {
-            //throw new Error("GeometryType " + geometryType + " is not handled (yet..?)");
-            return null;
+            throw new Error("GeometryType " + geometryType + " is not handled (yet..?)");
         }
         return new geometryTypes[geometryType](lines, origo, unit);
     }
