@@ -17,7 +17,7 @@ var SOSIDemo = window.SOSIDemo || {};
             _.bindAll(this, "submit");
         },
 
-        render: function ( ) {
+        render: function () {
             this.$el.html(_.template(this.template));
             return this;
         },
