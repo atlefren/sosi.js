@@ -14,11 +14,16 @@ var SOSI = window.SOSI || {};
 
             var coords = line.split(" ");
 
-            this.y = ns.util.round((parseInt(coords[0], 10) * unit) + origo.y, 2);
-            this.x = ns.util.round((parseInt(coords[1], 10) * unit) + origo.x, 2);
+            var numDecimals = 0;
+            if (unit < 1) {
+                numDecimals = String(unit).split(".")[1].length;
+            }
+
+            this.y = ns.util.round((parseInt(coords[0], 10) * unit) + origo.y, numDecimals);
+            this.x = ns.util.round((parseInt(coords[1], 10) * unit) + origo.x, numDecimals);
 
             if (coords[2] && !isNaN(coords[2])) {
-                this.z = parseInt(coords[2], 10) * unit;
+                this.z = ns.util.round(parseInt(coords[2], 10) * unit, numDecimals);
             }
 
             if (line.indexOf(".KP") !== -1) {
