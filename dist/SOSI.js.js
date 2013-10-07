@@ -315,7 +315,9 @@ var SOSI = window.SOSI || {};
             if (!kurve) {
                 throw new Error("Fant ikke KURVE " + id + " for FLATE");
             }
-
+            if(!kurve.geometry) {
+                console.log(kurve)
+            }
             var geom = kurve.geometry.kurve;
             if (ref < 0) {
                 geom =  geom.reverse();
@@ -351,6 +353,7 @@ var SOSI = window.SOSI || {};
 
             this.holes = _.map(refs.holes, function (hole) {
                 if (hole.length === 1) {
+                    console.log(hole[0]);
                     var feature = features.getById(hole[0]);
                     if (feature.geometryType === "FLATE") {
                         return feature.geometry.flate;
@@ -387,7 +390,7 @@ var SOSI = window.SOSI || {};
     ns.Feature = ns.Base.extend({
 
         initialize: function (data, origo, unit, features) {
-            if (! data.id) {
+            if (!data.id) {
                 throw new Error("Feature must have ID!");
             }
             this.id = data.id;
@@ -411,7 +414,6 @@ var SOSI = window.SOSI || {};
                 return result;
             }, {"attributes": [], "geometry": []});
 
-
             this.attributes = _.reduce(parsed.attributes, function (attributes, line) {
                 line = line.split(" ");
                 var key = line.shift();
@@ -423,29 +425,44 @@ var SOSI = window.SOSI || {};
                 return attributes;
             }, {});
 
-            if (data.geometryType === "FLATE") {
+            this.raw_data = {
+                geometryType: data.geometryType,
+                geometry: parsed.geometry,
+                origo: origo,
+                unit: unit
+            };
+        },
+
+        buildGeometry: function (features) {
+            if (this.raw_data.geometryType === "FLATE") {
                 this.geometry = new ns.Polygon(this.attributes["REF"], features);
-                this.geometry.center = new ns.Point(parsed.geometry, origo, unit);
-                this.attributes = _.omit(this.attributes, "REF")
+                this.geometry.center = new ns.Point(this.raw_data.geometry, this.raw_data.origo, this.raw_data.unit);
+                this.attributes = _.omit(this.attributes, "REF");
             } else {
-                this.geometry = createGeometry(data.geometryType, parsed.geometry, origo, unit);
+                this.geometry = createGeometry(this.raw_data.geometryType, this.raw_data.geometry, this.raw_data.origo, this.raw_data.unit);
             }
         }
     });
 
     ns.Features = ns.Base.extend({
 
+        withRefs: ["FLATE"],
+
         initialize: function (elements, head) {
             this.head = head;
             this.features = [];
-            _.each(elements, function (value, key) {
+            this.features = _.map(elements, function (value, key) {
                 key = key.replace(":", "").split(" ");
                 var data = {
                     id: parseInt(key[1], 10),
                     geometryType: key[0],
                     lines: value
                 };
-                this.features.push(new ns.Feature(data, head.origo, head.enhet, this));
+                return new ns.Feature(data, head.origo, head.enhet);
+            }, this);
+
+            _.each(this.features, function (feature) {
+                feature.buildGeometry(this);
             }, this);
         },
 
@@ -458,9 +475,13 @@ var SOSI = window.SOSI || {};
         },
 
         getById: function (id) {
-            return _.find(this.features, function (feature) {
+            var feature =  _.find(this.features, function (feature) {
                 return (feature.id === id);
             });
+            if (!feature.geometry) {
+                feature.buildGeometry(this);
+            }
+            return feature;
         },
 
         all: function () {
