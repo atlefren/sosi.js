@@ -29,6 +29,15 @@ var SOSIDemo = window.SOSIDemo || {};
         }
     });
 
+    function formatPopup(properties) {
+        return _.map(properties, function (value, key) {
+            if (_.isObject(value)) {
+                return key + ": " + formatPopup(value);
+            }
+            return key + ": " + value;
+        }).join("<br>");
+    }
+
     ns.Menu = Backbone.View.extend({
 
         className: "menu panel panel-default",
@@ -62,7 +71,12 @@ var SOSIDemo = window.SOSIDemo || {};
             try {
                 var json = this.sosiparser.parse(sosidata).dumps("geojson");
                 var layer = L.Proj.geoJson(
-                    json
+                    json,
+                    {
+                        "onEachFeature": function (featureData, layer) {
+                            layer.bindPopup(formatPopup(featureData.properties));
+                        }
+                    }
                 ).addTo(this.map);
 
                 this.map.fitBounds(layer.getBounds());
