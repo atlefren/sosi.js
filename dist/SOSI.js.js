@@ -315,9 +315,6 @@ var SOSI = window.SOSI || {};
             if (!kurve) {
                 throw new Error("Fant ikke KURVE " + id + " for FLATE");
             }
-            if(!kurve.geometry) {
-                console.log(kurve)
-            }
             var geom = kurve.geometry.kurve;
             if (ref < 0) {
                 geom =  geom.reverse();
@@ -353,7 +350,6 @@ var SOSI = window.SOSI || {};
 
             this.holes = _.map(refs.holes, function (hole) {
                 if (hole.length === 1) {
-                    console.log(hole[0]);
                     var feature = features.getById(hole[0]);
                     if (feature.geometryType === "FLATE") {
                         return feature.geometry.flate;
@@ -401,7 +397,7 @@ var SOSI = window.SOSI || {};
         parseData: function (data, origo, unit, features) {
 
             var foundGeom = false;
-            var parsed = _.reduce(data.lines, function (result, line){
+            var parsed = _.reduce(data.lines, function (result, line) {
                 line = ns.util.cleanupLine(line).replace("..", "");
                 if (line.indexOf("NØ") !== -1) {
                     foundGeom = true;
@@ -441,12 +437,11 @@ var SOSI = window.SOSI || {};
             } else {
                 this.geometry = createGeometry(this.raw_data.geometryType, this.raw_data.geometry, this.raw_data.origo, this.raw_data.unit);
             }
+            this.raw_data = null;
         }
     });
 
     ns.Features = ns.Base.extend({
-
-        withRefs: ["FLATE"],
 
         initialize: function (elements, head) {
             this.head = head;
@@ -459,10 +454,6 @@ var SOSI = window.SOSI || {};
                     lines: value
                 };
                 return new ns.Feature(data, head.origo, head.enhet);
-            }, this);
-
-            _.each(this.features, function (feature) {
-                feature.buildGeometry(this);
             }, this);
         },
 
@@ -478,7 +469,7 @@ var SOSI = window.SOSI || {};
         },
 
         at: function (idx) {
-            return this.features[idx];
+            return this.ensureGeom(this.features[idx]);
         },
 
         getById: function (id) {
@@ -488,7 +479,7 @@ var SOSI = window.SOSI || {};
         },
 
         all: function () {
-            return this.features;
+            return _.map(this.features, this.ensureGeom, this);
         }
     });
 
