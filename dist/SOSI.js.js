@@ -94,37 +94,38 @@ var SOSI = window.SOSI || {};
     };
 
     ns.koordsysMap = {
-        1: "EPSG:27391",
-        2: "EPSG:27392",
-        3: "EPSG:27393",
-        4: "EPSG:27394",
-        5: "EPSG:27395",
-        6: "EPSG:27396",
-        7: "EPSG:27397",
-        8: "EPSG:27398",
-        9: "EPSG:4273",
-        21: "EPSG:32631",
-        22: "EPSG:32632",
-        23: "EPSG:32633",
-        24: "EPSG:32634",
-        25: "EPSG:32635",
-        26: "EPSG:32636"
-        //31 UTM-Sone 31 ED50 UTM 31
-        //32 UTM-Sone 32 ED50 UTM 32
-        //33 UTM-Sone 33 ED50 UTM 33
-        //34 UTM-Sone 34 ED50 UTM 34
-        //35 UTM-Sone 35 ED50 UTM 35
-        //36 UTM-Sone 36 ED50 UTM 36
+        1: {"srid": "EPSG:27391", "def": "+proj=tmerc +lat_0=58 +lon_0=-4.666666666666667 +k=1 +x_0=0 +y_0=0 +a=6377492.018 +b=6356173.508712696 +towgs84=278.3,93,474.5,7.889,0.05,-6.61,6.21 +pm=oslo +units=m +no_defs"},
+        2: {"srid": "EPSG:27392", "def": "+proj=tmerc +lat_0=58 +lon_0=-2.333333333333333 +k=1 +x_0=0 +y_0=0 +a=6377492.018 +b=6356173.508712696 +towgs84=278.3,93,474.5,7.889,0.05,-6.61,6.21 +pm=oslo +units=m +no_defs"},
+        3: {"srid": "EPSG:27393", "def": "+proj=tmerc +lat_0=58 +lon_0=0 +k=1 +x_0=0 +y_0=0 +a=6377492.018 +b=6356173.508712696 +towgs84=278.3,93,474.5,7.889,0.05,-6.61,6.21 +pm=oslo +units=m +no_defs"},
+        4: {"srid": "EPSG:27394", "def": "+proj=tmerc +lat_0=58 +lon_0=2.5 +k=1 +x_0=0 +y_0=0 +a=6377492.018 +b=6356173.508712696 +towgs84=278.3,93,474.5,7.889,0.05,-6.61,6.21 +pm=oslo +units=m +no_defs"},
+        5: {"srid": "EPSG:27395", "def": "+proj=tmerc +lat_0=58 +lon_0=6.166666666666667 +k=1 +x_0=0 +y_0=0 +a=6377492.018 +b=6356173.508712696 +towgs84=278.3,93,474.5,7.889,0.05,-6.61,6.21 +pm=oslo +units=m +no_defs"},
+        6: {"srid": "EPSG:27396", "def": "+proj=tmerc +lat_0=58 +lon_0=10.16666666666667 +k=1 +x_0=0 +y_0=0 +a=6377492.018 +b=6356173.508712696 +towgs84=278.3,93,474.5,7.889,0.05,-6.61,6.21 +pm=oslo +units=m +no_defs"},
+        7: {"srid": "EPSG:27397", "def": "+proj=tmerc +lat_0=58 +lon_0=14.16666666666667 +k=1 +x_0=0 +y_0=0 +a=6377492.018 +b=6356173.508712696 +towgs84=278.3,93,474.5,7.889,0.05,-6.61,6.21 +pm=oslo +units=m +no_defs"},
+        8: {"srid": "EPSG:27398", "def": "+proj=tmerc +lat_0=58 +lon_0=18.33333333333333 +k=1 +x_0=0 +y_0=0 +a=6377492.018 +b=6356173.508712696 +towgs84=278.3,93,474.5,7.889,0.05,-6.61,6.21 +pm=oslo +units=m +no_defs"},
+        9: {"srid": "EPSG:4273", "def": "+proj=longlat +a=6377492.018 +b=6356173.508712696 +towgs84=278.3,93,474.5,7.889,0.05,-6.61,6.21 +no_defs"},
+        21: {"srid": "EPSG:32631", "def": "+proj=utm +zone=31 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"},
+        22: {"srid": "EPSG:32632", "def": "+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"},
+        23: {"srid": "EPSG:32633", "def": "+proj=utm +zone=33 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"},
+        24: {"srid": "EPSG:32634", "def": "+proj=utm +zone=34 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"},
+        25: {"srid": "EPSG:32635", "def": "+proj=utm +zone=35 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"},
+        26: {"srid": "EPSG:32636", "def": "+proj=utm +zone=35 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"},
+        31: {"srid": "EPSG:23031", def: "+proj=utm +zone=31 +ellps=intl +units=m +no_defs"},
+        32: {"srid": "EPSG:23032", def: "+proj=utm +zone=32 +ellps=intl +units=m +no_defs"},
+        33: {"srid": "EPSG:23033", def: "+proj=utm +zone=33 +ellps=intl +units=m +no_defs"},
+        34: {"srid": "EPSG:23034", def: "+proj=utm +zone=34 +ellps=intl +units=m +no_defs"},
+        35: {"srid": "EPSG:23035", def: "+proj=utm +zone=35 +ellps=intl +units=m +no_defs"},
+        36: {"srid": "EPSG:23036", def: "+proj=utm +zone=36 +ellps=intl +units=m +no_defs"},
+        50: {"srid": "EPSG:4230", def: "+proj=longlat +ellps=intl +no_defs"},
+        72: {"srid": "EPSG:4322", def: "+proj=longlat +ellps=WGS72 +no_defs "},
+        84: {"srid": "EPSG:4326", def: "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs "},
+        87: {"srid": "EPSG:4231", "def": "+proj=longlat +ellps=intl +no_defs "}
+
         //41 Lokalnett, uspes.
         //42 Lokalnett, uspes.
-        //50 ED50 Geografisk ED50 Ingen Ingen
         //51 NGO-56A (Møre) NGO1948 Gauss-Krüger
         //52 NGO-56B (Møre) NGO1948 Gauss-Krüger
         //53 NGO-64A (Møre) NGO1948 Gauss-Krüger
         //54 NGO-64B (Møre) NGO1948 Gauss-Krüger
-        //72 WGS72 Geografisk WGS72 Ingen Ingen
-        //84 WGS84 Geografisk WGS84 Ingen Ingen
-        //87 ED87 Geografisk ED87 Ingen Ingen
         //99 Egendefinert *
         //101 Lokalnett, Oslo
         //102 Lokalnett, Bærum
@@ -137,28 +138,12 @@ var SOSI = window.SOSI || {};
 
     //add proj4 defs so that proj4js works
     if (proj4) {
-        proj4.defs("EPSG:32631", "+proj=utm +zone=31 +ellps=WGS84 +datum=WGS84 +units=m +no_defs");
-        proj4.defs("EPSG:32632", "+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs");
-        proj4.defs("EPSG:32633", "+proj=utm +zone=33 +ellps=WGS84 +datum=WGS84 +units=m +no_defs");
-        proj4.defs("EPSG:32634", "+proj=utm +zone=34 +ellps=WGS84 +datum=WGS84 +units=m +no_defs");
-        proj4.defs("EPSG:32635", "+proj=utm +zone=35 +ellps=WGS84 +datum=WGS84 +units=m +no_defs");
-        proj4.defs("EPSG:32635", "+proj=utm +zone=35 +ellps=WGS84 +datum=WGS84 +units=m +no_defs");
-        proj4.defs("EPSG:27391", "+proj=tmerc +lat_0=58 +lon_0=-4.666666666666667 +k=1 +x_0=0 +y_0=0 +a=6377492.018 +b=6356173.508712696 +towgs84=278.3,93,474.5,7.889,0.05,-6.61,6.21 +pm=oslo +units=m +no_defs");
-        proj4.defs("EPSG:27392", "+proj=tmerc +lat_0=58 +lon_0=-2.333333333333333 +k=1 +x_0=0 +y_0=0 +a=6377492.018 +b=6356173.508712696 +towgs84=278.3,93,474.5,7.889,0.05,-6.61,6.21 +pm=oslo +units=m +no_defs");
-        proj4.defs("EPSG:27393", "+proj=tmerc +lat_0=58 +lon_0=0 +k=1 +x_0=0 +y_0=0 +a=6377492.018 +b=6356173.508712696 +towgs84=278.3,93,474.5,7.889,0.05,-6.61,6.21 +pm=oslo +units=m +no_defs");
-        proj4.defs("EPSG:27394", "+proj=tmerc +lat_0=58 +lon_0=2.5 +k=1 +x_0=0 +y_0=0 +a=6377492.018 +b=6356173.508712696 +towgs84=278.3,93,474.5,7.889,0.05,-6.61,6.21 +pm=oslo +units=m +no_defs");
-        proj4.defs("EPSG:27395", "+proj=tmerc +lat_0=58 +lon_0=6.166666666666667 +k=1 +x_0=0 +y_0=0 +a=6377492.018 +b=6356173.508712696 +towgs84=278.3,93,474.5,7.889,0.05,-6.61,6.21 +pm=oslo +units=m +no_defs");
-        proj4.defs("EPSG:27396", "+proj=tmerc +lat_0=58 +lon_0=10.16666666666667 +k=1 +x_0=0 +y_0=0 +a=6377492.018 +b=6356173.508712696 +towgs84=278.3,93,474.5,7.889,0.05,-6.61,6.21 +pm=oslo +units=m +no_defs");
-        proj4.defs("EPSG:27397", "+proj=tmerc +lat_0=58 +lon_0=14.16666666666667 +k=1 +x_0=0 +y_0=0 +a=6377492.018 +b=6356173.508712696 +towgs84=278.3,93,474.5,7.889,0.05,-6.61,6.21 +pm=oslo +units=m +no_defs");
-        proj4.defs("EPSG:27398", "+proj=tmerc +lat_0=58 +lon_0=18.33333333333333 +k=1 +x_0=0 +y_0=0 +a=6377492.018 +b=6356173.508712696 +towgs84=278.3,93,474.5,7.889,0.05,-6.61,6.21 +pm=oslo +units=m +no_defs");
-        proj4.defs("EPSG:4273", "+proj=longlat +a=6377492.018 +b=6356173.508712696 +towgs84=278.3,93,474.5,7.889,0.05,-6.61,6.21 +no_defs");
+        _.each(ns.koordsysMap, function (koordsys) {
+            proj4.defs(koordsys.srid, koordsys.def);
+        });
     }
 
-}(SOSI));
-
-
-
-;var SOSI = window.SOSI || {};
+}(SOSI));;var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
     "use strict";
@@ -182,7 +167,7 @@ var SOSI = window.SOSI || {};
     function getSrid(koordsys) {
         koordsys = parseInt(koordsys, 10);
         if (ns.koordsysMap[koordsys]) {
-            return ns.koordsysMap[koordsys];
+            return ns.koordsysMap[koordsys].srid;
         }
         throw new Error("KOORDSYS = " + koordsys + " not found!");
     }
@@ -284,7 +269,9 @@ var SOSI = window.SOSI || {};
             }
 
             if (line.indexOf(".KP") !== -1) {
-                this.setTiepoint(line.substring(line.indexOf(".KP"), line.length).split(" ")[1]);
+                this.setTiepoint(
+                    line.substring(line.indexOf(".KP"), line.length).split(" ")[1]
+                );
             }
         },
 
@@ -380,7 +367,10 @@ var SOSI = window.SOSI || {};
     }
 
     var specialAttributes = {
-        "KVALITET": {"name": "kvalitet", "function": ns.util.parseQuality}
+        "KVALITET": {
+            "name": "kvalitet",
+            "createFunction": ns.util.parseQuality
+        }
     };
 
     ns.Feature = ns.Base.extend({
@@ -394,7 +384,7 @@ var SOSI = window.SOSI || {};
             this.geometryType = data.geometryType;
         },
 
-        parseData: function (data, origo, unit, features) {
+        parseData: function (data, origo, unit) {
 
             var foundGeom = false;
             var parsed = _.reduce(data.lines, function (result, line) {
@@ -420,7 +410,7 @@ var SOSI = window.SOSI || {};
                 if (!specialAttributes[key]) {
                     attributes[key] = line.join(" ");
                 } else {
-                    attributes[specialAttributes[key].name] = specialAttributes[key].function(line.join(" "));
+                    attributes[specialAttributes[key].name] = specialAttributes[key].createFunction(line.join(" "));
                 }
                 return attributes;
             }, {});
@@ -436,10 +426,19 @@ var SOSI = window.SOSI || {};
         buildGeometry: function (features) {
             if (this.raw_data.geometryType === "FLATE") {
                 this.geometry = new ns.Polygon(this.attributes.REF, features);
-                this.geometry.center = new ns.Point(this.raw_data.geometry, this.raw_data.origo, this.raw_data.unit);
+                this.geometry.center = new ns.Point(
+                    this.raw_data.geometry,
+                    this.raw_data.origo,
+                    this.raw_data.unit
+                );
                 this.attributes = _.omit(this.attributes, "REF");
             } else {
-                this.geometry = createGeometry(this.raw_data.geometryType, this.raw_data.geometry, this.raw_data.origo, this.raw_data.unit);
+                this.geometry = createGeometry(
+                    this.raw_data.geometryType,
+                    this.raw_data.geometry,
+                    this.raw_data.origo,
+                    this.raw_data.unit
+                );
             }
             this.raw_data = null;
         }
@@ -511,7 +510,11 @@ var SOSI = window.SOSI || {};
         },
 
         getFeatures: function () {
-            return _.map(this.sosidata.features.all(), this.createGeoJsonFeature, this);
+            return _.map(
+                this.sosidata.features.all(),
+                this.createGeoJsonFeature,
+                this
+            );
         },
 
         createGeoJsonFeature: function (sosifeature) {
@@ -587,7 +590,7 @@ var SOSI = window.SOSI || {};
             );
         },
 
-        dumps: function(format) {
+        dumps: function (format) {
             if (dumpTypes[format]) {
                 return new dumpTypes[format](this).dumps();
             }
@@ -606,7 +609,7 @@ var SOSI = window.SOSI || {};
     ns.Parser = ns.Base.extend({
         parse: function (data) {
             var parent;
-            var res =_.reduce(data.split("\n"), function (res, line) {
+            var res = _.reduce(data.split("\n"), function (res, line) {
                 if (!isComment(line)) {
                     if (isParent(line)) {
                         var key = ns.util.cleanupLine(line.replace(".", ""));

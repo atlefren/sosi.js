@@ -22,7 +22,7 @@ var SOSI = window.SOSI || {};
     function getSrid(koordsys) {
         koordsys = parseInt(koordsys, 10);
         if (ns.koordsysMap[koordsys]) {
-            return ns.koordsysMap[koordsys];
+            return ns.koordsysMap[koordsys].srid;
         }
         throw new Error("KOORDSYS = " + koordsys + " not found!");
     }
