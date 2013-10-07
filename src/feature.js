@@ -37,14 +37,18 @@ var SOSI = window.SOSI || {};
 
             var foundGeom = false;
             var parsed = _.reduce(data.lines, function (result, line) {
-                line = ns.util.cleanupLine(line).replace("..", "");
-                if (line.indexOf("NØ") !== -1) {
+                line = ns.util.cleanupLine(line);
+                if (line.indexOf("..NØ") !== -1) {
                     foundGeom = true;
                 }
                 if (!foundGeom) {
-                    result.attributes.push(line);
+                    if (line.indexOf("..") !== 0) {
+                        result.attributes[result.attributes.length - 1] += " " + line;
+                    } else {
+                        result.attributes.push(line.replace("..", ""));
+                    }
                 } else {
-                    result.geometry.push(line);
+                    result.geometry.push(line.replace("..", ""));
                 }
                 return result;
             }, {"attributes": [], "geometry": []});
@@ -70,7 +74,7 @@ var SOSI = window.SOSI || {};
 
         buildGeometry: function (features) {
             if (this.raw_data.geometryType === "FLATE") {
-                this.geometry = new ns.Polygon(this.attributes["REF"], features);
+                this.geometry = new ns.Polygon(this.attributes.REF, features);
                 this.geometry.center = new ns.Point(this.raw_data.geometry, this.raw_data.origo, this.raw_data.unit);
                 this.attributes = _.omit(this.attributes, "REF");
             } else {
