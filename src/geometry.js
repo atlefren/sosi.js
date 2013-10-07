@@ -53,9 +53,6 @@ var SOSI = window.SOSI || {};
             if (!kurve) {
                 throw new Error("Fant ikke KURVE " + id + " for FLATE");
             }
-            if(!kurve.geometry) {
-                console.log(kurve)
-            }
             var geom = kurve.geometry.kurve;
             if (ref < 0) {
                 geom =  geom.reverse();
@@ -91,7 +88,6 @@ var SOSI = window.SOSI || {};
 
             this.holes = _.map(refs.holes, function (hole) {
                 if (hole.length === 1) {
-                    console.log(hole[0]);
                     var feature = features.getById(hole[0]);
                     if (feature.geometryType === "FLATE") {
                         return feature.geometry.flate;

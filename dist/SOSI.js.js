@@ -466,6 +466,13 @@ var SOSI = window.SOSI || {};
             }, this);
         },
 
+        ensureGeom: function (feature) {
+            if (!feature.geometry) {
+                feature.buildGeometry(this);
+            }
+            return feature;
+        },
+
         length: function () {
             return this.features.length;
         },
@@ -475,13 +482,9 @@ var SOSI = window.SOSI || {};
         },
 
         getById: function (id) {
-            var feature =  _.find(this.features, function (feature) {
+            return this.ensureGeom(_.find(this.features, function (feature) {
                 return (feature.id === id);
-            });
-            if (!feature.geometry) {
-                feature.buildGeometry(this);
-            }
-            return feature;
+            }));
         },
 
         all: function () {
