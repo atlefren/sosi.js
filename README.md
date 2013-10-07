@@ -23,27 +23,33 @@ There will obviously be some shortcuts, so the goals are as follows:
 - good test coverage
 - learn a bit more about the format
 - output features as either:
-    - geoJSON
+    - geoJSON (implemented)
     - TopoJSON
     - OpenLayers (2 or 3) features
     - Leaflet Layers
 - ignore backwards compability
 
+DEMO
+----
+See: https://rawgithub.com/atlefren/sosi.js/master/example/index.html
+
 Building
 -------
 - checkout the project
- $npm install
- $grunt
+-- $npm install
+-- $grunt
 
 Running tests
 -------------
- $buster-server &
- $buster-test
+- $buster-server &
+- $buster-test
 
 
 Dependencies
 ------------
-The only dependency is underscore.js (although jQuery is used for the tests)
+The only hard dependency is underscore.js (although jQuery is used for the tests and leaflet and backbone is used for the example)
+Optional support for proj4js (loads the proj4 definitions for crses known to sosi.js)
+
 
 Contribute
 ----------
