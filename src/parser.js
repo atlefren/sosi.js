@@ -24,7 +24,7 @@ var SOSI = window.SOSI || {};
             );
         },
 
-        dumps: function(format) {
+        dumps: function (format) {
             if (dumpTypes[format]) {
                 return new dumpTypes[format](this).dumps();
             }
@@ -43,7 +43,7 @@ var SOSI = window.SOSI || {};
     ns.Parser = ns.Base.extend({
         parse: function (data) {
             var parent;
-            var res =_.reduce(data.split("\n"), function (res, line) {
+            var res = _.reduce(data.split("\n"), function (res, line) {
                 if (!isComment(line)) {
                     if (isParent(line)) {
                         var key = ns.util.cleanupLine(line.replace(".", ""));

@@ -22,7 +22,11 @@ var SOSI = window.SOSI || {};
         },
 
         getFeatures: function () {
-            return _.map(this.sosidata.features.all(), this.createGeoJsonFeature, this);
+            return _.map(
+                this.sosidata.features.all(),
+                this.createGeoJsonFeature,
+                this
+            );
         },
 
         createGeoJsonFeature: function (sosifeature) {

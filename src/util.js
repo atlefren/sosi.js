@@ -116,6 +116,3 @@ var SOSI = window.SOSI || {};
     }
 
 }(SOSI));
-
-
-

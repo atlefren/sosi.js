@@ -22,7 +22,9 @@ var SOSI = window.SOSI || {};
             }
 
             if (line.indexOf(".KP") !== -1) {
-                this.setTiepoint(line.substring(line.indexOf(".KP"), line.length).split(" ")[1]);
+                this.setTiepoint(
+                    line.substring(line.indexOf(".KP"), line.length).split(" ")[1]
+                );
             }
         },
 

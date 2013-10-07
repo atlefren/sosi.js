@@ -19,7 +19,10 @@ var SOSI = window.SOSI || {};
     }
 
     var specialAttributes = {
-        "KVALITET": {"name": "kvalitet", "function": ns.util.parseQuality}
+        "KVALITET": {
+            "name": "kvalitet",
+            "createFunction": ns.util.parseQuality
+        }
     };
 
     ns.Feature = ns.Base.extend({
@@ -33,7 +36,7 @@ var SOSI = window.SOSI || {};
             this.geometryType = data.geometryType;
         },
 
-        parseData: function (data, origo, unit, features) {
+        parseData: function (data, origo, unit) {
 
             var foundGeom = false;
             var parsed = _.reduce(data.lines, function (result, line) {
@@ -59,7 +62,7 @@ var SOSI = window.SOSI || {};
                 if (!specialAttributes[key]) {
                     attributes[key] = line.join(" ");
                 } else {
-                    attributes[specialAttributes[key].name] = specialAttributes[key].function(line.join(" "));
+                    attributes[specialAttributes[key].name] = specialAttributes[key].createFunction(line.join(" "));
                 }
                 return attributes;
             }, {});
@@ -75,10 +78,19 @@ var SOSI = window.SOSI || {};
         buildGeometry: function (features) {
             if (this.raw_data.geometryType === "FLATE") {
                 this.geometry = new ns.Polygon(this.attributes.REF, features);
-                this.geometry.center = new ns.Point(this.raw_data.geometry, this.raw_data.origo, this.raw_data.unit);
+                this.geometry.center = new ns.Point(
+                    this.raw_data.geometry,
+                    this.raw_data.origo,
+                    this.raw_data.unit
+                );
                 this.attributes = _.omit(this.attributes, "REF");
             } else {
-                this.geometry = createGeometry(this.raw_data.geometryType, this.raw_data.geometry, this.raw_data.origo, this.raw_data.unit);
+                this.geometry = createGeometry(
+                    this.raw_data.geometryType,
+                    this.raw_data.geometry,
+                    this.raw_data.origo,
+                    this.raw_data.unit
+                );
             }
             this.raw_data = null;
         }
