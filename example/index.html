@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=8">
+    <meta charset="UTF-8">
+    <title>SOSI-js example</title>
+
+    <link rel="stylesheet" href="leaflet/leaflet.css" />
+    <!--[if lte IE 8]>
+    <link rel="stylesheet" href="leaflet/leaflet.ie.css" />
+    <![endif]-->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css">
+
+    <style type="text/css">
+        html, body {
+            height: 100%;
+            margin: 0;
+            background: #fff;
+        }
+
+        .map_fullscreen {
+            width: 100%;
+            height: 100%;
+            background: #fff;
+        }
+
+        .menu {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            bottom: 10px;
+            width: 600px;
+            background: #ddd;
+            z-index: 3000;
+            background-color: #FFFFFF;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            overflow-y: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+        }
+
+        .min {
+            width: 200px !important;
+            height: 40px !important;
+        }
+
+        .menu .page-header {
+            margin-top: 20px;
+        }
+
+        .menu h1 {
+            font-size: 24px;
+        }
+
+        .content {
+            padding: 5px;
+        }
+
+        .sosi_textarea {
+            width: 100%;
+        }
+
+        .alert {
+            margin-top: 20px;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<script type="text/template" id="sosiform">
+    <div class="form-group">
+        <label for="sosidata">SOSI-data</label>
+        <textarea id="sosidata" rows="10" cols="10" class="form-control sosi_textarea"></textarea>
+    </div>
+    <button type="submit" class="btn btn-default">Parse!</button>
+
+</script>
+
+
+<script type="text/template" id="menu-panel-template">
+    <div class="panel-heading">SOSI-data <span class="resize pull-right glyphicon glyphicon-resize-small"></span></div>
+    <div class="content">
+    </div>
+</script>
+
+
+
+<div id="map" class="map_fullscreen"></div>
+
+<script src="../lib/jquery-1.10.2.min.js"></script>
+<script src="../lib/underscore-min.js"></script>
+<script src="js/backbone-min.js"></script>
+<script src="leaflet/leaflet.js"></script>
+<script src="js/proj4.js"></script>
+<script src="js/proj4leaflet.js"></script>
+<script src="js/leafletUtils.js"></script>
+<script src="../dist/SOSI.js.js"></script>
+<script src="js/views.js"></script>
+<script type="text/javascript">
+
+    if (proj4) {
+        proj4.defs("EPSG:32631", "+proj=utm +zone=31 +ellps=WGS84 +datum=WGS84 +units=m +no_defs");
+        proj4.defs("EPSG:32632", "+proj=utm +zone=32 +ellps=WGS84 +datum=WGS84 +units=m +no_defs");
+        proj4.defs("EPSG:32633", "+proj=utm +zone=33 +ellps=WGS84 +datum=WGS84 +units=m +no_defs");
+        proj4.defs("EPSG:32634", "+proj=utm +zone=34 +ellps=WGS84 +datum=WGS84 +units=m +no_defs");
+        proj4.defs("EPSG:32635", "+proj=utm +zone=35 +ellps=WGS84 +datum=WGS84 +units=m +no_defs");
+        proj4.defs("EPSG:32635", "+proj=utm +zone=35 +ellps=WGS84 +datum=WGS84 +units=m +no_defs");
+        proj4.defs("EPSG:27391", "+proj=tmerc +lat_0=58 +lon_0=-4.666666666666667 +k=1 +x_0=0 +y_0=0 +a=6377492.018 +b=6356173.508712696 +towgs84=278.3,93,474.5,7.889,0.05,-6.61,6.21 +pm=oslo +units=m +no_defs");
+        proj4.defs("EPSG:27392", "+proj=tmerc +lat_0=58 +lon_0=-2.333333333333333 +k=1 +x_0=0 +y_0=0 +a=6377492.018 +b=6356173.508712696 +towgs84=278.3,93,474.5,7.889,0.05,-6.61,6.21 +pm=oslo +units=m +no_defs");
+        proj4.defs("EPSG:27393", "+proj=tmerc +lat_0=58 +lon_0=0 +k=1 +x_0=0 +y_0=0 +a=6377492.018 +b=6356173.508712696 +towgs84=278.3,93,474.5,7.889,0.05,-6.61,6.21 +pm=oslo +units=m +no_defs");
+        proj4.defs("EPSG:27394", "+proj=tmerc +lat_0=58 +lon_0=2.5 +k=1 +x_0=0 +y_0=0 +a=6377492.018 +b=6356173.508712696 +towgs84=278.3,93,474.5,7.889,0.05,-6.61,6.21 +pm=oslo +units=m +no_defs");
+        proj4.defs("EPSG:27395", "+proj=tmerc +lat_0=58 +lon_0=6.166666666666667 +k=1 +x_0=0 +y_0=0 +a=6377492.018 +b=6356173.508712696 +towgs84=278.3,93,474.5,7.889,0.05,-6.61,6.21 +pm=oslo +units=m +no_defs");
+        proj4.defs("EPSG:27396", "+proj=tmerc +lat_0=58 +lon_0=10.16666666666667 +k=1 +x_0=0 +y_0=0 +a=6377492.018 +b=6356173.508712696 +towgs84=278.3,93,474.5,7.889,0.05,-6.61,6.21 +pm=oslo +units=m +no_defs");
+        proj4.defs("EPSG:27397", "+proj=tmerc +lat_0=58 +lon_0=14.16666666666667 +k=1 +x_0=0 +y_0=0 +a=6377492.018 +b=6356173.508712696 +towgs84=278.3,93,474.5,7.889,0.05,-6.61,6.21 +pm=oslo +units=m +no_defs");
+        proj4.defs("EPSG:27398", "+proj=tmerc +lat_0=58 +lon_0=18.33333333333333 +k=1 +x_0=0 +y_0=0 +a=6377492.018 +b=6356173.508712696 +towgs84=278.3,93,474.5,7.889,0.05,-6.61,6.21 +pm=oslo +units=m +no_defs");
+        proj4.defs("EPSG:4273", "+proj=longlat +a=6377492.018 +b=6356173.508712696 +towgs84=278.3,93,474.5,7.889,0.05,-6.61,6.21 +no_defs");
+    }
+
+    (function () {
+        var map = L.map('map', { zoomControl: false }).setView([64.5, 10], 5);
+        new L.Control.Zoom({ position: 'topright' }).addTo(map);
+        leafletUtils.SkTiles({layers: "norges_grunnkart"}).addTo(map);
+        $("body").append(new SOSIDemo.Menu({"map": map}).render().$el);
+    }());
+
+
+</script>
+</body>
+</html>
