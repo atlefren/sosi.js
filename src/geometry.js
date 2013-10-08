@@ -87,20 +87,17 @@ var SOSI = window.SOSI || {};
             }
 
             shell = parseRefs(shell);
-
-            if (holes.length > 0) {
-                holes = _.reduce(holes, function (result, character) {
+            holes = _.map(
+                _.reduce(holes, function (result, character) {
                     if (character === "(") {
                         result.push("");
                     } else if (character !== ")" && character !== "") {
                         result[result.length - 1] += character;
                     }
                     return result;
-                }, []);
-                holes = _.map(holes, function (hole) {
-                    return parseRefs(hole);
-                });
-            }
+                }, []),
+                parseRefs
+            );
 
             this.flate = createPolygon(shell, features);
 
@@ -111,7 +108,6 @@ var SOSI = window.SOSI || {};
                         return feature.geometry.flate;
                     }
                 }
-                //console.log(hole);
                 return createPolygon(hole, features);
             });
         }
