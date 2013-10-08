@@ -101,6 +101,36 @@
             assert.equals(geom.coordinates[9][0], 10023.50);
             assert.equals(geom.coordinates[9][1], 100235.00);
 
+        },
+
+        "should be able to write to TopoJSON": function () {
+            var sosidata = this.parser.parse(this.sosidata);
+            var name = "testdata";
+            var json =  sosidata.dumps("topojson", name);
+            assert(json);
+
+            assert.equals(json.type, "Topology");
+            assert.equals(json.objects[name].type, "GeometryCollection");
+
+            assert.equals(json.objects[name].geometries.length, 1);
+
+            var geom1 = json.objects[name].geometries[0];
+
+            assert.equals(geom1.type, "LineString");
+
+            assert.equals(geom1.properties.id, 250);
+            assert.equals(geom1.properties.kvalitet.maalemetode, 40);
+            assert.equals(geom1.properties.kvalitet.noyaktighet, 58);
+
+            assert.equals(geom1.arcs.length, 1);
+            assert.equals(geom1.arcs[0], 0);
+
+            assert(json.arcs);
+            assert.equals(json.arcs.length, 1);
+            assert.equals(json.arcs[0][0][0], 10023.45);
+            assert.equals(json.arcs[0][0][1], 100234.56);
+            assert.equals(json.arcs[0][9][0], 10023.50);
+            assert.equals(json.arcs[0][9][1], 100235.00);
         }
     });
 }(SOSI));

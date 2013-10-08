@@ -83,9 +83,12 @@ var SOSI = window.SOSI || {};
         },
 
         dumps: function (name) {
+            var points = this.getPoints();
+            var lines = this.getLines();
+            var geometries = points.concat(_.map(lines, function (line) {
+                return line.geometry;
+            }));
 
-            var geometries = [];
-            geometries = this.getPoints(geometries);
             var data = {
                 "type": "Topology",
                 "objects": {}
@@ -94,14 +97,23 @@ var SOSI = window.SOSI || {};
                 "type": "GeometryCollection",
                 "geometries": geometries
             };
+            if (lines.length) {
+                data.arcs = _.map(lines, function (line) {
+                    return line.arc;
+                });
+            }
             return data;
         },
 
-        getPoints: function (res) {
-            var points = _.filter(this.sosidata.features.all(), function (feature) {
-                return (feature.geometry instanceof ns.Point);
+        getByType: function (type) {
+            return _.filter(this.sosidata.features.all(), function (feature) {
+                return (feature.geometry instanceof type);
             });
-            return res.concat(_.map(points, function (point) {
+        },
+
+        getPoints: function () {
+            var points = this.getByType(ns.Point);
+            return _.map(points, function (point) {
                 var properties = _.clone(point.attributes);
                 properties.id = point.id;
                 return {
@@ -109,7 +121,24 @@ var SOSI = window.SOSI || {};
                     "properties": properties,
                     "coordinates": writePoint(point.geometry)
                 };
-            }));
+            });
+        },
+
+        getLines: function () {
+            var lines = this.getByType(ns.LineString);
+            return _.map(lines, function (line, index) {
+                var properties = _.clone(line.attributes);
+                properties.id = line.id;
+                return {
+                    "geometry": {
+                        "type": "LineString",
+                        "properties": properties,
+                        "arcs": [index]
+                    },
+                    "arc": _.map(line.geometry.kurve, writePoint),
+                    "SOSI_ID": line.id
+                };
+            });
         }
     });
 
