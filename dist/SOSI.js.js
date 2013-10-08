@@ -317,31 +317,41 @@ var SOSI = window.SOSI || {};
         return flate;
     }
 
+    function parseRefs(refs) {
+        return _.map(refs.trim().split(" "), function (ref) {
+            return parseInt(ref.replace(":", ""), 10);
+        });
+    }
+
     ns.Polygon = ns.Base.extend({
         initialize: function (refs, features) {
-            var holeIdx = -1;
-            refs = _.reduce(refs.replace("( :", "(:").split(" "), function (res, ref) {
-                ref = ref.replace(/:/g, "");
-                //console.log(ref)
-                if (ref.indexOf("(") !== -1) {
-                    holeIdx += 1;
-                    res.holes.push([]);
-                    ref = ref.replace("(", "");
-                }
-                if (ref.indexOf(")") !== -1) {
-                    ref = ref.replace(")", "");
-                }
-                if (holeIdx === -1) {
-                    res.shell.push(parseInt(ref, 10));
-                } else {
-                    res.holes[holeIdx].push(parseInt(ref, 10));
-                }
-                return res;
-            }, {holes: [], "shell": []});
+            var shell = refs;
+            var holes = [];
+            var index = refs.indexOf("(");
+            if (index !== -1) {
+                shell = refs.substr(0, index);
+                holes = refs.substr(index, refs.length);
+            }
 
-            this.flate = createPolygon(refs.shell, features);
+            shell = parseRefs(shell);
 
-            this.holes = _.map(refs.holes, function (hole) {
+            if (holes.length > 0) {
+                holes = _.reduce(holes, function (result, character) {
+                    if (character === "(") {
+                        result.push("");
+                    } else if (character !== ")" && character !== "") {
+                        result[result.length - 1] += character;
+                    }
+                    return result;
+                }, []);
+                holes = _.map(holes, function (hole) {
+                    return parseRefs(hole);
+                });
+            }
+
+            this.flate = createPolygon(shell, features);
+
+            this.holes = _.map(holes, function (hole) {
                 if (hole.length === 1) {
                     var feature = features.getById(Math.abs(hole[0]));
                     if (feature.geometryType === "FLATE") {
