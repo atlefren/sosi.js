@@ -29,9 +29,38 @@ There will obviously be some shortcuts, so the goals are as follows:
     - Leaflet Layers
 - ignore backwards compability
 
-DEMO
+Demo
 ----
 See: https://rawgithub.com/atlefren/sosi.js/master/example/index.html
+
+Usage
+-----
+    //create a parser
+    var parser = new SOSI.Parser();
+
+    //parse SOSI-data (must be a newline-separated string!)
+    var sosidata = parser.parse(my_data);
+
+    //get the "hode"
+    var hode = sosidata.hode;
+    var srid = hode.srid; //get srid
+    var bbox = hode.bbox; //get bbox
+    //etc
+
+    //get number of features
+    var num_features = sosidata.features.length();
+
+    //get all features
+    var features = sosidata.features.all();
+
+    //get feature by index
+    var feature1 = sosidata.features.at(0); //0-indexed
+
+    //get feature by ID:
+    var feature1 = sosidata.features.getById(200);
+
+    //get as GeoJSON
+    var geojson = sosidata.dumps("geojson");
 
 Building
 -------
