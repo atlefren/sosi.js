@@ -10,7 +10,8 @@ var SOSI = window.SOSI || {};
     });
 
     var dumpTypes = {
-        "geojson": ns.Sosi2GeoJSON
+        "geojson": ns.Sosi2GeoJSON,
+        "topojson": ns.Sosi2TopoJSON
     };
 
     var SosiData = ns.Base.extend({
@@ -26,7 +27,7 @@ var SOSI = window.SOSI || {};
 
         dumps: function (format) {
             if (dumpTypes[format]) {
-                return new dumpTypes[format](this).dumps();
+                return new dumpTypes[format](this).dumps(_.rest(arguments));
             }
             throw new Error("Outputformat " + format + " is not supported!");
         }

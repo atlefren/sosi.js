@@ -59,6 +59,27 @@
 
             assert(json.crs);
             assert.equals(json.crs.properties.name, "EPSG:27395");
+        },
+
+        "should be able to write to TopoJSON": function () {
+            var sosidata = this.parser.parse(this.sosidata);
+            var name = "testdata";
+            var json =  sosidata.dumps("topojson", name);
+            assert(json);
+
+            assert.equals(json.type, "Topology");
+            assert.equals(json.objects[name].type, "GeometryCollection");
+
+            assert.equals(json.objects[name].geometries.length, 1);
+
+            var geom1 = json.objects[name].geometries[0];
+
+            assert.equals(geom1.type, "Point");
+
+            assert.equals(geom1.properties.id, 1);
+            assert.equals(geom1.properties["OBJTYPE"], "Fastmerke");
+
+            assert.equals(geom1.coordinates, [10023.45, 100234.56]);
         }
     });
 }(SOSI));

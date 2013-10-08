@@ -76,4 +76,41 @@ var SOSI = window.SOSI || {};
         }
     });
 
-}(SOSI));
+    ns.Sosi2TopoJSON = ns.Base.extend({
+
+        initialize: function (sosidata) {
+            this.sosidata = sosidata;
+        },
+
+        dumps: function (name) {
+
+            var geometries = [];
+            geometries = this.getPoints(geometries);
+            var data = {
+                "type": "Topology",
+                "objects": {}
+            };
+            data.objects[name] = {
+                "type": "GeometryCollection",
+                "geometries": geometries
+            };
+            return data;
+        },
+
+        getPoints: function (res) {
+            var points = _.filter(this.sosidata.features.all(), function (feature) {
+                return (feature.geometry instanceof ns.Point);
+            });
+            return res.concat(_.map(points, function (point) {
+                var properties = _.clone(point.attributes);
+                properties.id = point.id;
+                return {
+                    "type": "Point",
+                    "properties": properties,
+                    "coordinates": writePoint(point.geometry)
+                };
+            }));
+        }
+    });
+
+    }(SOSI));
