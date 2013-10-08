@@ -320,8 +320,9 @@ var SOSI = window.SOSI || {};
     ns.Polygon = ns.Base.extend({
         initialize: function (refs, features) {
             var holeIdx = -1;
-            refs = _.reduce(refs.split(" "), function (res, ref) {
+            refs = _.reduce(refs.replace("( :", "(:").split(" "), function (res, ref) {
                 ref = ref.replace(/:/g, "");
+                //console.log(ref)
                 if (ref.indexOf("(") !== -1) {
                     holeIdx += 1;
                     res.holes.push([]);
@@ -342,11 +343,12 @@ var SOSI = window.SOSI || {};
 
             this.holes = _.map(refs.holes, function (hole) {
                 if (hole.length === 1) {
-                    var feature = features.getById(hole[0]);
+                    var feature = features.getById(Math.abs(hole[0]));
                     if (feature.geometryType === "FLATE") {
                         return feature.geometry.flate;
                     }
                 }
+                //console.log(hole);
                 return createPolygon(hole, features);
             });
         }
@@ -366,7 +368,6 @@ var SOSI = window.SOSI || {};
 
         if (!geometryTypes[geometryType]) {
             throw new Error("GeometryType " + geometryType + " is not handled (yet..?)");
-            //return null;
         }
         return new geometryTypes[geometryType](lines, origo, unit);
     }
