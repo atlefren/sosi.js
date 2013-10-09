@@ -3,12 +3,34 @@ var SOSI = window.SOSI || {};
 (function (ns, undefined) {
     "use strict";
 
+    function getValues(line) {
+        return _.rest(line.split(" ")).join(" ").trim();
+    }
+
     function getNumDots(num) {
         return new Array(num + 1).join(".");
     }
 
+    function getKeyFromLine(line) {
+        if (line.indexOf(":") !== -1) {
+            return _.first(line.split(":")).trim();
+        }
+        return _.first(line.split(" ")).trim();
+    }
+
+    function cleanupLine(line) {
+        if (line.indexOf('!') !== -1) {
+            line = line.substring(0, line.indexOf('!'));
+        }
+        return line.replace(/\s\s*$/, '');
+    }
+
     function getKey(line, parentLevel) {
-        return ns.util.cleanupLine(line.replace(getNumDots(parentLevel), ""));
+        return cleanupLine(
+            getKeyFromLine(
+                line.replace(getNumDots(parentLevel), "")
+            )
+        );
     }
 
     function pushOrCreate(dict, val) {
@@ -18,29 +40,42 @@ var SOSI = window.SOSI || {};
         dict.objects[dict.key].push(val);
     }
 
+    function countStartingDots(str) {
+        var stop = false;
+        return _.reduce(str, function (count, character) {
+            if (character === "." && !stop) {
+                count += 1;
+            } else {
+                stop = true;
+            }
+            return count;
+        }, 0);
+    }
+
     function isParent(line, parentLevel) {
-        return (ns.util.countStartingDots(line) === parentLevel);
+        return (countStartingDots(line) === parentLevel);
+    }
+
+    function isEmpty(line) {
+        return line === "";
     }
 
     ns.util = {
-        cleanupLine: function (line) {
-            if (line.indexOf('!') !== -1) {
-                line = line.substring(0, line.indexOf('!'));
-            }
-            return line.replace(/\s\s*$/, '');
+        parseTree: function (data, parentLevel) {
+            return _.reduce(_.reject(data, isEmpty), function (res, line) {
+                line = cleanupLine(line);
+                if (isParent(line, parentLevel)) {
+                    res.key = getKey(line, parentLevel);
+                    line = getValues(line);
+                }
+                if (!isEmpty(line)) {
+                    pushOrCreate(res, line);
+                }
+                return res;
+            }, {objects: {}}).objects;
         },
 
-        countStartingDots: function (str) {
-            var stop = false;
-            return _.reduce(str, function (count, character) {
-                if (character === "." && !stop) {
-                    count += 1;
-                } else {
-                    stop = true;
-                }
-                return count;
-            }, 0);
-        },
+        cleanupLine: cleanupLine,
 
         parseQuality: function (data) {
 
@@ -69,17 +104,6 @@ var SOSI = window.SOSI || {};
         round: function (number, numDecimals) {
             var pow = Math.pow(10, numDecimals);
             return Math.round(number * pow) / pow;
-        },
-
-        parseTree: function (data, parentLevel) {
-            return _.reduce(data, function (res, line) {
-                if (isParent(line, parentLevel)) {
-                    res.key = getKey(line, parentLevel);
-                } else {
-                    pushOrCreate(res, line);
-                }
-                return res;
-            }, {objects: {}}).objects;
         }
 
     };

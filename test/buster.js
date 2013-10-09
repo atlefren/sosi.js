@@ -17,7 +17,7 @@ config["My tests"] = {
         "src/parser.js"
     ],
     tests: [
-        "test/parser-test.js"
+        "test/*-test.js"
     ],
     resources: [
         {path: "/testfile1.sos", content: fs.readFileSync('data/testfile1.sos')},
