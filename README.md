@@ -24,7 +24,7 @@ There will obviously be some shortcuts, so the goals are as follows:
 - learn a bit more about the format
 - output features as either:
     - geoJSON (implemented)
-    - TopoJSON
+    - TopoJSON (implemented)
     - OpenLayers (2 or 3) features
     - Leaflet Layers
 - ignore backwards compability
@@ -61,6 +61,9 @@ Usage
 
     //get as GeoJSON
     var geojson = sosidata.dumps("geojson");
+
+    //get as TopoJSON (non-quantized for now)
+    var geojson = sosidata.dumps("topojson", "name_of_objects);
 
 Building
 -------
