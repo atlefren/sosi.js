@@ -6,17 +6,17 @@ Library to read SOSI files in Javascript
 Status
 ------
 This is just an attempt to see if it's posible to parse SOSI-files at all in javascript without too much hassle.
-The data/testfile.sos is the example file found in the document "SOSI standard - versjon 4.5 Del 1: Realisering i SOSI-format og GML"
-(see http://www.statkart.no/Documents/Standard/SOSI-standarden%20del%201%20og%202/SOSI%20standarden/del1_2_RealiseringSosiGml_45_20120608.pdf)
+The data/testfile.sos is the example file found in the document ["SOSI standard - versjon 4.5 Del 1: Realisering i SOSI-format og GML"](http://www.statkart.no/Documents/Standard/SOSI-standarden%20del%201%20og%202/SOSI%20standarden/del1_2_RealiseringSosiGml_45_20120608.pdf) (pdf).
 
 There will obviously be some shortcuts, so the goals are as follows:
 
 - Focus on utf-8 SOSI documents
 - Defer the axis ordering issue
 - get the following geometry-types to work
--- PUNKT
--- KURVE
--- FLATE
+    - PUNKT
+    - KURVE
+    - FLATE
+    - TRASE (perhaps)
 - ignore the rest for now
 - use SRID instead of the sosi-specific codes
 - lightweight
@@ -63,25 +63,23 @@ Usage
     var geojson = sosidata.dumps("geojson");
 
     //get as TopoJSON (non-quantized for now)
-    var geojson = sosidata.dumps("topojson", "name_of_objects);
+    var geojson = sosidata.dumps("topojson", "name_of_objects");
 
 Building
 -------
 - checkout the project
--- $npm install
--- $grunt
+    $ npm install
+    $ grunt
 
 Running tests
 -------------
-- $buster-server &
-- $buster-test
-
+    $ buster-server &
+    $ buster-test
 
 Dependencies
 ------------
 The only hard dependency is underscore.js (although jQuery is used for the tests and leaflet and backbone is used for the example)
 Optional support for proj4js (loads the proj4 definitions for crses known to sosi.js)
-
 
 Contribute
 ----------
