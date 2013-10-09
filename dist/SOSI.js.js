@@ -42,25 +42,94 @@ var SOSI = window.SOSI || {};
 (function (ns, undefined) {
     "use strict";
 
+    function getValues(line) {
+        return _.rest(line.split(" ")).join(" ").trim();
+    }
+
+    function getNumDots(num) {
+        return new Array(num + 1).join(".");
+    }
+
+    function getKeyFromLine(line) {
+        if (line.indexOf(":") !== -1) {
+            return _.first(line.split(":")).trim();
+        }
+        return _.first(line.split(" ")).trim();
+    }
+
+    function cleanupLine(line) {
+        if (line.indexOf('!') !== -1) {
+            line = line.substring(0, line.indexOf('!'));
+        }
+        return line.replace(/\s\s*$/, '');
+    }
+
+    function getKey(line, parentLevel) {
+        return cleanupLine(
+            getKeyFromLine(
+                line.replace(getNumDots(parentLevel), "")
+            )
+        );
+    }
+
+    function pushOrCreate(dict, val) {
+        if (!_.isArray(dict.objects[dict.key])) {
+            dict.objects[dict.key] = [];
+        }
+        dict.objects[dict.key].push(val);
+    }
+
+    function c2(str) {
+        var substr = str.substr(0, _.lastIndexOf(str, ".") + 1);
+        if (_.every(substr, function (character) {return (character === "."); })) {
+            return substr.length;
+        }
+        return 0;
+    }
+
+    function countStartingDots(str) {
+        var differs = _.find(str, function(character){ return (character !== ".") })
+        if (differs) {
+            str = str.substr(0, _.indexOf(str, differs));
+        }
+        if (_.every(str, function (character) {  return (character === "."); })){
+            return str.length;
+        }
+        return 0;
+    }
+
+    function numStartingDots(str) {
+        var substr = str.substr(0, _.lastIndexOf(str, ".") + 1);
+        if (_.every(substr, function (character) { console.log(character); return (character === "."); })){
+            return substr.length;
+        }
+        return 0;
+    }
+
+    function isParent(line, parentLevel) {
+        return (countStartingDots(line) === parentLevel);
+    }
+
+    function isEmpty(line) {
+        return line === "";
+    }
+
     ns.util = {
-        cleanupLine: function (line) {
-            if (line.indexOf('!') !== -1) {
-                line = line.substring(0, line.indexOf('!'));
-            }
-            return line.replace(/\s\s*$/, '');
+        parseTree: function (data, parentLevel) {
+            return _.reduce(_.reject(data, isEmpty), function (res, line) {
+                line = cleanupLine(line);
+                if (isParent(line, parentLevel)) {
+                    res.key = getKey(line, parentLevel);
+                    line = getValues(line);
+                }
+                if (!isEmpty(line)) {
+                    pushOrCreate(res, line);
+                }
+                return res;
+            }, {objects: {}}).objects;
         },
 
-        countStartingDots: function (str) {
-            var stop = false;
-            return _.reduce(str, function (count, character) {
-                if (character === "." && !stop) {
-                    count += 1;
-                } else {
-                    stop = true;
-                }
-                return count;
-            }, 0);
-        },
+        cleanupLine: cleanupLine,
 
         parseQuality: function (data) {
 
@@ -145,17 +214,10 @@ var SOSI = window.SOSI || {};
         Proj4js.defs[koordsys.srid] = koordsys.def;
     }
 
-    }(SOSI));;var SOSI = window.SOSI || {};
+}(SOSI));;var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
     "use strict";
-
-    function parseLine(line) {
-        var res = line.split(" ");
-        var data = {};
-        data[res.shift()] = res.join(" ");
-        return data;
-    }
 
     function getString(data, key) {
         var str = data[key] || "";
@@ -201,32 +263,16 @@ var SOSI = window.SOSI || {};
         },
 
         parse: function (data) {
-            var parent;
-            var immediate = _.reduce(data, function (res, line) {
-                line = ns.util.cleanupLine(line);
-                if (ns.util.countStartingDots(line) === 2) {
-                    line = line.replace("..", "");
-                    if (line.split(" ").length === 1) {
-                        res[line] = [];
-                        parent = line;
-                    } else {
-                        _.extend(res, parseLine(line));
-                    }
-                } else {
-                    res[parent].push(line);
-                }
-                return res;
-            }, {});
-            return _.reduce(immediate, function (res, value, key) {
-                if (_.isArray(value)) {
-                    res[key] = _.reduce(value, function (arr, line) {
-                        return _.extend(arr, parseLine(line.replace("...", "")));
+            return _.reduce(ns.util.parseTree(data, 2), function (head, lines, key) {
+                if (lines.length > 1) {
+                    head[key] = _.reduce(ns.util.parseTree(lines, 3), function (dict, value, key) {
+                        dict[key] = value[0];
+                        return dict;
                     }, {});
                 } else {
-                    res[key] = value;
+                    head[key] = lines[0];
                 }
-
-                return res;
+                return head;
             }, {});
         },
 
@@ -723,30 +769,17 @@ var SOSI = window.SOSI || {};
         }
     });
 
-    function isParent(line) {
-        return (ns.util.countStartingDots(line) === 1);
-    }
-
     function isComment(line) {
         return !(line[0] && line[0] !== "!");
     }
 
+    function splitOnNewline(data) {
+        return data.split("\n");
+    }
+
     ns.Parser = ns.Base.extend({
         parse: function (data) {
-            var parent;
-            var res = _.reduce(data.split("\n"), function (res, line) {
-                if (!isComment(line)) {
-                    if (isParent(line)) {
-                        var key = ns.util.cleanupLine(line.replace(".", ""));
-                        res[key] = [];
-                        parent = key;
-                    } else if (parent) {
-                        res[parent].push(line);
-                    }
-                }
-                return res;
-            }, {});
-            return new SosiData(res);
+            return new SosiData(ns.util.parseTree(_.reject(splitOnNewline(data), isComment), 1));
         }
     });
 }(SOSI));
