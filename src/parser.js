@@ -49,19 +49,24 @@ var SOSI = window.SOSI || {};
         return ns.util.cleanupLine(line.replace(".", ""));
     }
 
+    function pushOrCreate(dict, val) {
+        if (!_.isArray(dict.objects[dict.key])) {
+            dict.objects[dict.key] = [];
+        }
+        dict.objects[dict.key].push(val);
+    }
+
     ns.Parser = ns.Base.extend({
         parse: function (data) {
-            var parent;
             var res = _.reduce(_.reject(splitOnNewline(data), isComment), function (res, line) {
                 if (isParent(line)) {
-                    parent = getKey(line);
-                    res[parent] = [];
-                } else if (parent) {
-                    res[parent].push(line);
+                    res.key = getKey(line);
+                } else {
+                    pushOrCreate(res, line);
                 }
                 return res;
-            }, {});
-            return new SosiData(res);
+            }, {objects: {}});
+            return new SosiData(res.objects);
         }
     });
 }(SOSI));
