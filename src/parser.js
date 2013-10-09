@@ -41,18 +41,23 @@ var SOSI = window.SOSI || {};
         return !(line[0] && line[0] !== "!");
     }
 
+    function splitOnNewline(data) {
+        return data.split("\n");
+    }
+
+    function getKey(line) {
+        return ns.util.cleanupLine(line.replace(".", ""));
+    }
+
     ns.Parser = ns.Base.extend({
         parse: function (data) {
             var parent;
-            var res = _.reduce(data.split("\n"), function (res, line) {
-                if (!isComment(line)) {
-                    if (isParent(line)) {
-                        var key = ns.util.cleanupLine(line.replace(".", ""));
-                        res[key] = [];
-                        parent = key;
-                    } else if (parent) {
-                        res[parent].push(line);
-                    }
+            var res = _.reduce(_.reject(splitOnNewline(data), isComment), function (res, line) {
+                if (isParent(line)) {
+                    parent = getKey(line);
+                    res[parent] = [];
+                } else if (parent) {
+                    res[parent].push(line);
                 }
                 return res;
             }, {});
