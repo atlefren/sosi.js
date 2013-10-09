@@ -70,6 +70,10 @@ var SOSI = window.SOSI || {};
                 }
                 return res;
             }, {});
+
+
+            //console.log(immediate);
+
             return _.reduce(immediate, function (res, value, key) {
                 if (_.isArray(value)) {
                     res[key] = _.reduce(value, function (arr, line) {

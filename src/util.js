@@ -3,6 +3,25 @@ var SOSI = window.SOSI || {};
 (function (ns, undefined) {
     "use strict";
 
+    function getNumDots(num) {
+        return new Array(num + 1).join(".");
+    }
+
+    function getKey(line, parentLevel) {
+        return ns.util.cleanupLine(line.replace(getNumDots(parentLevel), ""));
+    }
+
+    function pushOrCreate(dict, val) {
+        if (!_.isArray(dict.objects[dict.key])) {
+            dict.objects[dict.key] = [];
+        }
+        dict.objects[dict.key].push(val);
+    }
+
+    function isParent(line, parentLevel) {
+        return (ns.util.countStartingDots(line) === parentLevel);
+    }
+
     ns.util = {
         cleanupLine: function (line) {
             if (line.indexOf('!') !== -1) {
@@ -50,6 +69,17 @@ var SOSI = window.SOSI || {};
         round: function (number, numDecimals) {
             var pow = Math.pow(10, numDecimals);
             return Math.round(number * pow) / pow;
+        },
+
+        parseTree: function (data, parentLevel) {
+            return _.reduce(data, function (res, line) {
+                if (isParent(line, parentLevel)) {
+                    res.key = getKey(line, parentLevel);
+                } else {
+                    pushOrCreate(res, line);
+                }
+                return res;
+            }, {objects: {}}).objects;
         }
 
     };

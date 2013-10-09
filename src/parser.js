@@ -33,10 +33,6 @@ var SOSI = window.SOSI || {};
         }
     });
 
-    function isParent(line) {
-        return (ns.util.countStartingDots(line) === 1);
-    }
-
     function isComment(line) {
         return !(line[0] && line[0] !== "!");
     }
@@ -45,28 +41,9 @@ var SOSI = window.SOSI || {};
         return data.split("\n");
     }
 
-    function getKey(line) {
-        return ns.util.cleanupLine(line.replace(".", ""));
-    }
-
-    function pushOrCreate(dict, val) {
-        if (!_.isArray(dict.objects[dict.key])) {
-            dict.objects[dict.key] = [];
-        }
-        dict.objects[dict.key].push(val);
-    }
-
     ns.Parser = ns.Base.extend({
         parse: function (data) {
-            var res = _.reduce(_.reject(splitOnNewline(data), isComment), function (res, line) {
-                if (isParent(line)) {
-                    res.key = getKey(line);
-                } else {
-                    pushOrCreate(res, line);
-                }
-                return res;
-            }, {objects: {}});
-            return new SosiData(res.objects);
+            return new SosiData(ns.util.parseTree(_.reject(splitOnNewline(data), isComment), 1));
         }
     });
 }(SOSI));
