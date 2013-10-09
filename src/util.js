@@ -106,4 +106,4 @@ var SOSI = window.SOSI || {};
         Proj4js.defs[koordsys.srid] = koordsys.def;
     }
 
-    }(SOSI));
+}(SOSI));
