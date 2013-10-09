@@ -146,6 +146,110 @@
 
             assert.equals(geom.coordinates[1][0][0], 300010);
             assert.equals(geom.coordinates[1][0][1], 7000010);
+        },
+
+        "should be able to write to TopoJSON": function () {
+            var sosidata = this.parser.parse(this.sosidata);
+            var name = "testdata";
+            var json =  sosidata.dumps("topojson", name);
+            assert(json);
+
+            assert.equals(json.type, "Topology");
+            assert.equals(json.objects[name].type, "GeometryCollection");
+
+            assert.equals(json.objects[name].geometries.length, 11);
+
+            var geom10 = json.objects[name].geometries[10];
+
+            assert.equals(geom10.type, "Polygon");
+
+            assert.equals(geom10.properties.id, 600);
+            assert.equals(geom10.properties["OBJTYPE"], "Mahogney");
+            assert.equals(geom10.properties.kvalitet.maalemetode, 82);
+
+            assert.equals(geom10.arcs.length, 2);
+            assert.equals(geom10.arcs[0].length, 4);
+
+            var shell10 = geom10.arcs[0];
+            assert.equals(shell10[0], 0);
+            assert.equals(shell10[1], 1);
+            assert.equals(shell10[2], 2);
+            assert.equals(shell10[3], 3);
+
+            assert.equals(geom10.arcs[1].length, 4);
+            var hole10 = geom10.arcs[1];
+            assert.equals(hole10[0], 4);
+            assert.equals(hole10[1], 5);
+            assert.equals(hole10[2], 6);
+            assert.equals(hole10[3], 7);
+
+
+            var geom9 = json.objects[name].geometries[9];
+
+            assert.equals(geom9.type, "Polygon");
+
+            assert.equals(geom9.properties.id, 400);
+            assert.equals(geom9.properties["OBJTYPE"], "Mahogney");
+            assert.equals(geom9.properties.kvalitet.maalemetode, 82);
+
+            assert.equals(geom9.arcs.length, 2);
+            assert.equals(geom9.arcs[0].length, 4);
+
+
+            var shell9 = geom9.arcs[0];
+            assert.equals(shell9[0], 0);
+            assert.equals(shell9[1], 1);
+            assert.equals(shell9[2], 2);
+            assert.equals(shell9[3], 3);
+
+            assert.equals(geom9.arcs[1].length, 4);
+            var hole9 = geom9.arcs[1];
+            assert.equals(hole9[0], 4);
+            assert.equals(hole9[1], 5);
+            assert.equals(hole9[2], 6);
+            assert.equals(hole9[3], 7);
+
+            assert(json.arcs);
+            assert.equals(json.arcs.length, 8);
+            assert.equals(json.arcs[0][0][0], 300000);
+            assert.equals(json.arcs[0][0][1], 7000000);
+            assert.equals(json.arcs[0][1][0], 300000);
+            assert.equals(json.arcs[0][1][1], 7001000);
+
+            assert.equals(json.arcs[1][0][0], 300000);
+            assert.equals(json.arcs[1][0][1], 7001000);
+            assert.equals(json.arcs[1][1][0], 301000);
+            assert.equals(json.arcs[1][1][1], 7001000);
+
+            assert.equals(json.arcs[2][0][0], 301000);
+            assert.equals(json.arcs[2][0][1], 7001000);
+            assert.equals(json.arcs[2][1][0], 301000);
+            assert.equals(json.arcs[2][1][1], 7000000);
+
+            assert.equals(json.arcs[3][0][0], 301000);
+            assert.equals(json.arcs[3][0][1], 7000000);
+            assert.equals(json.arcs[3][1][0], 300000);
+            assert.equals(json.arcs[3][1][1], 7000000);
+
+            assert.equals(json.arcs[4][0][0], 300010);
+            assert.equals(json.arcs[4][0][1], 7000010);
+            assert.equals(json.arcs[4][1][0], 300010);
+            assert.equals(json.arcs[4][1][1], 7000020);
+
+            assert.equals(json.arcs[5][0][0], 300010);
+            assert.equals(json.arcs[5][0][1], 7000020);
+            assert.equals(json.arcs[5][1][0], 300020);
+            assert.equals(json.arcs[5][1][1], 7000020);
+
+            assert.equals(json.arcs[6][0][0], 300020);
+            assert.equals(json.arcs[6][0][1], 7000020);
+            assert.equals(json.arcs[6][1][0], 300020);
+            assert.equals(json.arcs[6][1][1], 7000010);
+
+            assert.equals(json.arcs[7][0][0], 300020);
+            assert.equals(json.arcs[7][0][1], 7000010);
+            assert.equals(json.arcs[7][1][0], 300010);
+            assert.equals(json.arcs[7][1][1], 7000010);
         }
     });
 }(SOSI));

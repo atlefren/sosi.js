@@ -76,6 +76,17 @@ var SOSI = window.SOSI || {};
         }
     });
 
+    function mapArcs(refs, lines) {
+        return _.map(refs, function (ref) {
+            var index = lines[Math.abs(ref)].index;
+            if (ref > 0) {
+                return index;
+            } else {
+                return -(Math.abs(index) + 1);
+            }
+        });
+    }
+
     ns.Sosi2TopoJSON = ns.Base.extend({
 
         initialize: function (sosidata) {
@@ -151,21 +162,25 @@ var SOSI = window.SOSI || {};
             return _.map(polygons, function (polygon) {
                 var properties = _.clone(polygon.attributes);
                 properties.id = polygon.id;
-                var shell_indexes = _.map(polygon.geometry.shellRefs, function (ref) {
-                    var index = lines[Math.abs(ref)].index;
-                    if (ref > 0) {
-                        return index;
-                    } else {
-                        return -(Math.abs(index) + 1);
+
+                var arcs = [mapArcs(polygon.geometry.shellRefs, lines)];
+
+                arcs = arcs.concat(_.map(polygon.geometry.holeRefs, function (hole) {
+                    if (hole.length === 1) {
+                        var feature = this.sosidata.features.getById(hole[0]);
+                        if (feature.geometry instanceof ns.Polygon) {
+                            return mapArcs(feature.geometry.shellRefs, lines);
+                        }
                     }
-                });
+                    return mapArcs(hole, lines);
+                }, this));
 
                 return {
                     "type": "Polygon",
                     "properties": properties,
-                    "arcs": [shell_indexes]
+                    "arcs": arcs
                 };
-            });
+            }, this);
         }
     });
 
