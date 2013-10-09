@@ -137,13 +137,15 @@ var SOSI = window.SOSI || {};
 
 
     //add proj4 defs so that proj4js works
-    if (proj4) {
+    if (proj4) { // newer proj4js (>=1.3.1)
         _.each(ns.koordsysMap, function (koordsys) {
             proj4.defs(koordsys.srid, koordsys.def);
         });
+    } else if (Proj4js) { //older proj4js (=< 1.1.0)
+        Proj4js.defs[koordsys.srid] = koordsys.def;
     }
 
-}(SOSI));;var SOSI = window.SOSI || {};
+    }(SOSI));;var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
     "use strict";
@@ -309,7 +311,7 @@ var SOSI = window.SOSI || {};
             }
             var geom = kurve.geometry.kurve;
             if (ref < 0) {
-                geom =  geom.reverse();
+                geom = _.clone(geom).reverse();
             }
             return _.initial(geom);
         }));
@@ -357,6 +359,8 @@ var SOSI = window.SOSI || {};
                 }
                 return createPolygon(hole, features);
             });
+            this.shellRefs = shell;
+            this.holeRefs = holes;
         }
     });
 }(SOSI));;var SOSI = window.SOSI || {};
@@ -576,6 +580,114 @@ var SOSI = window.SOSI || {};
         }
     });
 
+    function mapArcs(refs, lines) {
+        return _.map(refs, function (ref) {
+            var index = lines[Math.abs(ref)].index;
+            if (ref > 0) {
+                return index;
+            } else {
+                return -(Math.abs(index) + 1);
+            }
+        });
+    }
+
+    ns.Sosi2TopoJSON = ns.Base.extend({
+
+        initialize: function (sosidata) {
+            this.sosidata = sosidata;
+        },
+
+        dumps: function (name) {
+            var points = this.getPoints();
+            var lines = this.getLines();
+            var polygons = this.getPolygons(lines);
+            var geometries = points.concat(_.map(lines, function (line) {
+                return line.geometry;
+            })).concat(polygons);
+
+            var data = {
+                "type": "Topology",
+                "objects": {}
+            };
+            data.objects[name] = {
+                "type": "GeometryCollection",
+                "geometries": geometries
+            };
+
+            var arcs = _.map(_.sortBy(lines, function (line) {return line.index; }), function (line) {
+                return line.arc;
+            });
+
+            if (arcs.length) {
+                data.arcs = arcs;
+            }
+            return data;
+        },
+
+        getByType: function (type) {
+            return _.filter(this.sosidata.features.all(), function (feature) {
+                return (feature.geometry instanceof type);
+            });
+        },
+
+        getPoints: function () {
+            var points = this.getByType(ns.Point);
+            return _.map(points, function (point) {
+                var properties = _.clone(point.attributes);
+                properties.id = point.id;
+                return {
+                    "type": "Point",
+                    "properties": properties,
+                    "coordinates": writePoint(point.geometry)
+                };
+            });
+        },
+
+        getLines: function () {
+            var lines = this.getByType(ns.LineString);
+            return _.reduce(lines, function (res, line, index) {
+                var properties = _.clone(line.attributes);
+                properties.id = line.id;
+                res[line.id] = {
+                    "geometry": {
+                        "type": "LineString",
+                        "properties": properties,
+                        "arcs": [index]
+                    },
+                    "arc": _.map(line.geometry.kurve, writePoint),
+                    "index": index
+                };
+                return res;
+            }, {});
+        },
+
+        getPolygons: function (lines) {
+            var polygons = this.getByType(ns.Polygon);
+            return _.map(polygons, function (polygon) {
+                var properties = _.clone(polygon.attributes);
+                properties.id = polygon.id;
+
+                var arcs = [mapArcs(polygon.geometry.shellRefs, lines)];
+
+                arcs = arcs.concat(_.map(polygon.geometry.holeRefs, function (hole) {
+                    if (hole.length === 1) {
+                        var feature = this.sosidata.features.getById(hole[0]);
+                        if (feature.geometry instanceof ns.Polygon) {
+                            return mapArcs(feature.geometry.shellRefs, lines);
+                        }
+                    }
+                    return mapArcs(hole, lines);
+                }, this));
+
+                return {
+                    "type": "Polygon",
+                    "properties": properties,
+                    "arcs": arcs
+                };
+            }, this);
+        }
+    });
+
 }(SOSI));;var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
@@ -588,7 +700,8 @@ var SOSI = window.SOSI || {};
     });
 
     var dumpTypes = {
-        "geojson": ns.Sosi2GeoJSON
+        "geojson": ns.Sosi2GeoJSON,
+        "topojson": ns.Sosi2TopoJSON
     };
 
     var SosiData = ns.Base.extend({
@@ -604,7 +717,7 @@ var SOSI = window.SOSI || {};
 
         dumps: function (format) {
             if (dumpTypes[format]) {
-                return new dumpTypes[format](this).dumps();
+                return new dumpTypes[format](this).dumps(_.rest(arguments));
             }
             throw new Error("Outputformat " + format + " is not supported!");
         }
