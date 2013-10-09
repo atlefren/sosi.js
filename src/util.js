@@ -98,9 +98,9 @@ var SOSI = window.SOSI || {};
 
 
     //add proj4 defs so that proj4js works
-    if (proj4) {
+    if (Proj4js) {
         _.each(ns.koordsysMap, function (koordsys) {
-            proj4.defs(koordsys.srid, koordsys.def);
+            Proj4js.defs[koordsys.srid] = koordsys.def;
         });
     }
 
