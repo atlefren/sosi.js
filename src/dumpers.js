@@ -85,9 +85,10 @@ var SOSI = window.SOSI || {};
         dumps: function (name) {
             var points = this.getPoints();
             var lines = this.getLines();
+            var polygons = this.getPolygons(lines);
             var geometries = points.concat(_.map(lines, function (line) {
                 return line.geometry;
-            }));
+            })).concat(polygons);
 
             var data = {
                 "type": "Topology",
@@ -97,10 +98,13 @@ var SOSI = window.SOSI || {};
                 "type": "GeometryCollection",
                 "geometries": geometries
             };
-            if (lines.length) {
-                data.arcs = _.map(lines, function (line) {
-                    return line.arc;
-                });
+
+            var arcs = _.map(_.sortBy(lines, function (line) {return line.index; }), function (line) {
+                return line.arc;
+            });
+
+            if (arcs.length) {
+                data.arcs = arcs;
             }
             return data;
         },
@@ -126,20 +130,43 @@ var SOSI = window.SOSI || {};
 
         getLines: function () {
             var lines = this.getByType(ns.LineString);
-            return _.map(lines, function (line, index) {
+            return _.reduce(lines, function (res, line, index) {
                 var properties = _.clone(line.attributes);
                 properties.id = line.id;
-                return {
+                res[line.id] = {
                     "geometry": {
                         "type": "LineString",
                         "properties": properties,
                         "arcs": [index]
                     },
                     "arc": _.map(line.geometry.kurve, writePoint),
-                    "SOSI_ID": line.id
+                    "index": index
+                };
+                return res;
+            }, {});
+        },
+
+        getPolygons: function (lines) {
+            var polygons = this.getByType(ns.Polygon);
+            return _.map(polygons, function (polygon) {
+                var properties = _.clone(polygon.attributes);
+                properties.id = polygon.id;
+                var shell_indexes = _.map(polygon.geometry.shellRefs, function (ref) {
+                    var index = lines[Math.abs(ref)].index;
+                    if (ref > 0) {
+                        return index;
+                    } else {
+                        return -(Math.abs(index) + 1);
+                    }
+                });
+
+                return {
+                    "type": "Polygon",
+                    "properties": properties,
+                    "arcs": [shell_indexes]
                 };
             });
         }
     });
 
-    }(SOSI));
+}(SOSI));

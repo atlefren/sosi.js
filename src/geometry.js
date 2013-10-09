@@ -62,7 +62,7 @@ var SOSI = window.SOSI || {};
             }
             var geom = kurve.geometry.kurve;
             if (ref < 0) {
-                geom =  geom.reverse();
+                geom = _.clone(geom).reverse();
             }
             return _.initial(geom);
         }));
@@ -110,6 +110,8 @@ var SOSI = window.SOSI || {};
                 }
                 return createPolygon(hole, features);
             });
+            this.shellRefs = shell;
+            this.holeRefs = holes;
         }
     });
 }(SOSI));

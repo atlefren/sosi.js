@@ -97,8 +97,52 @@
             assert.equals(geom.coordinates[0][8][0], 341824.03);
             assert.equals(geom.coordinates[0][8][1], 7661347.45);
 
+        },
+
+        "should be able to write to TopoJSON": function () {
+            var sosidata = this.parser.parse(this.sosidata);
+            var name = "testdata";
+            var json =  sosidata.dumps("topojson", name);
+            assert(json);
+
+            assert.equals(json.type, "Topology");
+            assert.equals(json.objects[name].type, "GeometryCollection");
+
+            assert.equals(json.objects[name].geometries.length, 5);
+
+            var geom4 = json.objects[name].geometries[4];
+
+            assert.equals(geom4.type, "Polygon");
+
+            assert.equals(geom4.properties.id, 651);
+            assert.equals(geom4.properties["OBJTYPE"], "Tank");
+            assert.equals(geom4.properties["DATAFANGSTDATO"], "20030702");
+            assert.equals(geom4.properties.kvalitet.maalemetode, 82);
+
+            assert.equals(geom4.arcs.length, 1);
+            assert.equals(geom4.arcs[0].length, 4);
+
+            var shell = geom4.arcs[0];
+            assert.equals(shell[0], -1);
+            assert.equals(shell[1],  1);
+            assert.equals(shell[2], -3);
+            assert.equals(shell[3], 3);
+
+            assert(json.arcs);
+            assert.equals(json.arcs.length, 4);
+            assert.equals(json.arcs[0][0][0], 341817.16);
+            assert.equals(json.arcs[0][0][1], 7661352.49);
+            assert.equals(json.arcs[0][1][0], 341817.18);
+            assert.equals(json.arcs[0][1][1], 7661352.50);
+            assert.equals(json.arcs[0][2][0], 341824.03);
+            assert.equals(json.arcs[0][2][1], 7661347.45);
+
+            assert.equals(json.arcs[3][0][0], 341826.90);
+            assert.equals(json.arcs[3][0][1], 7661350.95);
+            assert.equals(json.arcs[3][1][0], 341826.78);
+            assert.equals(json.arcs[3][1][1], 7661350.28);
+            assert.equals(json.arcs[3][2][0], 341824.03);
+            assert.equals(json.arcs[3][2][1], 7661347.45);
         }
-
-
-        });
+    });
 }(SOSI));
