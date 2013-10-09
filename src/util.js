@@ -40,16 +40,31 @@ var SOSI = window.SOSI || {};
         dict.objects[dict.key].push(val);
     }
 
+    function c2(str) {
+        var substr = str.substr(0, _.lastIndexOf(str, ".") + 1);
+        if (_.every(substr, function (character) {return (character === "."); })) {
+            return substr.length;
+        }
+        return 0;
+    }
+
     function countStartingDots(str) {
-        var stop = false;
-        return _.reduce(str, function (count, character) {
-            if (character === "." && !stop) {
-                count += 1;
-            } else {
-                stop = true;
-            }
-            return count;
-        }, 0);
+        var differs = _.find(str, function(character){ return (character !== ".") })
+        if (differs) {
+            str = str.substr(0, _.indexOf(str, differs));
+        }
+        if (_.every(str, function (character) {  return (character === "."); })){
+            return str.length;
+        }
+        return 0;
+    }
+
+    function numStartingDots(str) {
+        var substr = str.substr(0, _.lastIndexOf(str, ".") + 1);
+        if (_.every(substr, function (character) { console.log(character); return (character === "."); })){
+            return substr.length;
+        }
+        return 0;
     }
 
     function isParent(line, parentLevel) {
