@@ -47,17 +47,7 @@ var SOSI = window.SOSI || {};
         },
 
         parse: function (data) {
-            return _.reduce(ns.util.parseTree(data, 2), function (head, lines, key) {
-                if (lines.length > 1) {
-                    head[key] = _.reduce(ns.util.parseTree(lines, 3), function (dict, value, key) {
-                        dict[key] = value[0];
-                        return dict;
-                    }, {});
-                } else {
-                    head[key] = lines[0];
-                }
-                return head;
-            }, {});
+            return ns.util.parseFromLevel2(data);
         },
 
         setData: function (data) {

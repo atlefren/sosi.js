@@ -49,20 +49,12 @@ var SOSI = window.SOSI || {};
     }
 
     function countStartingDots(str) {
-        var differs = _.find(str, function(character){ return (character !== ".") })
+        var differs = _.find(str, function (character) {return (character !== "."); });
         if (differs) {
             str = str.substr(0, _.indexOf(str, differs));
         }
-        if (_.every(str, function (character) {  return (character === "."); })){
+        if (_.every(str, function (character) {  return (character === "."); })) {
             return str.length;
-        }
-        return 0;
-    }
-
-    function numStartingDots(str) {
-        var substr = str.substr(0, _.lastIndexOf(str, ".") + 1);
-        if (_.every(substr, function (character) { console.log(character); return (character === "."); })){
-            return substr.length;
         }
         return 0;
     }
@@ -75,22 +67,38 @@ var SOSI = window.SOSI || {};
         return line === "";
     }
 
-    ns.util = {
-        parseTree: function (data, parentLevel) {
-            return _.reduce(_.reject(data, isEmpty), function (res, line) {
-                line = cleanupLine(line);
-                if (isParent(line, parentLevel)) {
-                    res.key = getKey(line, parentLevel);
-                    line = getValues(line);
-                }
-                if (!isEmpty(line)) {
-                    pushOrCreate(res, line);
-                }
-                return res;
-            }, {objects: {}}).objects;
-        },
+    function parseTree(data, parentLevel) {
+        return _.reduce(_.reject(data, isEmpty), function (res, line) {
+            line = cleanupLine(line);
+            if (isParent(line, parentLevel)) {
+                res.key = getKey(line, parentLevel);
+                line = getValues(line);
+            }
+            if (!isEmpty(line)) {
+                pushOrCreate(res, line);
+            }
+            return res;
+        }, {objects: {}}).objects;
+    }
 
+    ns.util = {
+
+        parseTree: parseTree,
         cleanupLine: cleanupLine,
+
+        parseFromLevel2: function (data) {
+            return _.reduce(parseTree(data, 2), function (dict, lines, key) {
+                if (lines.length > 1) {
+                    dict[key] = _.reduce(parseTree(lines, 3), function (subdict, value, key) {
+                        subdict[key] = value[0];
+                        return subdict;
+                    }, {});
+                } else {
+                    dict[key] = lines[0];
+                }
+                return dict;
+            }, {});
+        },
 
         parseQuality: function (data) {
 

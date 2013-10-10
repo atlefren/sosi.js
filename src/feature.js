@@ -37,38 +37,50 @@ var SOSI = window.SOSI || {};
 
         parseData: function (data, origo, unit) {
 
-            var foundGeom = false;
-            var parsed = _.reduce(data.lines, function (result, line) {
-                line = ns.util.cleanupLine(line);
-                if (line.indexOf("..NØ") !== -1) {
-                    foundGeom = true;
-                }
-                if (!foundGeom) {
-                    if (line.indexOf("..") !== 0) {
-                        result.attributes[result.attributes.length - 1] += " " + line;
-                    } else {
-                        result.attributes.push(line.replace("..", ""));
-                    }
-                } else {
-                    result.geometry.push(line.replace("..", ""));
-                }
-                return result;
-            }, {"attributes": [], "geometry": []});
 
-            this.attributes = _.reduce(parsed.attributes, function (attributes, line) {
-                line = line.split(" ");
-                var key = line.shift();
-                if (!specialAttributes[key]) {
-                    attributes[key] = line.join(" ");
-                } else {
-                    attributes[specialAttributes[key].name] = specialAttributes[key].createFunction(line.join(" "));
+            var split = _.reduce(data.lines, function (dict, line) {
+                if (line.indexOf("..NØ") !== -1) {
+                    dict.foundGeom = true;
                 }
-                return attributes;
+                if (dict.foundGeom) {
+                    dict.geom.push(line);
+                } else {
+                    if (line.indexOf("..REF") !== -1) {
+                        dict.foundRef = true;
+                        line = line.replace("..REF", "");
+                    }
+                    if (dict.foundRef) {
+                        dict.refs.push(line);
+                    } else {
+                        dict.attributes.push(line);
+                    }
+                }
+                return dict;
+            }, {
+                "attributes": [],
+                "geom": [],
+                "refs": [],
+                "foundGeom": false,
+                "foundRef": false
+            });
+
+            this.attributes = ns.util.parseFromLevel2(split.attributes);
+            this.attributes = _.reduce(this.attributes, function (attrs, value, key) {
+                if (specialAttributes[key]) {
+                    attrs[key] = specialAttributes[key].createFunction(value);
+                } else {
+                    attrs[key] = value;
+                }
+                return attrs;
             }, {});
+
+            if (split.refs) {
+                this.attributes.REF = split.refs.join(" ");
+            }
 
             this.raw_data = {
                 geometryType: data.geometryType,
-                geometry: parsed.geometry,
+                geometry: split.geom,
                 origo: origo,
                 unit: unit
             };
@@ -105,7 +117,7 @@ var SOSI = window.SOSI || {};
                 var data = {
                     id: parseInt(key[1], 10),
                     geometryType: key[0],
-                    lines: value
+                    lines: _.rest(value)
                 };
                 return new ns.Feature(data, head.origo, head.enhet);
             }, this);

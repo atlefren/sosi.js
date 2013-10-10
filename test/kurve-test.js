@@ -32,8 +32,8 @@
             assert.equals(feature1.attributes["OBJTYPE"], "EiendomsGrense");
 
 
-            assert.equals(feature1.attributes.kvalitet.maalemetode, 40);
-            assert.equals(feature1.attributes.kvalitet.noyaktighet, 58);
+            assert.equals(feature1.attributes.KVALITET.maalemetode, 40);
+            assert.equals(feature1.attributes.KVALITET.noyaktighet, 58);
 
         },
 
@@ -89,8 +89,8 @@
 
             assert.equals(feature1.type, "Feature");
             assert.equals(feature1.id, 250);
-            assert.equals(feature1.properties.kvalitet.maalemetode, 40);
-            assert.equals(feature1.properties.kvalitet.noyaktighet, 58);
+            assert.equals(feature1.properties.KVALITET.maalemetode, 40);
+            assert.equals(feature1.properties.KVALITET.noyaktighet, 58);
 
             var geom = feature1.geometry;
             assert.equals(geom.type, "LineString");
@@ -119,8 +119,8 @@
             assert.equals(geom1.type, "LineString");
 
             assert.equals(geom1.properties.id, 250);
-            assert.equals(geom1.properties.kvalitet.maalemetode, 40);
-            assert.equals(geom1.properties.kvalitet.noyaktighet, 58);
+            assert.equals(geom1.properties.KVALITET.maalemetode, 40);
+            assert.equals(geom1.properties.KVALITET.noyaktighet, 58);
 
             assert.equals(geom1.arcs.length, 1);
             assert.equals(geom1.arcs[0], 0);
