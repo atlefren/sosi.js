@@ -12,7 +12,7 @@ var SOSI = window.SOSI || {};
                 line = line[1];
             }
 
-            var coords = line.split(" ");
+            var coords = line.replace(/^\s+|\s+$/g, '').split(/\s+/); // trim and split by whitespace
 
             var numDecimals = 0;
             if (unit < 1) {

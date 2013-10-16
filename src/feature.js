@@ -7,6 +7,7 @@ var SOSI = window.SOSI || {};
 
         var geometryTypes = {
             "PUNKT": ns.Point,
+            "TEKST": ns.Point, // a point feature with exsta styling hints - the geometry actually consists of up to three points
             "KURVE": ns.LineString,
             "LINJE": ns.LineString, // old 4.0 name for unsmoothed KURVE
             "FLATE": ns.Polygon
@@ -122,7 +123,7 @@ var SOSI = window.SOSI || {};
             this.head = head;
             this.features = [];
             this.features = _.map(elements, function (value, key) {
-                key = key.replace(":", "").split(" ");
+                key = key.replace(":", "").split(/\s+/);
                 var data = {
                     id: parseInt(key[1], 10),
                     geometryType: key[0],
