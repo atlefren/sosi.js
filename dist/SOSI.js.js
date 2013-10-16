@@ -155,7 +155,7 @@ var SOSI = window.SOSI || {};
             ];
 
             if (_.isString(data)) {
-                return _.reduce(data.split(" "), function (res, number, i) {
+                return _.reduce(data.split(/\s+/), function (res, number, i) {
                     res[qualityShorthand[i]] = parseInt(number, 10);
                     return res;
                 }, {});
@@ -306,7 +306,7 @@ var SOSI = window.SOSI || {};
                 line = line[1];
             }
 
-            var coords = line.split(" ");
+            var coords = line.split(/\s+/); 
 
             var numDecimals = 0;
             if (unit < 1) {
@@ -418,6 +418,7 @@ var SOSI = window.SOSI || {};
 
         var geometryTypes = {
             "PUNKT": ns.Point,
+            "TEKST": ns.Point, // a point feature with exsta styling hints - the geometry actually consists of up to three points
             "KURVE": ns.LineString,
             "LINJE": ns.LineString, // old 4.0 name for unsmoothed KURVE
             "FLATE": ns.Polygon
@@ -439,7 +440,7 @@ var SOSI = window.SOSI || {};
     ns.Feature = ns.Base.extend({
 
         initialize: function (data, origo, unit, features) {
-            if (!data.id) {
+            if (data.id === undefined || data.id === null) {
                 throw new Error("Feature must have ID!");
             }
             this.id = data.id;
@@ -462,9 +463,14 @@ var SOSI = window.SOSI || {};
                         line = line.replace("..REF", "");
                     }
                     if (dict.foundRef) {
+                      if (line[0] == '.') {
+                        dict.foundRef = false;
+                      } else {
                         dict.refs.push(line);
-                    } else {
-                        dict.attributes.push(line);
+                      }
+                    }
+                    if (!dict.foundRef) {
+                      dict.attributes.push(line);
                     }
                 }
                 return dict;
@@ -488,6 +494,9 @@ var SOSI = window.SOSI || {};
 
             if (split.refs) {
                 this.attributes.REF = split.refs.join(" ");
+            }
+            if (this.attributes.ENHET) {
+              unit = parseFloat(this.attributes.ENHET);
             }
 
             this.raw_data = {
@@ -525,7 +534,7 @@ var SOSI = window.SOSI || {};
             this.head = head;
             this.features = [];
             this.features = _.map(elements, function (value, key) {
-                key = key.replace(":", "").split(" ");
+                key = key.replace(":", "").split(/\s+/);
                 var data = {
                     id: parseInt(key[1], 10),
                     geometryType: key[0],
@@ -536,7 +545,7 @@ var SOSI = window.SOSI || {};
         },
 
         ensureGeom: function (feature) {
-            if (!feature.geometry) {
+            if (feature && !feature.geometry) {
                 feature.buildGeometry(this);
             }
             return feature;
@@ -766,11 +775,11 @@ var SOSI = window.SOSI || {};
 
     var SosiData = ns.Base.extend({
         initialize: function (data) {
-            this.hode = new ns.Head(data["HODE"]);
+            this.hode = new ns.Head(data["HODE"] || data["HODE 0"]);
             this.def = new Def(data["DEF"]); //Not sure if I will care about this
             this.objdef = new Objdef(data["OBJDEF"]); //Not sure if I will care about this
             this.features = new ns.Features(
-                _.omit(data, ["HODE", "DEF", "OBJDEF", "SLUTT"]),
+                _.omit(data, ["HODE", "HODE 0", "DEF", "OBJDEF", "SLUTT"]),
                 this.hode
             );
         },
@@ -783,17 +792,18 @@ var SOSI = window.SOSI || {};
         }
     });
 
-    function isComment(line) {
-        return !(line[0] && line[0] !== "!");
-    }
-
     function splitOnNewline(data) {
-        return data.split("\n");
+        return _.map(data.split("\n"), function(line) {
+          if (line.indexOf("!")) { //ignore comments starting with ! also in the middle of the line
+            line = line.split("!")[0];
+          }
+          return line.replace(/^\s+|\s+$/g, ''); // trim whitespace padding comments and elsewhere
+        });
     }
 
     ns.Parser = ns.Base.extend({
         parse: function (data) {
-            return new SosiData(ns.util.parseTree(_.reject(splitOnNewline(data), isComment), 1));
+            return new SosiData(ns.util.parseTree(splitOnNewline(data), 1));
         }
     });
 }(SOSI));
