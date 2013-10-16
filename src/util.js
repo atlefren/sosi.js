@@ -3,24 +3,101 @@ var SOSI = window.SOSI || {};
 (function (ns, undefined) {
     "use strict";
 
-    ns.util = {
-        cleanupLine: function (line) {
-            if (line.indexOf('!') !== -1) {
-                line = line.substring(0, line.indexOf('!'));
-            }
-            return line.replace(/\s\s*$/, '');
-        },
+    function getValues(line) {
+        return _.rest(line.split(" ")).join(" ").trim();
+    }
 
-        countStartingDots: function (str) {
-            var stop = false;
-            return _.reduce(str, function (count, character) {
-                if (character === "." && !stop) {
-                    count += 1;
+    function getNumDots(num) {
+        return new Array(num + 1).join(".");
+    }
+
+    function getKeyFromLine(line) {
+        if (line.indexOf(":") !== -1) {
+            return _.first(line.split(":")).trim();
+        }
+        return _.first(line.split(" ")).trim();
+    }
+
+    function cleanupLine(line) {
+        if (line.indexOf('!') !== -1) {
+            line = line.substring(0, line.indexOf('!'));
+        }
+        return line.replace(/\s\s*$/, '');
+    }
+
+    function getKey(line, parentLevel) {
+        return cleanupLine(
+            getKeyFromLine(
+                line.replace(getNumDots(parentLevel), "")
+            )
+        );
+    }
+
+    function pushOrCreate(dict, val) {
+        if (!_.isArray(dict.objects[dict.key])) {
+            dict.objects[dict.key] = [];
+        }
+        dict.objects[dict.key].push(val);
+    }
+
+    function c2(str) {
+        var substr = str.substr(0, _.lastIndexOf(str, ".") + 1);
+        if (_.every(substr, function (character) {return (character === "."); })) {
+            return substr.length;
+        }
+        return 0;
+    }
+
+    function countStartingDots(str) {
+        var differs = _.find(str, function (character) {return (character !== "."); });
+        if (differs) {
+            str = str.substr(0, _.indexOf(str, differs));
+        }
+        if (_.every(str, function (character) {  return (character === "."); })) {
+            return str.length;
+        }
+        return 0;
+    }
+
+    function isParent(line, parentLevel) {
+        return (countStartingDots(line) === parentLevel);
+    }
+
+    function isEmpty(line) {
+        return line === "";
+    }
+
+    function parseTree(data, parentLevel) {
+        return _.reduce(_.reject(data, isEmpty), function (res, line) {
+            line = cleanupLine(line);
+            if (isParent(line, parentLevel)) {
+                res.key = getKey(line, parentLevel);
+                line = getValues(line);
+            }
+            if (!isEmpty(line)) {
+                pushOrCreate(res, line);
+            }
+            return res;
+        }, {objects: {}}).objects;
+    }
+
+    ns.util = {
+
+        parseTree: parseTree,
+        cleanupLine: cleanupLine,
+
+        parseFromLevel2: function (data) {
+            return _.reduce(parseTree(data, 2), function (dict, lines, key) {
+                if (lines.length > 1) {
+                    dict[key] = _.reduce(parseTree(lines, 3), function (subdict, value, key) {
+                        subdict[key] = value[0];
+                        return subdict;
+                    }, {});
                 } else {
-                    stop = true;
+                    dict[key] = lines[0];
                 }
-                return count;
-            }, 0);
+                return dict;
+            }, {});
         },
 
         parseQuality: function (data) {
@@ -98,10 +175,12 @@ var SOSI = window.SOSI || {};
 
 
     //add proj4 defs so that proj4js works
-    if (Proj4js) {
-        _.each(ns.koordsysMap, function (koordsys) {
-            Proj4js.defs[koordsys.srid] = koordsys.def;
-        });
-    }
+    _.each(ns.koordsysMap, function (koordsys) {
+      if (proj4) { // newer proj4js (>=1.3.1)
+        proj4.defs(koordsys.srid, koordsys.def);
+      } else if (Proj4js) { //older proj4js (=< 1.1.0)
+        Proj4js.defs[koordsys.srid] = koordsys.def;
+      }
+    });
 
 }(SOSI));

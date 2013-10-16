@@ -3,13 +3,6 @@ var SOSI = window.SOSI || {};
 (function (ns, undefined) {
     "use strict";
 
-    function parseLine(line) {
-        var res = line.split(" ");
-        var data = {};
-        data[res.shift()] = res.join(" ");
-        return data;
-    }
-
     function getString(data, key) {
         var str = data[key] || "";
         return str.replace(/"/g, "");
@@ -54,33 +47,7 @@ var SOSI = window.SOSI || {};
         },
 
         parse: function (data) {
-            var parent;
-            var immediate = _.reduce(data, function (res, line) {
-                line = ns.util.cleanupLine(line);
-                if (ns.util.countStartingDots(line) === 2) {
-                    line = line.replace("..", "");
-                    if (line.split(" ").length === 1) {
-                        res[line] = [];
-                        parent = line;
-                    } else {
-                        _.extend(res, parseLine(line));
-                    }
-                } else {
-                    res[parent].push(line);
-                }
-                return res;
-            }, {});
-            return _.reduce(immediate, function (res, value, key) {
-                if (_.isArray(value)) {
-                    res[key] = _.reduce(value, function (arr, line) {
-                        return _.extend(arr, parseLine(line.replace("...", "")));
-                    }, {});
-                } else {
-                    res[key] = value;
-                }
-
-                return res;
-            }, {});
+            return ns.util.parseFromLevel2(data);
         },
 
         setData: function (data) {

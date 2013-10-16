@@ -33,30 +33,17 @@ var SOSI = window.SOSI || {};
         }
     });
 
-    function isParent(line) {
-        return (ns.util.countStartingDots(line) === 1);
-    }
-
     function isComment(line) {
         return !(line[0] && line[0] !== "!");
     }
 
+    function splitOnNewline(data) {
+        return data.split("\n");
+    }
+
     ns.Parser = ns.Base.extend({
         parse: function (data) {
-            var parent;
-            var res = _.reduce(data.split("\n"), function (res, line) {
-                if (!isComment(line)) {
-                    if (isParent(line)) {
-                        var key = ns.util.cleanupLine(line.replace(".", ""));
-                        res[key] = [];
-                        parent = key;
-                    } else if (parent) {
-                        res[parent].push(line);
-                    }
-                }
-                return res;
-            }, {});
-            return new SosiData(res);
+            return new SosiData(ns.util.parseTree(_.reject(splitOnNewline(data), isComment), 1));
         }
     });
 }(SOSI));

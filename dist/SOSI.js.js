@@ -42,24 +42,101 @@ var SOSI = window.SOSI || {};
 (function (ns, undefined) {
     "use strict";
 
-    ns.util = {
-        cleanupLine: function (line) {
-            if (line.indexOf('!') !== -1) {
-                line = line.substring(0, line.indexOf('!'));
-            }
-            return line.replace(/\s\s*$/, '');
-        },
+    function getValues(line) {
+        return _.rest(line.split(" ")).join(" ").trim();
+    }
 
-        countStartingDots: function (str) {
-            var stop = false;
-            return _.reduce(str, function (count, character) {
-                if (character === "." && !stop) {
-                    count += 1;
+    function getNumDots(num) {
+        return new Array(num + 1).join(".");
+    }
+
+    function getKeyFromLine(line) {
+        if (line.indexOf(":") !== -1) {
+            return _.first(line.split(":")).trim();
+        }
+        return _.first(line.split(" ")).trim();
+    }
+
+    function cleanupLine(line) {
+        if (line.indexOf('!') !== -1) {
+            line = line.substring(0, line.indexOf('!'));
+        }
+        return line.replace(/\s\s*$/, '');
+    }
+
+    function getKey(line, parentLevel) {
+        return cleanupLine(
+            getKeyFromLine(
+                line.replace(getNumDots(parentLevel), "")
+            )
+        );
+    }
+
+    function pushOrCreate(dict, val) {
+        if (!_.isArray(dict.objects[dict.key])) {
+            dict.objects[dict.key] = [];
+        }
+        dict.objects[dict.key].push(val);
+    }
+
+    function c2(str) {
+        var substr = str.substr(0, _.lastIndexOf(str, ".") + 1);
+        if (_.every(substr, function (character) {return (character === "."); })) {
+            return substr.length;
+        }
+        return 0;
+    }
+
+    function countStartingDots(str) {
+        var differs = _.find(str, function (character) {return (character !== "."); });
+        if (differs) {
+            str = str.substr(0, _.indexOf(str, differs));
+        }
+        if (_.every(str, function (character) {  return (character === "."); })) {
+            return str.length;
+        }
+        return 0;
+    }
+
+    function isParent(line, parentLevel) {
+        return (countStartingDots(line) === parentLevel);
+    }
+
+    function isEmpty(line) {
+        return line === "";
+    }
+
+    function parseTree(data, parentLevel) {
+        return _.reduce(_.reject(data, isEmpty), function (res, line) {
+            line = cleanupLine(line);
+            if (isParent(line, parentLevel)) {
+                res.key = getKey(line, parentLevel);
+                line = getValues(line);
+            }
+            if (!isEmpty(line)) {
+                pushOrCreate(res, line);
+            }
+            return res;
+        }, {objects: {}}).objects;
+    }
+
+    ns.util = {
+
+        parseTree: parseTree,
+        cleanupLine: cleanupLine,
+
+        parseFromLevel2: function (data) {
+            return _.reduce(parseTree(data, 2), function (dict, lines, key) {
+                if (lines.length > 1) {
+                    dict[key] = _.reduce(parseTree(lines, 3), function (subdict, value, key) {
+                        subdict[key] = value[0];
+                        return subdict;
+                    }, {});
                 } else {
-                    stop = true;
+                    dict[key] = lines[0];
                 }
-                return count;
-            }, 0);
+                return dict;
+            }, {});
         },
 
         parseQuality: function (data) {
@@ -137,24 +214,19 @@ var SOSI = window.SOSI || {};
 
 
     //add proj4 defs so that proj4js works
-    if (Proj4js) {
-        _.each(ns.koordsysMap, function (koordsys) {
-            Proj4js.defs[koordsys.srid] = koordsys.def;
-        });
-    }
+    _.each(ns.koordsysMap, function (koordsys) {
+      if (proj4) { // newer proj4js (>=1.3.1)
+        proj4.defs(koordsys.srid, koordsys.def);
+      } else if (Proj4js) { //older proj4js (=< 1.1.0)
+        Proj4js.defs[koordsys.srid] = koordsys.def;
+      }
+    });
 
 }(SOSI));
 ;var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
     "use strict";
-
-    function parseLine(line) {
-        var res = line.split(" ");
-        var data = {};
-        data[res.shift()] = res.join(" ");
-        return data;
-    }
 
     function getString(data, key) {
         var str = data[key] || "";
@@ -200,33 +272,7 @@ var SOSI = window.SOSI || {};
         },
 
         parse: function (data) {
-            var parent;
-            var immediate = _.reduce(data, function (res, line) {
-                line = ns.util.cleanupLine(line);
-                if (ns.util.countStartingDots(line) === 2) {
-                    line = line.replace("..", "");
-                    if (line.split(" ").length === 1) {
-                        res[line] = [];
-                        parent = line;
-                    } else {
-                        _.extend(res, parseLine(line));
-                    }
-                } else {
-                    res[parent].push(line);
-                }
-                return res;
-            }, {});
-            return _.reduce(immediate, function (res, value, key) {
-                if (_.isArray(value)) {
-                    res[key] = _.reduce(value, function (arr, line) {
-                        return _.extend(arr, parseLine(line.replace("...", "")));
-                    }, {});
-                } else {
-                    res[key] = value;
-                }
-
-                return res;
-            }, {});
+            return ns.util.parseFromLevel2(data);
         },
 
         setData: function (data) {
@@ -362,7 +408,8 @@ var SOSI = window.SOSI || {};
             this.holeRefs = holes;
         }
     });
-}(SOSI));;var SOSI = window.SOSI || {};
+}(SOSI));
+;var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
     "use strict";
@@ -372,6 +419,7 @@ var SOSI = window.SOSI || {};
         var geometryTypes = {
             "PUNKT": ns.Point,
             "KURVE": ns.LineString,
+            "LINJE": ns.LineString, // old 4.0 name for unsmoothed KURVE
             "FLATE": ns.Polygon
         };
 
@@ -401,38 +449,50 @@ var SOSI = window.SOSI || {};
 
         parseData: function (data, origo, unit) {
 
-            var foundGeom = false;
-            var parsed = _.reduce(data.lines, function (result, line) {
-                line = ns.util.cleanupLine(line);
-                if (line.indexOf("..NØ") !== -1) {
-                    foundGeom = true;
-                }
-                if (!foundGeom) {
-                    if (line.indexOf("..") !== 0) {
-                        result.attributes[result.attributes.length - 1] += " " + line;
-                    } else {
-                        result.attributes.push(line.replace("..", ""));
-                    }
-                } else {
-                    result.geometry.push(line.replace("..", ""));
-                }
-                return result;
-            }, {"attributes": [], "geometry": []});
 
-            this.attributes = _.reduce(parsed.attributes, function (attributes, line) {
-                line = line.split(" ");
-                var key = line.shift();
-                if (!specialAttributes[key]) {
-                    attributes[key] = line.join(" ");
-                } else {
-                    attributes[specialAttributes[key].name] = specialAttributes[key].createFunction(line.join(" "));
+            var split = _.reduce(data.lines, function (dict, line) {
+                if (line.indexOf("..NØ") !== -1) {
+                    dict.foundGeom = true;
                 }
-                return attributes;
+                if (dict.foundGeom) {
+                    dict.geom.push(line);
+                } else {
+                    if (line.indexOf("..REF") !== -1) {
+                        dict.foundRef = true;
+                        line = line.replace("..REF", "");
+                    }
+                    if (dict.foundRef) {
+                        dict.refs.push(line);
+                    } else {
+                        dict.attributes.push(line);
+                    }
+                }
+                return dict;
+            }, {
+                "attributes": [],
+                "geom": [],
+                "refs": [],
+                "foundGeom": false,
+                "foundRef": false
+            });
+
+            this.attributes = ns.util.parseFromLevel2(split.attributes);
+            this.attributes = _.reduce(this.attributes, function (attrs, value, key) {
+                if (specialAttributes[key]) {
+                    attrs[key] = specialAttributes[key].createFunction(value);
+                } else {
+                    attrs[key] = value;
+                }
+                return attrs;
             }, {});
+
+            if (split.refs) {
+                this.attributes.REF = split.refs.join(" ");
+            }
 
             this.raw_data = {
                 geometryType: data.geometryType,
-                geometry: parsed.geometry,
+                geometry: split.geom,
                 origo: origo,
                 unit: unit
             };
@@ -469,7 +529,7 @@ var SOSI = window.SOSI || {};
                 var data = {
                     id: parseInt(key[1], 10),
                     geometryType: key[0],
-                    lines: value
+                    lines: _.rest(value)
                 };
                 return new ns.Feature(data, head.origo, head.enhet);
             }, this);
@@ -501,7 +561,8 @@ var SOSI = window.SOSI || {};
         }
     });
 
-}(SOSI));;var SOSI = window.SOSI || {};
+}(SOSI));
+;var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
     "use strict";
@@ -722,30 +783,17 @@ var SOSI = window.SOSI || {};
         }
     });
 
-    function isParent(line) {
-        return (ns.util.countStartingDots(line) === 1);
-    }
-
     function isComment(line) {
         return !(line[0] && line[0] !== "!");
     }
 
+    function splitOnNewline(data) {
+        return data.split("\n");
+    }
+
     ns.Parser = ns.Base.extend({
         parse: function (data) {
-            var parent;
-            var res = _.reduce(data.split("\n"), function (res, line) {
-                if (!isComment(line)) {
-                    if (isParent(line)) {
-                        var key = ns.util.cleanupLine(line.replace(".", ""));
-                        res[key] = [];
-                        parent = key;
-                    } else if (parent) {
-                        res[parent].push(line);
-                    }
-                }
-                return res;
-            }, {});
-            return new SosiData(res);
+            return new SosiData(ns.util.parseTree(_.reject(splitOnNewline(data), isComment), 1));
         }
     });
 }(SOSI));
