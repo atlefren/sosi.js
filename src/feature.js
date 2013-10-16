@@ -83,6 +83,9 @@ var SOSI = window.SOSI || {};
             if (split.refs) {
                 this.attributes.REF = split.refs.join(" ");
             }
+            if (this.attributes.ENHET) {
+              unit = parseFloat(this.attributes.ENHET);
+            }
 
             this.raw_data = {
                 geometryType: data.geometryType,
