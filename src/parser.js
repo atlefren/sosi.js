@@ -16,11 +16,11 @@ var SOSI = window.SOSI || {};
 
     var SosiData = ns.Base.extend({
         initialize: function (data) {
-            this.hode = new ns.Head(data["HODE"]);
+            this.hode = new ns.Head(data["HODE"] || data["HODE 0"]);
             this.def = new Def(data["DEF"]); //Not sure if I will care about this
             this.objdef = new Objdef(data["OBJDEF"]); //Not sure if I will care about this
             this.features = new ns.Features(
-                _.omit(data, ["HODE", "DEF", "OBJDEF", "SLUTT"]),
+                _.omit(data, ["HODE", "HODE 0", "DEF", "OBJDEF", "SLUTT"]),
                 this.hode
             );
         },
