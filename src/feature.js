@@ -29,7 +29,7 @@ var SOSI = window.SOSI || {};
     ns.Feature = ns.Base.extend({
 
         initialize: function (data, origo, unit, features) {
-            if (!data.id) {
+            if (data.id === undefined || data.id === null) {
                 throw new Error("Feature must have ID!");
             }
             this.id = data.id;
