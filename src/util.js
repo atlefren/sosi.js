@@ -116,7 +116,7 @@ var SOSI = window.SOSI || {};
             ];
 
             if (_.isString(data)) {
-                return _.reduce(data.split(" "), function (res, number, i) {
+                return _.reduce(data.split(/\s+/), function (res, number, i) {
                     res[qualityShorthand[i]] = parseInt(number, 10);
                     return res;
                 }, {});
