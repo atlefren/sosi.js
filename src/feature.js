@@ -8,6 +8,7 @@ var SOSI = window.SOSI || {};
         var geometryTypes = {
             "PUNKT": ns.Point,
             "KURVE": ns.LineString,
+            "LINJE": ns.LineString, // old 4.0 name for unsmoothed KURVE
             "FLATE": ns.Polygon
         };
 
@@ -50,9 +51,14 @@ var SOSI = window.SOSI || {};
                         line = line.replace("..REF", "");
                     }
                     if (dict.foundRef) {
+                      if (line[0] == '.') {
+                        dict.foundRef = false;
+                      } else {
                         dict.refs.push(line);
-                    } else {
-                        dict.attributes.push(line);
+                      }
+                    }
+                    if (!dict.foundRef) {
+                      dict.attributes.push(line);
                     }
                 }
                 return dict;
@@ -124,7 +130,7 @@ var SOSI = window.SOSI || {};
         },
 
         ensureGeom: function (feature) {
-            if (!feature.geometry) {
+            if (feature && !feature.geometry) {
                 feature.buildGeometry(this);
             }
             return feature;
