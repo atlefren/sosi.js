@@ -33,17 +33,18 @@ var SOSI = window.SOSI || {};
         }
     });
 
-    function isComment(line) {
-        return !(line[0] && line[0] !== "!");
-    }
-
     function splitOnNewline(data) {
-        return data.split("\n");
+        return _.map(data.split("\n"), function(line) {
+          if (line.indexOf("!")) { //ignore comments starting with ! also in the middle of the line
+            line = line.split("!")[0];
+          }
+          return line.replace(/^\s+|\s+$/g, ''); // trim whitespace padding comments and elsewhere
+        });
     }
 
     ns.Parser = ns.Base.extend({
         parse: function (data) {
-            return new SosiData(ns.util.parseTree(_.reject(splitOnNewline(data), isComment), 1));
+            return new SosiData(ns.util.parseTree(splitOnNewline(data), 1));
         }
     });
 }(SOSI));
