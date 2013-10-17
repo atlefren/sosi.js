@@ -29,13 +29,16 @@ var SOSIDemo = window.SOSIDemo || {};
         }
     });
 
-    function formatPopup(properties) {
-        return _.map(properties, function (value, key) {
-            if (_.isObject(value)) {
-                return key + ": " + formatPopup(value);
-            }
-            return key + ": " + value;
-        }).join("<br>");
+    function formatPopup(properties, indent) {
+        indent = typeof indent !== 'undefined' ? indent : 0;
+        return "<div style='margin-left:"+indent+"mm'>" + 
+               _.map(properties, function (value, key) {
+                 if (_.isObject(value)) {
+                   return key + ":<br/>" + formatPopup(value, indent+5);
+                 }
+                 return key + ": " + value;
+               }).join("<br/>") +
+               "</div>";
     }
 
     ns.Menu = Backbone.View.extend({
@@ -68,7 +71,7 @@ var SOSIDemo = window.SOSIDemo || {};
                 this.layer.clearLayers();
             }
             this.$el.find(".alert").remove();
-            try {
+            //try {
                 var json = this.sosiparser.parse(sosidata).dumps("geojson");
                 var layer = L.Proj.geoJson(
                     json,
@@ -83,9 +86,9 @@ var SOSIDemo = window.SOSIDemo || {};
                 this.layer = layer;
                 this.minimize();
 
-            } catch (error) {
-                this.showError(error);
-            }
+            //} catch (error) {
+            //    this.showError(error);
+            //}
         },
 
         showError: function (error) {
