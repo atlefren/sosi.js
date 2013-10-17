@@ -119,7 +119,8 @@ var SOSI = window.SOSI || {};
 
             if (_.isString(data)) {
                 return _.reduce(data.split(/\s+/), function (res, number, i) {
-                    res[qualityShorthand[i]] = parseInt(number, 10);
+                    var asInt = parseInt(number, 10);
+                    res[qualityShorthand[i]] = isNaN(asInt) ? number : asInt;
                     return res;
                 }, {});
             }
