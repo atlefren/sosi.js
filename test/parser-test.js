@@ -36,7 +36,7 @@
             assert.equals(sosidata.hode.eier, "Statens kartverk");
             assert.equals(sosidata.hode.produsent, "SØRKART A/S");
             assert.equals(sosidata.hode.objektkatalog, "Eksempel 4.5");
-            assert.equals(sosidata.hode.verifiseringsdato, "19890623");
+            assert.equals(sosidata.hode.verifiseringsdato, "1989-06-23");
             assert.equals(sosidata.hode.version, 4.5);
             assert.equals(sosidata.hode.level, 5);
             assert.equals(sosidata.hode.vertdatum, "NN54 SJØ0");
@@ -46,8 +46,8 @@
         "should get kvalitet": function () {
             var sosidata = this.parser.parse(this.sosidata);
             assert(sosidata.hode.kvalitet);
-            assert.equals(sosidata.hode.kvalitet.maalemetode, 11);
-            assert.equals(sosidata.hode.kvalitet.noyaktighet, 300);
+            assert.equals(sosidata.hode.kvalitet["målemetode"], 11);
+            assert.equals(sosidata.hode.kvalitet["nøyaktighet"], 300);
 
         },
 

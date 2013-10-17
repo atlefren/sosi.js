@@ -9,6 +9,7 @@ config["My tests"] = {
     ],
     sources: [
         "src/class_system.js",
+        "src/datatypes.js",
         "src/util.js",
         "src/head.js",
         "src/geometry.js",
