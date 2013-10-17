@@ -109,11 +109,11 @@ var SOSI = window.SOSI || {};
             }
 
             var qualityShorthand = [
-                "maalemetode",
-                "noyaktighet",
+                "målemetode",
+                "nøyaktighet",
                 "synbarhet",
-                "h-maalemetode",
-                "h-noyaktighet",
+                "h-målemetode",
+                "h-nøyaktighet",
                 "max-avvik"
             ];
 
