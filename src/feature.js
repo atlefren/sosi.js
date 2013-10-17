@@ -81,7 +81,7 @@ var SOSI = window.SOSI || {};
                 return attrs;
             }, {});
 
-            if (split.refs) {
+            if (split.refs.length > 0) {
                 this.attributes.REF = split.refs.join(" ");
             }
             if (this.attributes.ENHET) {
