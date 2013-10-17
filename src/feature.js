@@ -9,6 +9,7 @@ var SOSI = window.SOSI || {};
             "PUNKT": ns.Point,
             "TEKST": ns.Point, // a point feature with exsta styling hints - the geometry actually consists of up to three points
             "KURVE": ns.LineString,
+            "BUEP" : ns.LineStringFromArc,
             "LINJE": ns.LineString, // old 4.0 name for unsmoothed KURVE
             "FLATE": ns.Polygon
         };
