@@ -81,22 +81,46 @@ var SOSI = window.SOSI || {};
         }, {objects: {}}).objects;
     }
 
+    function setDataType(key, value) {
+      var type = window.SOSI.types[key];
+      if (type) {
+        if (typeof(type[0]) == 'Object') {
+        } else {
+          if (type[1]=="Integer") {
+            return parseInt(value);
+          } else if (type[1]=="Real") {
+            return parseFloat(value);
+          } else
+          if (type[1]=="Date") {
+            //return new Date(parseInt(value.substring(0,4)), parseInt(value.substring(4,6))-1, parseInt(value.substring(6,8)));
+            return value.substring(0,4)+"-"+value.substring(4,6)+"-"+value.substring(6,8);
+          }
+        }
+      }
+      return value;
+    }
+
     ns.util = {
 
         parseTree: parseTree,
         cleanupLine: cleanupLine,
 
+        getLongname: function (key) { // not tested
+          var type = window.SOSI.types[key];
+          return type && type[0] || key;
+        },
+
         parseFromLevel2: function (data) {
             return _.reduce(parseTree(data, 2), function (dict, lines, key) {
                 if (lines.length && lines[0][0]==".") {
                   dict[key] = _.reduce(parseTree(lines, 3), function (subdict, value, key) {
-                    subdict[key] = value[0];
+                    subdict[key] = setDataType(key, value[0]);
                       return subdict;
                     }, {});
                 } else if (lines.length > 1) {
-                  dict[key] = lines;
+                  dict[key] = _.map(lines, function(value){return setDataType(key, value);});
                 } else if (lines.length) {
-                  dict[key] = lines[0];
+                  dict[key] = setDataType(key, lines[0]);
                 }
                 return dict;
             }, {});
