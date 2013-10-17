@@ -16,7 +16,7 @@ var SOSI = window.SOSI || {};
 
             var numDecimals = 0;
             if (unit < 1) {
-                numDecimals = String(unit).split(".")[1].length;
+                numDecimals = Math.floor(Math.log(unit)/Math.LN10); 
             }
 
             this.y = ns.util.round((parseInt(coords[0], 10) * unit) + origo.y, numDecimals);
