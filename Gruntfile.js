@@ -9,6 +9,7 @@ module.exports = function(grunt) {
             dist: {
                 src: [
                     "src/class_system.js",
+                    "src/datatypes.js",
                     "src/util.js",
                     "src/head.js",
                     "src/geometry.js",
