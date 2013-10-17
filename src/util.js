@@ -88,17 +88,15 @@ var SOSI = window.SOSI || {};
 
         parseFromLevel2: function (data) {
             return _.reduce(parseTree(data, 2), function (dict, lines, key) {
-                if (lines.length > 1) {
-                    if (lines[0][0]==".") {
-                      dict[key] = _.reduce(parseTree(lines, 3), function (subdict, value, key) {
-                          subdict[key] = value[0];
-                          return subdict;
-                      }, {});
-                    } else {
-                      dict[key] = lines;
-                    }
-                } else {
-                    dict[key] = lines[0];
+                if (lines.length && lines[0][0]==".") {
+                  dict[key] = _.reduce(parseTree(lines, 3), function (subdict, value, key) {
+                    subdict[key] = value[0];
+                      return subdict;
+                    }, {});
+                } else if (lines.length > 1) {
+                  dict[key] = lines;
+                } else if (lines.length) {
+                  dict[key] = lines[0];
                 }
                 return dict;
             }, {});
