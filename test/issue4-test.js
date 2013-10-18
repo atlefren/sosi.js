@@ -17,7 +17,7 @@
             this.parser = new ns.Parser();
         },
 
-        "should be able to read attributes": function () {
+        "should be able to read transpar that is not shorthand": function () {
             var sosidata = this.parser.parse(this.sosidata);
             assert.equals(sosidata.hode.srid, "EPSG:32632");
             assert.equals(sosidata.hode.origo.x, 0);
