@@ -10,6 +10,7 @@ sositypes["ADRESSEREFKODE"]=["adresseReferansekode", "String"];
 sositypes["AJOURFØRTAV"]=["ajourførtAv", "String"];
 
 sositypes["AJOURFØRTDATO"]=["ajourførtDato", "Date"];
+sositypes["DATO"]=["Dato", "Date"];
 
 sositypes["AKGEOLTEMA"]=["annetKvTema", "Integer"];
 
