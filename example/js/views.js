@@ -34,7 +34,7 @@ var SOSIDemo = window.SOSIDemo || {};
         return "<div style='margin-left:"+indent+"mm'>" + 
                _.map(properties, function (value, key) {
                  if (value instanceof Date) {      // treat objects one by one for now...
-                   return key + ": " + value.getFullYear()+"-"+value.getMonth()+1+"-"+value.getDate();
+                   return key + ": " + value.getFullYear()+"-"+(value.getMonth()+1)+"-"+value.getDate();
                  } else if (_.isObject(value)) { // breaks for actual objects as value, e.g. Date
                    return key + ":<br/>" + formatPopup(value, indent+5);
                  } else if (_.isNan(value)) { 
