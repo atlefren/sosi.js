@@ -91,7 +91,12 @@ var SOSI = window.SOSI || {};
           } else if (type[1]=="Real") {
             return parseFloat(value);
           } else if (type[1]=="Date") {
-            return new Date(parseInt(value.substring(0,4)), parseInt(value.substring(4,6))-1, parseInt(value.substring(6,8)));
+            if (value.length==8) {
+              return new Date(parseInt(value.substring(0,4)), parseInt(value.substring(4,6))-1, parseInt(value.substring(6,8)));
+            } else if (value.length==14) {
+              return new Date(parseInt(value.substring(0,4)), parseInt(value.substring(4,6))-1, parseInt(value.substring(6,8)), 
+                              parseInt(value.substring(8,10)), parseInt(value.substring(10,12)), parseInt(value.substring(12,14)));
+            }
           } else if (type[1]=="String") {
             if (value[0] == '"' || value[0]=="'") return value.substring(1,value.length-1);
             return value;
