@@ -127,13 +127,15 @@ var SOSI = window.SOSI || {};
 
         parseFromLevel2: function (data) {
             return _.reduce(parseTree(data, 2), function (dict, lines, key) {
-                if (lines.length > 1) {
-                    dict[key] = _.reduce(parseTree(lines, 3), function (subdict, value, key) {
-                        subdict[key] = value[0];
-                        return subdict;
+                if (lines.length && lines[0][0]==".") {
+                  dict[key] = _.reduce(parseTree(lines, 3), function (subdict, value, key) {
+                    subdict[key] = value[0];
+                      return subdict;
                     }, {});
-                } else {
-                    dict[key] = lines[0];
+                } else if (lines.length > 1) {
+                  dict[key] = lines;
+                } else if (lines.length) {
+                  dict[key] = lines[0];
                 }
                 return dict;
             }, {});
@@ -146,17 +148,18 @@ var SOSI = window.SOSI || {};
             }
 
             var qualityShorthand = [
-                "maalemetode",
-                "noyaktighet",
+                "målemetode",
+                "nøyaktighet",
                 "synbarhet",
-                "h-maalemetode",
-                "h-noyaktighet",
+                "h-målemetode",
+                "h-nøyaktighet",
                 "max-avvik"
             ];
 
             if (_.isString(data)) {
                 return _.reduce(data.split(/\s+/), function (res, number, i) {
-                    res[qualityShorthand[i]] = parseInt(number, 10);
+                    var asInt = parseInt(number, 10);
+                    res[qualityShorthand[i]] = isNaN(asInt) ? number : asInt;
                     return res;
                 }, {});
             }
@@ -165,9 +168,13 @@ var SOSI = window.SOSI || {};
 
         round: function (number, numDecimals) {
             var pow = Math.pow(10, numDecimals);
-            return Math.round(number * pow) / pow;
+            return Math.round(number * pow) / pow; 
         }
 
+    };
+
+    ns.geosysMap = {
+        2: {"srid": "EPSG:4326", def: "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs "}
     };
 
     ns.koordsysMap = {
@@ -215,11 +222,11 @@ var SOSI = window.SOSI || {};
 
     //add proj4 defs so that proj4js works
     _.each(ns.koordsysMap, function (koordsys) {
-      if (proj4) { // newer proj4js (>=1.3.1)
-        proj4.defs(koordsys.srid, koordsys.def);
-      } else if (Proj4js) { //older proj4js (=< 1.1.0)
-        Proj4js.defs[koordsys.srid] = koordsys.def;
-      }
+        if (proj4) { // newer proj4js (>=1.3.1)
+            proj4.defs(koordsys.srid, koordsys.def);
+        } else if (Proj4js) { //older proj4js (=< 1.1.0)
+            Proj4js.defs[koordsys.srid] = koordsys.def;
+        }
     });
 
 }(SOSI));
@@ -244,10 +251,21 @@ var SOSI = window.SOSI || {};
         }
         throw new Error("KOORDSYS = " + koordsys + " not found!");
     }
+    function getSridFromGeosys(geosys) {
+        if (_.isArray(geosys)) {
+            throw new Error("GEOSYS cannot be parsed in uncompacted form yet.");
+        } else {
+            geosys = geosys.split(/\s+/);
+        }
+        if (ns.geosysMap[geosys[0]]) {
+            return ns.geosysMap[geosys[0]];
+        }
+        throw new Error("GEOSYS = " + geosys + " not found!");
+    }
 
     function parseBbox(data) {
-        var ll = data["MIN-NØ"].split(" ");
-        var ur = data["MAX-NØ"].split(" ");
+        var ll = data["MIN-NØ"].split(/\s+/);
+        var ur = data["MAX-NØ"].split(/\s+/);
         return [
             parseFloat(ll[1]),
             parseFloat(ll[0]),
@@ -288,11 +306,16 @@ var SOSI = window.SOSI || {};
             this.origo = parseOrigo(data["TRANSPAR"]["ORIGO-NØ"]);
             this.enhet = parseFloat(data["TRANSPAR"]["ENHET"]);
             this.vertdatum = getString(data["TRANSPAR"], "VERT-DATUM");
-            this.srid = getSrid(data["TRANSPAR"]["KOORDSYS"]);
+            if (data["TRANSPAR"]["KOORDSYS"]) {
+                this.srid = getSrid(data["TRANSPAR"]["KOORDSYS"]);
+            } else { 
+                this.srid = getSridFromGeosys(data["TRANSPAR"]["GEOSYS"]);
+            }
         }
     });
 
-}(SOSI));;var SOSI = window.SOSI || {};
+}(SOSI));
+;var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
     "use strict";
@@ -306,11 +329,11 @@ var SOSI = window.SOSI || {};
                 line = line[1];
             }
 
-            var coords = line.split(/\s+/); 
+            var coords = line.split(/\s+/);
 
             var numDecimals = 0;
             if (unit < 1) {
-                numDecimals = String(unit).split(".")[1].length;
+                numDecimals = -Math.floor(Math.log(unit) / Math.LN10);
             }
 
             this.y = ns.util.round((parseInt(coords[0], 10) * unit) + origo.y, numDecimals);
@@ -450,7 +473,6 @@ var SOSI = window.SOSI || {};
 
         parseData: function (data, origo, unit) {
 
-
             var split = _.reduce(data.lines, function (dict, line) {
                 if (line.indexOf("..NØ") !== -1) {
                     dict.foundGeom = true;
@@ -463,14 +485,14 @@ var SOSI = window.SOSI || {};
                         line = line.replace("..REF", "");
                     }
                     if (dict.foundRef) {
-                      if (line[0] == '.') {
-                        dict.foundRef = false;
-                      } else {
-                        dict.refs.push(line);
-                      }
+                        if (line[0] === '.') {
+                            dict.foundRef = false;
+                        } else {
+                            dict.refs.push(line);
+                        }
                     }
                     if (!dict.foundRef) {
-                      dict.attributes.push(line);
+                        dict.attributes.push(line);
                     }
                 }
                 return dict;
@@ -492,11 +514,11 @@ var SOSI = window.SOSI || {};
                 return attrs;
             }, {});
 
-            if (split.refs) {
+            if (split.refs.length > 0) {
                 this.attributes.REF = split.refs.join(" ");
             }
             if (this.attributes.ENHET) {
-              unit = parseFloat(this.attributes.ENHET);
+                unit = parseFloat(this.attributes.ENHET);
             }
 
             this.raw_data = {
@@ -793,11 +815,11 @@ var SOSI = window.SOSI || {};
     });
 
     function splitOnNewline(data) {
-        return _.map(data.split("\n"), function(line) {
-          if (line.indexOf("!")) { //ignore comments starting with ! also in the middle of the line
-            line = line.split("!")[0];
-          }
-          return line.replace(/^\s+|\s+$/g, ''); // trim whitespace padding comments and elsewhere
+        return _.map(data.split("\n"), function (line) {
+            if (line.indexOf("!") !== 0) { //ignore comments starting with ! also in the middle of the line
+                line = line.split("!")[0];
+            }
+            return line.replace(/^\s+|\s+$/g, ''); // trim whitespace padding comments and elsewhere
         });
     }
 
