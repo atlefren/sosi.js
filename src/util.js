@@ -81,6 +81,13 @@ var SOSI = window.SOSI || {};
         }, {objects: {}}).objects;
     }
 
+    function parseSubdict(lines) {
+        return _.reduce(parseTree(lines, 3), function (subdict, value, key) {
+            subdict[key] = value[0];
+            return subdict;
+        }, {});
+    }
+
     ns.util = {
 
         parseTree: parseTree,
@@ -88,15 +95,14 @@ var SOSI = window.SOSI || {};
 
         parseFromLevel2: function (data) {
             return _.reduce(parseTree(data, 2), function (dict, lines, key) {
-                if (lines.length && lines[0][0]==".") {
-                  dict[key] = _.reduce(parseTree(lines, 3), function (subdict, value, key) {
-                    subdict[key] = value[0];
-                      return subdict;
-                    }, {});
-                } else if (lines.length > 1) {
-                  dict[key] = lines;
-                } else if (lines.length) {
-                  dict[key] = lines[0];
+                if (lines.length) {
+                    if (lines[0][0] === ".") {
+                        dict[key] = parseSubdict(lines);
+                    } else if (lines.length > 1) {
+                        dict[key] = lines;
+                    } else {
+                        dict[key] = lines[0];
+                    }
                 }
                 return dict;
             }, {});
@@ -129,7 +135,7 @@ var SOSI = window.SOSI || {};
 
         round: function (number, numDecimals) {
             var pow = Math.pow(10, numDecimals);
-            return Math.round(number * pow) / pow; 
+            return Math.round(number * pow) / pow;
         }
 
     };
