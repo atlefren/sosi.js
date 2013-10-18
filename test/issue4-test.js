@@ -9,7 +9,7 @@
 
             $.ajax({
                 async: false,
-                url: buster.env.contextPath + "/1001_Hoyde.sos",
+                url: buster.env.contextPath + "/testfile_issue4.sos",
                 success:_.bind(function(data) {
                     this.sosidata = data;
                 }, this)
@@ -23,6 +23,18 @@
             assert.equals(sosidata.hode.origo.x, 0);
             assert.equals(sosidata.hode.origo.y, 0);
             assert.equals(sosidata.hode.enhet, 0.01);
+        },
+
+        "should get repeated values for attributes as a array": function () {
+            var sosidata = this.parser.parse(this.sosidata);
+            var kurve = sosidata.features.getById(119);
+
+            assert.equals(kurve.attributes.LTEMA.length, 5);
+            assert.equals(kurve.attributes.LTEMA[0], "4002");
+            assert.equals(kurve.attributes.LTEMA[1], "4003");
+            assert.equals(kurve.attributes.LTEMA[2], "4011");
+            assert.equals(kurve.attributes.LTEMA[3], "4005");
+            assert.equals(kurve.attributes.LTEMA[4], "4019");
         }
     });
 }(SOSI));
