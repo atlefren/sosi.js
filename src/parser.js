@@ -34,11 +34,11 @@ var SOSI = window.SOSI || {};
     });
 
     function splitOnNewline(data) {
-        return _.map(data.split("\n"), function(line) {
-          if (line.indexOf("!")) { //ignore comments starting with ! also in the middle of the line
-            line = line.split("!")[0];
-          }
-          return line.replace(/^\s+|\s+$/g, ''); // trim whitespace padding comments and elsewhere
+        return _.map(data.split("\n"), function (line) {
+            if (line.indexOf("!") !== 0) { //ignore comments starting with ! also in the middle of the line
+                line = line.split("!")[0];
+            }
+            return line.replace(/^\s+|\s+$/g, ''); // trim whitespace padding comments and elsewhere
         });
     }
 

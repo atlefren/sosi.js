@@ -183,11 +183,11 @@ var SOSI = window.SOSI || {};
 
     //add proj4 defs so that proj4js works
     _.each(ns.koordsysMap, function (koordsys) {
-      if (proj4) { // newer proj4js (>=1.3.1)
-        proj4.defs(koordsys.srid, koordsys.def);
-      } else if (Proj4js) { //older proj4js (=< 1.1.0)
-        Proj4js.defs[koordsys.srid] = koordsys.def;
-      }
+        if (proj4) { // newer proj4js (>=1.3.1)
+            proj4.defs(koordsys.srid, koordsys.def);
+        } else if (Proj4js) { //older proj4js (=< 1.1.0)
+            Proj4js.defs[koordsys.srid] = koordsys.def;
+        }
     });
 
 }(SOSI));
