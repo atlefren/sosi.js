@@ -29,7 +29,7 @@
         "should be able to read attributes": function () {
             var sosidata = this.parser.parse(this.sosidata);
             var feature1 = sosidata.features.at(0);
-            assert.equals(feature1.attributes["OBJTYPE"], "EiendomsGrense");
+            assert.equals(feature1.attributes.objekttypenavn, "EiendomsGrense");
 
 
             assert.equals(feature1.attributes.KVALITET.målemetode, 40);

@@ -28,7 +28,7 @@
         "should be able to read attributes": function () {
             var sosidata = this.parser.parse(this.sosidata);
             var feature1 = sosidata.features.at(0);
-            assert.equals(feature1.attributes["OBJTYPE"], "Fastmerke");
+            assert.equals(feature1.attributes.objekttypenavn, "Fastmerke");
         },
 
         "should be able to read geometry": function () {
@@ -51,7 +51,7 @@
 
             assert.equals(feature1.type, "Feature");
             assert.equals(feature1.id, 1);
-            assert.equals(feature1.properties["OBJTYPE"], "Fastmerke");
+            assert.equals(feature1.properties.objekttypenavn, "Fastmerke");
 
             var geom = feature1.geometry;
             assert.equals(geom.type, "Point");
@@ -77,7 +77,7 @@
             assert.equals(geom1.type, "Point");
 
             assert.equals(geom1.properties.id, 1);
-            assert.equals(geom1.properties["OBJTYPE"], "Fastmerke");
+            assert.equals(geom1.properties.objekttypenavn, "Fastmerke");
 
             assert.equals(geom1.coordinates, [10023.45, 100234.56]);
         }

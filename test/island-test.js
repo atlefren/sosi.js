@@ -130,7 +130,7 @@
 
             assert.equals(feature1.type, "Feature");
             assert.equals(feature1.id, 600);
-            assert.equals(feature1.properties["OBJTYPE"], "Mahogney");
+            assert.equals(feature1.properties.objekttypenavn, "Mahogney");
 
             assert.equals(feature1.properties.KVALITET.målemetode, 82);
 
@@ -164,7 +164,7 @@
             assert.equals(geom10.type, "Polygon");
 
             assert.equals(geom10.properties.id, 600);
-            assert.equals(geom10.properties["OBJTYPE"], "Mahogney");
+            assert.equals(geom10.properties.objekttypenavn, "Mahogney");
             assert.equals(typeof geom10.properties.KVALITET.målemetode ,  "number");
             assert.equals(geom10.properties.KVALITET.målemetode,  82);
 
@@ -190,7 +190,7 @@
             assert.equals(geom9.type, "Polygon");
 
             assert.equals(geom9.properties.id, 400);
-            assert.equals(geom9.properties["OBJTYPE"], "Mahogney");
+            assert.equals(geom9.properties.objekttypenavn, "Mahogney");
             assert.equals(geom9.properties.KVALITET.målemetode, 82);
 
             assert.equals(geom9.arcs.length, 2);

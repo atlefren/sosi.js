@@ -115,28 +115,30 @@ var SOSI = window.SOSI || {};
           }
     };
 
+    function getLongname (key) { // not tested
+          var type = window.SOSI.types[key];
+          if (!type || _.isArray(type[0])) return key;
+          return type[0];
+    };
+
 
     ns.util = {
 
         parseTree: parseTree,
         cleanupLine: cleanupLine,
 
-        getLongname: function (key) { // not tested
-          var type = window.SOSI.types[key];
-          return type && type[0] || key;
-        },
 
         parseFromLevel2: function (data) {
             return _.reduce(parseTree(data, 2), function (dict, lines, key) {
                 if (lines.length && lines[0][0]==".") {
                   dict[key] = _.reduce(parseTree(lines, 3), function (subdict, value, key) {
-                    subdict[key] = setDataType(key, value[0]);
+                    subdict[getLongname(key)] = setDataType(key, value[0]);
                       return subdict;
                     }, {});
                 } else if (lines.length > 1) {
-                  dict[key] = _.map(lines, function(value){return setDataType(key, value);});
+                  dict[getLongname(key)] = _.map(lines, function(value){return setDataType(key, value);});
                 } else if (lines.length) {
-                  dict[key] = setDataType(key, lines[0]);
+                  dict[getLongname(key)] = setDataType(key, lines[0]);
                 }
                 return dict;
             }, {});
