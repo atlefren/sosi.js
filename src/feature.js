@@ -83,7 +83,7 @@ var SOSI = window.SOSI || {};
                 this.attributes.REF = split.refs.join(" ");
             }
             if (this.attributes.ENHET) {
-              unit = parseFloat(this.attributes.ENHET);
+                unit = parseFloat(this.attributes.ENHET);
             }
 
             this.raw_data = {
