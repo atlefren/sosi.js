@@ -92,8 +92,8 @@ var SOSI = window.SOSI || {};
             return parseFloat(value);
           } else
           if (type[1]=="Date") {
-            //return new Date(parseInt(value.substring(0,4)), parseInt(value.substring(4,6))-1, parseInt(value.substring(6,8)));
-            return value.substring(0,4)+"-"+value.substring(4,6)+"-"+value.substring(6,8);
+            return new Date(parseInt(value.substring(0,4)), parseInt(value.substring(4,6))-1, parseInt(value.substring(6,8)));
+            //return value.substring(0,4)+"-"+value.substring(4,6)+"-"+value.substring(6,8);
           }
         }
       }
