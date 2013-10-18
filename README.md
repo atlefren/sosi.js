@@ -87,6 +87,13 @@ All contributions welcome! If you speak SOSI _and_ Javascript fluently you are m
 Otherwise, send pull requests or ask for commit privileges. If you by chance have any SOSI files that are freely
 usable I'd appreciate some input so that the test set can be expanded.
 
+Contributors
+------------
+In addition to myself (atlefren) some people have contributed code and/or input to this project_
+- Thomas Hirsch (relet)
+- Torbjørn Auglænd Vilhelmsen (torbjvi)
+- SigTill
+
 Disclaimer
 ----------
 This lib must not be used for critical applications, as the test set is veeeeeery limited.
