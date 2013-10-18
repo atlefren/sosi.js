@@ -3,7 +3,7 @@ var SOSIDemo = window.SOSIDemo || {};
 (function (ns, undefined) {
     "use strict";
 
-    var Form =  Backbone.View.extend({
+    var Form = Backbone.View.extend({
 
         tagName: "form",
 
@@ -31,16 +31,16 @@ var SOSIDemo = window.SOSIDemo || {};
 
     function formatPopup(properties, indent) {
         indent = typeof indent !== 'undefined' ? indent : 0;
-        return "<div style='margin-left:"+indent+"mm'>" + 
-               _.map(properties, function (value, key) {
-                 if (value instanceof Date) {      // treat objects one by one for now...
-                   return key + ": " + value.getFullYear()+"-"+value.getMonth()+1+"-"+value.getDate();
-                 } else if (_.isObject(value)) { // breaks for actual objects as value, e.g. Date
-                   return key + ":<br/>" + formatPopup(value, indent+5);
-                 }
-                 return key + ": " + value;
-               }).join("<br/>") +
-               "</div>";
+        return "<div style='margin-left:" + indent + "mm'>" +
+            _.map(properties, function (value, key) {
+                if (value instanceof Date) {      // treat objects one by one for now...
+                    return key + ": " + value.getFullYear() + "-" + value.getMonth() + 1 + "-" + value.getDate();
+                } else if (_.isObject(value)) { // breaks for actual objects as value, e.g. Date
+                    return key + ":<br/>" + formatPopup(value, indent + 5);
+                }
+                return key + ": " + value;
+            }).join("<br/>") +
+            "</div>";
     }
 
     ns.Menu = Backbone.View.extend({
