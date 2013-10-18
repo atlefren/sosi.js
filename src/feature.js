@@ -56,8 +56,7 @@ var SOSI = window.SOSI || {};
                         } else {
                             dict.refs.push(line);
                         }
-                    }
-                    if (!dict.foundRef) {
+                    } else {
                         dict.attributes.push(line);
                     }
                 }
@@ -80,11 +79,11 @@ var SOSI = window.SOSI || {};
                 return attrs;
             }, {});
 
-            if (split.refs.length) {
+            if (split.refs.length > 0) {
                 this.attributes.REF = split.refs.join(" ");
             }
             if (this.attributes.ENHET) {
-                unit = parseFloat(this.attributes.ENHET);
+              unit = parseFloat(this.attributes.ENHET);
             }
 
             this.raw_data = {
