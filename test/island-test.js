@@ -165,7 +165,8 @@
 
             assert.equals(geom10.properties.id, 600);
             assert.equals(geom10.properties["OBJTYPE"], "Mahogney");
-            assert.equals(geom10.properties.KVALITET.målemetode, 82);
+            assert.equals(typeof geom10.properties.KVALITET.målemetode ,  "number");
+            assert.equals(geom10.properties.KVALITET.målemetode,  82);
 
             assert.equals(geom10.arcs.length, 2);
             assert.equals(geom10.arcs[0].length, 4);

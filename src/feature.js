@@ -20,13 +20,6 @@ var SOSI = window.SOSI || {};
         return new geometryTypes[geometryType](lines, origo, unit);
     }
 
-    var specialAttributes = {
-        "KVALITET": {
-            "name": "kvalitet",
-            "createFunction": ns.util.parseQuality
-        }
-    };
-
     ns.Feature = ns.Base.extend({
 
         initialize: function (data, origo, unit, features) {
@@ -74,8 +67,8 @@ var SOSI = window.SOSI || {};
 
             this.attributes = ns.util.parseFromLevel2(split.attributes);
             this.attributes = _.reduce(this.attributes, function (attrs, value, key) {
-                if (specialAttributes[key]) {
-                    attrs[key] = specialAttributes[key].createFunction(value);
+                if (ns.util.specialAttributes[key]) {
+                    attrs[key] = ns.util.specialAttributes[key].createFunction(value);
                 } else {
                     attrs[key] = value;
                 }

@@ -24,7 +24,7 @@
             assert.equals(feature1.attributes["OBJTYPE"], "Tank");
 
             assert.equals(feature1.attributes.KVALITET.målemetode, 82);
-            assert.equals(feature1.attributes["REGISTRERINGSVERSJON"], '"FKB" "3.4 eller eldre"');
+            assert.equals(feature1.attributes["REGISTRERINGSVERSJON"].versjon, "3.4 eller eldre");
         },
 
         "should get center point": function () {

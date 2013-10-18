@@ -82,7 +82,7 @@ var SOSI = window.SOSI || {};
     }
 
     function setDataType(key, value) {
-      var type = window.SOSI.types[key];
+      var type = _.isArray(key) ? key : window.SOSI.types[key];
       if (type) {
         if (typeof(type[0]) == 'Object') {
         } else {
@@ -90,15 +90,31 @@ var SOSI = window.SOSI || {};
             return parseInt(value);
           } else if (type[1]=="Real") {
             return parseFloat(value);
-          } else
-          if (type[1]=="Date") {
+          } else if (type[1]=="Date") {
             return new Date(parseInt(value.substring(0,4)), parseInt(value.substring(4,6))-1, parseInt(value.substring(6,8)));
-            //return value.substring(0,4)+"-"+value.substring(4,6)+"-"+value.substring(6,8);
+          } else if (type[1]=="String") {
+            if (value[0] == '"' || value[0]=="'") return value.substring(1,value.length-1);
+            return value;
           }
         }
       }
       return value;
     }
+
+    function parseSpecial(key, subfields) { 
+          return function (data) {
+            if (!data) return null;
+            if (_.isObject(data)) return data; // extended subfields
+
+            if (_.isString(data)) { 
+              return _.reduce(data.match(/"[^"]*"|'[^']*'|\S+/g), function (res, chunk, i) {
+                res[subfields[i][0]] = setDataType(subfields[i], chunk);
+                return res;
+              }, {});
+            }
+          }
+    };
+
 
     ns.util = {
 
@@ -126,30 +142,14 @@ var SOSI = window.SOSI || {};
             }, {});
         },
 
-        parseQuality: function (data) {
-
-            if (!data) {
-                return null;
-            }
-
-            var qualityShorthand = [
-                "målemetode",
-                "nøyaktighet",
-                "synbarhet",
-                "h-målemetode",
-                "h-nøyaktighet",
-                "max-avvik"
-            ];
-
-            if (_.isString(data)) {
-                return _.reduce(data.split(/\s+/), function (res, number, i) {
-                    var asInt = parseInt(number, 10);
-                    res[qualityShorthand[i]] = isNaN(asInt) ? number : asInt;
-                    return res;
-                }, {});
-            }
-            throw new Error("Reading KVALITET as subfields not implemented!");
-        },
+        specialAttributes: function() {
+          var atts = {};
+          _.each(SOSI.types, function(type,key) {
+            if (_.isObject(type[0])) { // true for complex datatypes
+              atts[key]={name:key, createFunction:parseSpecial(key, type)};
+          }});
+          return atts;
+        }(),
 
         round: function (number, numDecimals) {
             var pow = Math.pow(10, numDecimals);
