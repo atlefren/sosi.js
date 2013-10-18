@@ -251,6 +251,7 @@ var SOSI = window.SOSI || {};
         }
         throw new Error("KOORDSYS = " + koordsys + " not found!");
     }
+
     function getSridFromGeosys(geosys) {
         if (_.isArray(geosys)) {
             throw new Error("GEOSYS cannot be parsed in uncompacted form yet.");
@@ -308,7 +309,7 @@ var SOSI = window.SOSI || {};
             this.vertdatum = getString(data["TRANSPAR"], "VERT-DATUM");
             if (data["TRANSPAR"]["KOORDSYS"]) {
                 this.srid = getSrid(data["TRANSPAR"]["KOORDSYS"]);
-            } else { 
+            } else {
                 this.srid = getSridFromGeosys(data["TRANSPAR"]["GEOSYS"]);
             }
         }
@@ -514,7 +515,7 @@ var SOSI = window.SOSI || {};
                 return attrs;
             }, {});
 
-            if (split.refs.length > 0) {
+            if (split.refs.length) {
                 this.attributes.REF = split.refs.join(" ");
             }
             if (this.attributes.ENHET) {
