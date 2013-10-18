@@ -23,6 +23,11 @@ Other:
 - namespace everything
 
 
+Language
+--------
+Although SOSI is a norwegian format I would like to keep the code in english. This means all variable names,
+commit messages etc. The exception are SOSI-attributes (like KVALITET) and geometry types (like KURVE).
+
 External dependencies
 ---------------------
 Underscore.js is the ony hard dependency of sosi.js, and I would like to keep it that way.
