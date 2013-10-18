@@ -75,6 +75,7 @@ var SOSIDemo = window.SOSIDemo || {};
             this.$el.find(".alert").remove();
             //try {
                 var json = this.sosiparser.parse(sosidata).dumps("geojson");
+                $("#jsondata")[0].innerText = JSON.stringify(json);
                 var layer = L.Proj.geoJson(
                     json,
                     {

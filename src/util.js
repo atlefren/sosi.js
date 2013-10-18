@@ -153,9 +153,13 @@ var SOSI = window.SOSI || {};
 
         round: function (number, numDecimals) {
             var pow = Math.pow(10, numDecimals);
-            return Math.round(number * pow) / pow;
+            return Math.round(number * pow) / pow; 
         }
 
+    };
+
+    ns.geosysMap = {
+        2: {"srid": "EPSG:4326", def: "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs "}
     };
 
     ns.koordsysMap = {

@@ -21,6 +21,12 @@
             var sosidata = this.parser.parse(this.sosidata);
             assert(sosidata.features.all());
 
+            var flate = sosidata.features.getById(5);
+            assert.equals(flate.attributes.KVALITET.målemetode, "*");
+
+
+ 
+
         }
     });
 }(SOSI));

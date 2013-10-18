@@ -23,7 +23,7 @@
             var feature1 = sosidata.features.at(4);
             assert.equals(feature1.attributes["OBJTYPE"], "Tank");
 
-            assert.equals(feature1.attributes.KVALITET["målemetode"], 82);
+            assert.equals(feature1.attributes.KVALITET.målemetode, 82);
             assert.equals(feature1.attributes["REGISTRERINGSVERSJON"], '"FKB" "3.4 eller eldre"');
         },
 
@@ -85,7 +85,7 @@
             assert.equals(feature1.id, 651);
             assert.equals(feature1.properties["OBJTYPE"], "Tank");
             assert.equals(feature1.properties["DATAFANGSTDATO"], "2003-07-02");
-            assert.equals(feature1.properties.KVALITET["målemetode"], 82);
+            assert.equals(feature1.properties.KVALITET.målemetode, 82);
 
 
             var geom = feature1.geometry;
@@ -117,7 +117,7 @@
             assert.equals(geom4.properties.id, 651);
             assert.equals(geom4.properties["OBJTYPE"], "Tank");
             assert.equals(geom4.properties["DATAFANGSTDATO"], "2003-07-02");
-            assert.equals(geom4.properties.KVALITET["målemetode"], 82);
+            assert.equals(geom4.properties.KVALITET.målemetode, 82);
 
             assert.equals(geom4.arcs.length, 1);
             assert.equals(geom4.arcs[0].length, 4);

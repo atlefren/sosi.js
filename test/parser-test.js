@@ -46,8 +46,8 @@
         "should get kvalitet": function () {
             var sosidata = this.parser.parse(this.sosidata);
             assert(sosidata.hode.kvalitet);
-            assert.equals(sosidata.hode.kvalitet["målemetode"], 11);
-            assert.equals(sosidata.hode.kvalitet["nøyaktighet"], 300);
+            assert.equals(sosidata.hode.kvalitet.målemetode, 11);
+            assert.equals(sosidata.hode.kvalitet.nøyaktighet, 300);
 
         },
 
