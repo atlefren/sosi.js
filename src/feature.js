@@ -80,7 +80,7 @@ var SOSI = window.SOSI || {};
                 return attrs;
             }, {});
 
-            if (split.refs.length > 0) {
+            if (split.refs.length) {
                 this.attributes.REF = split.refs.join(" ");
             }
             if (this.attributes.ENHET) {
