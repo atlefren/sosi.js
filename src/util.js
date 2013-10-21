@@ -82,11 +82,10 @@ var SOSI = window.SOSI || {};
     }
 
     function setDataType(key, value) {
+
         var type = _.isArray(key) ? key : SOSI.types[key];
         if (type) {
-            if (typeof (type[0]) === 'Object') {
-
-            } else {
+            if (!_.isObject(type[0])) {
                 if (type[1] === "Integer") {
                     return parseInt(value, 10);
                 } else if (type[1] === "Real") {
@@ -108,7 +107,7 @@ var SOSI = window.SOSI || {};
                             parseInt(value.substring(12, 14), 10)
                         );
                     }
-                } else if (type[1] === "String") {
+                } else if (_.isString(type[1])) {
                     if (value[0] === '"' || value[0] === "'") {
                         return value.substring(1, value.length - 1);
                     }
