@@ -18,6 +18,18 @@ module.exports = function(grunt) {
                     "src/parser.js"
                 ],
                 dest: 'dist/<%= pkg.name %>.js'
+            },
+            lite: {
+                src: [
+                    "src/class_system.js",
+                    "src/util.js",
+                    "src/head.js",
+                    "src/geometry.js",
+                    "src/feature.js",
+                    "src/dumpers.js",
+                    "src/parser.js"
+                ],
+                dest: 'dist/<%= pkg.name %>_lite.js'
             }
         },
         uglify: {
@@ -27,6 +39,11 @@ module.exports = function(grunt) {
             dist: {
                 files: {
                     'dist/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
+                }
+            },
+            lite: {
+                files: {
+                    'dist/<%= pkg.name %>_lite.min.js': ['<%= concat.lite.dest %>']
                 }
             }
         },

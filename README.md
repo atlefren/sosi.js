@@ -29,6 +29,16 @@ There will obviously be some shortcuts, so the goals are as follows:
     - Leaflet Layers
 - ignore backwards compability
 
+Versions
+--------
+The dist folder contains two versions of sosi.js:
+- SOSI.js (and SOSI.min.js)
+- SOSI_lite.js (and SOSI_lite.min.js)
+
+The difference (and hence the filesize-difference) stems from the fact that the full version includes a lookup table to
+translate the SOSI attribute names into their logical names according to the specification (Thanks to Thomas Hirsch).
+If this is unimportant for you, you can save about 85K in minified size by choosing the SOSI_lite.min.js version.
+
 Demo
 ----
 See: https://rawgithub.com/atlefren/sosi.js/master/example/index.html
