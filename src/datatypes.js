@@ -1,5 +1,5 @@
 /* automatic conversion from sosi.h - TODO convert to single json object */
-var sositypes = window.SOSI.types || {};
+var sositypes = SOSI.types || {};
 
 sositypes["ADM_GRENSE"]=["administrativGrense", "String"];
 
@@ -3353,4 +3353,4 @@ sositypes["VNR"][1][1] = ["vegstatus","String"];
 sositypes["VPA"][1][0] = ["hovedParsell","Integer"];
 sositypes["VPA"][1][1] = ["veglenkeMeterFra","Integer"];
 sositypes["VPA"][1][2] = ["veglenkeMeterTil","Integer"];
-window.SOSI.types = sositypes;
+SOSI.types = sositypes;

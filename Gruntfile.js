@@ -4,10 +4,11 @@ module.exports = function(grunt) {
         pkg: grunt.file.readJSON('package.json'),
         concat: {
             options: {
-                separator: ';'
+                separator: '\n'
             },
             dist: {
                 src: [
+                    "src/cli_header.js",
                     "src/class_system.js",
                     "src/datatypes.js",
                     "src/util.js",
@@ -15,7 +16,8 @@ module.exports = function(grunt) {
                     "src/geometry.js",
                     "src/feature.js",
                     "src/dumpers.js",
-                    "src/parser.js"
+                    "src/parser.js",
+                    "src/cli.js"
                 ],
                 dest: 'dist/<%= pkg.name %>.js'
             }
