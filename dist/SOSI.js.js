@@ -1,3 +1,10 @@
+if (!(typeof require=="undefined")) { /* we are running inside node.js */
+  var _ = require("underscore");
+  var proj4 = require("proj4");
+  var window = window || {};
+  window.SOSI = window.SOSI || {};
+}
+
 var SOSI = window.SOSI || {};
 
 /**
@@ -37,8 +44,10 @@ var SOSI = window.SOSI || {};
         return child;
     };
 
-}(SOSI));;/* automatic conversion from sosi.h - TODO convert to single json object */
-var sositypes = window.SOSI.types || {};
+}(SOSI));
+
+/* automatic conversion from sosi.h - TODO convert to single json object */
+var sositypes = SOSI.types || {};
 
 sositypes["ADM_GRENSE"]=["administrativGrense", "String"];
 
@@ -3392,8 +3401,9 @@ sositypes["VNR"][1][1] = ["vegstatus","String"];
 sositypes["VPA"][1][0] = ["hovedParsell","Integer"];
 sositypes["VPA"][1][1] = ["veglenkeMeterFra","Integer"];
 sositypes["VPA"][1][2] = ["veglenkeMeterTil","Integer"];
-window.SOSI.types = sositypes;
-;var SOSI = window.SOSI || {};
+SOSI.types = sositypes;
+
+var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
     "use strict";
@@ -3622,7 +3632,8 @@ window.SOSI.types = sositypes;
     });
 
 }(SOSI));
-;var SOSI = window.SOSI || {};
+
+var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
     "use strict";
@@ -3708,7 +3719,8 @@ window.SOSI.types = sositypes;
     });
 
 }(SOSI));
-;var SOSI = window.SOSI || {};
+
+var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
     "use strict";
@@ -3891,7 +3903,8 @@ window.SOSI.types = sositypes;
         }
     });
 }(SOSI));
-;var SOSI = window.SOSI || {};
+
+var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
     "use strict";
@@ -4045,7 +4058,8 @@ window.SOSI.types = sositypes;
     });
 
 }(SOSI));
-;var SOSI = window.SOSI || {};
+
+var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
     "use strict";
@@ -4232,7 +4246,8 @@ window.SOSI.types = sositypes;
     });
 
 }(SOSI));
-;var SOSI = window.SOSI || {};
+
+var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
     "use strict";
@@ -4282,3 +4297,26 @@ window.SOSI.types = sositypes;
         }
     });
 }(SOSI));
+
+if (!(typeof require == "undefined")) { /* we are running inside nodejs */
+  var fs = require("fs")
+  var util = require("util")
+  
+  if (process.argv.length < 3) { 
+    util.print("\nusage: nodejs SOSI.js.js filename.sos > filename.geojson\n");
+    process.exit(1);
+  } 
+
+  var filename = process.argv[2];
+  fs.readFile(filename, "utf8", function(err, data) {
+    /* todo: detect TEGNSETT/encoding in the first bytes and re-read the file with the proper encoding */
+    if (err) {
+      return util.print(err);
+    }
+    var parser = new SOSI.Parser();
+    json       = parser.parse(data).dumps("geojson");
+    util.print(JSON.stringify(json));
+  });
+
+}
+
