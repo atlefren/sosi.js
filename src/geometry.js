@@ -102,19 +102,17 @@ var SOSI = window.SOSI || {};
 
             dth = dth / (npt - 1);
 
-            this.kurve = Array(npt);
-            var i;
-            for (i = 0; i < npt; i++) {
+            this.kurve = _.map(_.range(npt), function (i) {
                 var x  = cE + r * Math.cos(th1 + dth * i);
                 var y = cN + r * Math.sin(th1 + dth * i);
                 if (isNaN(x)) {
                     throw new Error("BUEP: Interpolated " + x + " for point " + i + " of " + npt + " in curve.");
                 }
-                this.kurve[i] = new ns.Point(x, y);
-            }
+                return new ns.Point(x, y);
+            });
 
-            this.knutepunkter = _.filter(p, function (punkt) {
-                return punkt.has_tiepoint;
+            this.knutepunkter = _.filter(p, function (point) {
+                return point.has_tiepoint;
             });
         }
     });
