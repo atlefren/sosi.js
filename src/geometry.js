@@ -45,7 +45,22 @@ var SOSI = window.SOSI || {};
         }
     });
 
-    ns.LineStringFromArc = ns.Base.extend({ // BUEP - an arc defined by three points on a circle
+
+    ns.LineString = ns.Base.extend({
+        initialize: function (lines, origo, unit) {
+            this.kurve = _.compact(_.map(lines, function (line) {
+                if (line.indexOf("NØ") === -1) {
+                    return new ns.Point(line, origo, unit);
+                }
+            }));
+
+            this.knutepunkter = _.filter(this.kurve, function (punkt) {
+                return punkt.has_tiepoint;
+            });
+        }
+    });
+
+    ns.LineStringFromArc = ns.LineString.extend({ // BUEP - an arc defined by three points on a circle
         initialize: function (lines, origo, unit) {
           var p = _.map(_.filter(lines, function(line){return line.indexOf("NØ")===-1}), function(coord) {
             return new ns.Point(coord, origo, unit);
@@ -102,20 +117,6 @@ var SOSI = window.SOSI || {};
           this.knutepunkter = _.filter(p, function (punkt) {
                 return punkt.has_tiepoint;
           });
-        }
-    });
-
-    ns.LineString = ns.Base.extend({
-        initialize: function (lines, origo, unit) {
-            this.kurve = _.compact(_.map(lines, function (line) {
-                if (line.indexOf("NØ") === -1) {
-                    return new ns.Point(line, origo, unit);
-                }
-            }));
-
-            this.knutepunkter = _.filter(this.kurve, function (punkt) {
-                return punkt.has_tiepoint;
-            });
         }
     });
 
