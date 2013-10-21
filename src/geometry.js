@@ -45,9 +45,16 @@ var SOSI = window.SOSI || {};
         }
     });
 
+
+    function cleanLines(lines) {
+        return _.filter(lines, function (line) {
+            return (line.indexOf("NØ") === -1);
+        });
+    }
+
     ns.LineStringFromArc = ns.Base.extend({ // BUEP - an arc defined by three points on a circle
         initialize: function (lines, origo, unit) {
-            var p = _.map(_.filter(lines, function (line) {return (line.indexOf("NØ") === -1); }), function (coord) {
+            var p = _.map(cleanLines(lines), function (coord) {
                 return new ns.Point(coord, origo, unit);
             });
             if (p.length !== 3) {
