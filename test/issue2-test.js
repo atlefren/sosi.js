@@ -31,7 +31,7 @@
             assert(kurve606);
         },
 
-        //test issue 14
+        //test issue 20
         "should be able to write to TopoJSON": function () {
             var sosidata = this.parser.parse(this.sosidata);
             var name = "testdata";
@@ -39,7 +39,7 @@
             assert(json);
         },
 
-        //test issue 14
+        //test issue 20
         "should be able to write to GeoJSON": function () {
             var sosidata = this.parser.parse(this.sosidata);
             var name = "testdata";

@@ -2787,7 +2787,7 @@ window.SOSI.types = sositypes;;var SOSI = window.SOSI || {};
 
                 arcs = arcs.concat(_.map(polygon.geometry.holeRefs, function (hole) {
                     if (hole.length === 1) {
-                        var feature = this.sosidata.features.getById(hole[0]);
+                        var feature = this.sosidata.features.getById(Math.abs(hole[0]));
                         if (feature.geometry instanceof ns.Polygon) {
                             return mapArcs(feature.geometry.shellRefs, lines);
                         }
