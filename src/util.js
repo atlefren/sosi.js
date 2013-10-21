@@ -83,6 +83,10 @@ var SOSI = window.SOSI || {};
 
     function setDataType(key, value) {
 
+        if (!ns.types) {
+            return value;
+        }
+
         var type = _.isArray(key) ? key : SOSI.types[key];
         if (type) {
             if (!_.isObject(type[0])) {
@@ -136,8 +140,11 @@ var SOSI = window.SOSI || {};
     }
 
     function getLongname(key) { // not tested
-        var type = SOSI.types[key];
-        return !!type && type[0] || key; //ambiguity ahoy!
+        if (ns.types && ns.types[key]) {
+            var type = ns.types[key];
+            return !!type && type[0] || key; //ambiguity ahoy!
+        }
+        return key;
     }
 
     function parseSubdict(lines) {
@@ -159,7 +166,9 @@ var SOSI = window.SOSI || {};
                     if (lines[0][0] === ".") {
                         dict[getLongname(key)] = parseSubdict(lines);
                     } else if (lines.length > 1) {
-                        dict[getLongname(key)] = _.map(lines, function(value){return setDataType(key, value);});
+                        dict[getLongname(key)] = _.map(lines, function (value) {
+                            return setDataType(key, value);
+                        });
                     } else {
                         dict[getLongname(key)] = setDataType(key, lines[0]);
                     }

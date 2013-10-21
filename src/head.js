@@ -53,6 +53,13 @@ var SOSI = window.SOSI || {};
         };
     }
 
+    function parseUnit(data) {
+        if (data.TRANSPAR.enhet) {
+            return parseFloat(data.TRANSPAR.enhet);
+        }
+        return parseFloat(data.TRANSPAR.ENHET);
+    }
+
     ns.Head = ns.Base.extend({
         initialize: function (data) {
             this.setData(data);
@@ -73,7 +80,7 @@ var SOSI = window.SOSI || {};
             this.kvalitet = ns.util.specialAttributes["kvalitet"].createFunction(data["kvalitet"]);
             this.bbox = parseBbox(data["OMRÅDE"]);
             this.origo = parseOrigo(data["TRANSPAR"]["ORIGO-NØ"]);
-            this.enhet = parseFloat(data["TRANSPAR"]["enhet"]);
+            this.enhet = parseUnit(data);
             this.vertdatum = getString(data["TRANSPAR"], "VERT-DATUM");
             if (data["TRANSPAR"]["KOORDSYS"]) {
                 this.srid = getSrid(data["TRANSPAR"]["KOORDSYS"]);
