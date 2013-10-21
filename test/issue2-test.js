@@ -37,6 +37,14 @@
             var name = "testdata";
             var json =  sosidata.dumps("topojson", name);
             assert(json);
+        },
+
+        //test issue 14
+        "should be able to write to GeoJSON": function () {
+            var sosidata = this.parser.parse(this.sosidata);
+            var name = "testdata";
+            var json =  sosidata.dumps("geojson", name);
+            assert(json);
         }
 
     });
