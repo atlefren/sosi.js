@@ -46,7 +46,7 @@ var SOSI = window.SOSI || {};
                 };
             }
 
-            if (geom instanceof ns.LineString) {
+            if ((geom instanceof ns.LineString) || (geom instanceof ns.LineStringFromArc)) {
                 return {
                     "type": "LineString",
                     "coordinates": _.map(geom.kurve, writePoint)
