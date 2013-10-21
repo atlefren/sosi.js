@@ -19,16 +19,17 @@ var SOSI = window.SOSI || {};
         }
         throw new Error("KOORDSYS = " + koordsys + " not found!");
     }
+
     function getSridFromGeosys(geosys) {
-      if (_.isArray(geosys)) {
-        throw new Error("GEOSYS cannot be parsed in uncompacted form yet.");
-      } else {
-        geosys = geosys.split(/\s+/);
-      }
-      if (ns.geosysMap[geosys[0]]) { 
-        return ns.geosysMap[geosys[0]];
-      }
-      throw new Error("GEOSYS = " + geosys + " not found!");
+        if (_.isArray(geosys)) {
+            throw new Error("GEOSYS cannot be parsed in uncompacted form yet.");
+        } else {
+            geosys = geosys.split(/\s+/);
+        }
+        if (ns.geosysMap[geosys[0]]) {
+            return ns.geosysMap[geosys[0]];
+        }
+        throw new Error("GEOSYS = " + geosys + " not found!");
     }
 
     function parseBbox(data) {
@@ -75,9 +76,9 @@ var SOSI = window.SOSI || {};
             this.enhet = parseFloat(data["TRANSPAR"]["enhet"]);
             this.vertdatum = getString(data["TRANSPAR"], "VERT-DATUM");
             if (data["TRANSPAR"]["KOORDSYS"]) {
-              this.srid = getSrid(data["TRANSPAR"]["KOORDSYS"]);
-            } else { 
-              this.srid = getSridFromGeosys(data["TRANSPAR"]["GEOSYS"]);
+                this.srid = getSrid(data["TRANSPAR"]["KOORDSYS"]);
+            } else {
+                this.srid = getSridFromGeosys(data["TRANSPAR"]["GEOSYS"]);
             }
         }
     });

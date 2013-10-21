@@ -29,7 +29,8 @@ config["My tests"] = {
         {path: "/naturvernomraade.sos", content: fs.readFileSync('data/naturvernomraade.sos')},
         {path: "/non-linear.sos", content: fs.readFileSync('data/non-linear.sos')},
         {path: "/testfile2.sos", content: fs.readFileSync('data/testfile2.sos')},
-        {path: "/buer.sos", content: fs.readFileSync('data/buer.sos')}
+        {path: "/buer.sos", content: fs.readFileSync('data/buer.sos')},
+        {path: "/testfile_issue4.sos", content: fs.readFileSync('data/testfile_issue4.sos')}
     ]
 
 };

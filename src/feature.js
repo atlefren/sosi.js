@@ -33,7 +33,6 @@ var SOSI = window.SOSI || {};
 
         parseData: function (data, origo, unit) {
 
-
             var split = _.reduce(data.lines, function (dict, line) {
                 if (line.indexOf("..NØ") !== -1) {
                     dict.foundGeom = true;
@@ -46,14 +45,13 @@ var SOSI = window.SOSI || {};
                         line = line.replace("..REF", "");
                     }
                     if (dict.foundRef) {
-                      if (line[0] == '.') {
-                        dict.foundRef = false;
-                      } else {
-                        dict.refs.push(line);
-                      }
-                    }
-                    if (!dict.foundRef) {
-                      dict.attributes.push(line);
+                        if (line[0] === '.') {
+                            dict.foundRef = false;
+                        } else {
+                            dict.refs.push(line);
+                        }
+                    } else {
+                        dict.attributes.push(line);
                     }
                 }
                 return dict;

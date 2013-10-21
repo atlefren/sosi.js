@@ -18,11 +18,11 @@ var SOSI = window.SOSI || {};
                 line = line[1];
             }
 
-            var coords = line.split(/\s+/); 
+            var coords = line.split(/\s+/);
 
             var numDecimals = 0;
             if (unit < 1) {
-                numDecimals = -Math.floor(Math.log(unit)/Math.LN10); 
+                numDecimals = -Math.floor(Math.log(unit) / Math.LN10);
             }
 
             this.y = ns.util.round((parseInt(coords[0], 10) * unit) + origo.y, numDecimals);

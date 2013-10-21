@@ -127,6 +127,13 @@ var SOSI = window.SOSI || {};
     };
 
 
+    function parseSubdict(lines) {
+        return _.reduce(parseTree(lines, 3), function (subdict, value, key) {
+            subdict[getLongname(key)] = setDataType(key, value[0]);
+            return subdict;
+        }, {});
+    }
+
     ns.util = {
 
         parseTree: parseTree,
@@ -135,15 +142,14 @@ var SOSI = window.SOSI || {};
 
         parseFromLevel2: function (data) {
             return _.reduce(parseTree(data, 2), function (dict, lines, key) {
-                if (lines.length && lines[0][0]==".") {
-                  dict[key] = _.reduce(parseTree(lines, 3), function (subdict, value, key) {
-                    subdict[getLongname(key)] = setDataType(key, value[0]);
-                      return subdict;
-                    }, {});
-                } else if (lines.length > 1) {
-                  dict[getLongname(key)] = _.map(lines, function(value){return setDataType(key, value);});
-                } else if (lines.length) {
-                  dict[getLongname(key)] = setDataType(key, lines[0]);
+                if (lines.length) {
+                    if (lines[0][0] === ".") {
+                        dict[key] = parseSubdict(lines);
+                    } else if (lines.length > 1) {
+                        dict[getLongname(key)] = _.map(lines, function(value){return setDataType(key, value);});
+                    } else {
+                        dict[getLongname(key)] = setDataType(key, lines[0]);
+                    }
                 }
                 return dict;
             }, {});
@@ -160,7 +166,7 @@ var SOSI = window.SOSI || {};
 
         round: function (number, numDecimals) {
             var pow = Math.pow(10, numDecimals);
-            return Math.round(number * pow) / pow; 
+            return Math.round(number * pow) / pow;
         }
 
     };
@@ -214,11 +220,11 @@ var SOSI = window.SOSI || {};
 
     //add proj4 defs so that proj4js works
     _.each(ns.koordsysMap, function (koordsys) {
-      if (proj4) { // newer proj4js (>=1.3.1)
-        proj4.defs(koordsys.srid, koordsys.def);
-      } else if (Proj4js) { //older proj4js (=< 1.1.0)
-        Proj4js.defs[koordsys.srid] = koordsys.def;
-      }
+        if (proj4) { // newer proj4js (>=1.3.1)
+            proj4.defs(koordsys.srid, koordsys.def);
+        } else if (Proj4js) { //older proj4js (=< 1.1.0)
+            Proj4js.defs[koordsys.srid] = koordsys.def;
+        }
     });
 
 }(SOSI));

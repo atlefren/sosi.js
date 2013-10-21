@@ -3,7 +3,7 @@ var SOSIDemo = window.SOSIDemo || {};
 (function (ns, undefined) {
     "use strict";
 
-    var Form =  Backbone.View.extend({
+    var Form = Backbone.View.extend({
 
         tagName: "form",
 

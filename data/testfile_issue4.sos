@@ -1,0 +1,56 @@
+.HODE
+..TEGNSETT ISO8859-1
+..OMRÅDE
+...MIN-NØ  6434765 431509
+...MAX-NØ  6461372 455330
+..SOSI-VERSJON 4.0
+..SOSI-NIVÅ 4
+..EIER 'Statens kartverk'
+..PRODUSENT 'Statens kartverk'
+!Annet
+..TRANSPAR
+...KOORDSYS 22
+...ORIGO-NØ 0  0
+...ENHET 0.01
+..OVERORD_KVALITET
+...PROSESS_HISTORIE "20130412: Transformert fra 23 til 22 med skt2lan1 - SKT2LAN1 Transf.progr. for hele Norge, basert på fylkesformler. Med fellespunkt versjon20070227."
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+.FLATE 1:
+..OBJTYPE Høydelag
+..MAKSHØYDE 500
+..MINHØYDE 0
+..OPPDATERINGSDATO 10000101
+..KVALITET *
+..REF :119
+..NØ
+.KURVE 119:
+..OBJTYPE KantUtsnitt
+..OPPDATERINGSDATO 20080801
+..LTEMA 4002
+..LTEMA 4003
+..LTEMA 4011
+..KVALITET *
+..DATO 10000101
+..LTEMA 4005
+..LTEMA 4019
+..NØ
+643833617 43740366 ...KP 1
+..NØ
+643838722 43734701
+643844370 43733996
+643848704 43735413
+643855849 43736879
+643859072 43738194
+643860831 43739941
+643860902 43740736
+643862398 43742907
+643861867 43747062
+643859371 43748287
+643850564 43747269
+643841198 43745601
+643834666 43745382
+643833617 43740366 ...KP 1
