@@ -178,13 +178,12 @@ var SOSI = window.SOSI || {};
         },
 
         specialAttributes: (function () {
-            var atts = {};
-            _.each(SOSI.types, function (type, key) {
+            return _.reduce(SOSI.types, function (attrs, type, key) {
                 if (_.isObject(type[1])) { // true for complex datatypes
-                    atts[type[0]] = {name: type[0], createFunction: parseSpecial(key, type[1])};
+                    attrs[type[0]] = {name: type[0], createFunction: parseSpecial(key, type[1])};
                 }
-            });
-            return atts;
+                return attrs;
+            }, {});
         }()),
 
         round: function (number, numDecimals) {
