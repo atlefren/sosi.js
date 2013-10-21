@@ -99,7 +99,9 @@ var SOSI = window.SOSI || {};
             this.kurve[i] = new ns.Point(x,y);
           }
           
-          this.knutepunkter = [];
+          this.knutepunkter = _.filter(p, function (punkt) {
+                return punkt.has_tiepoint;
+          });
         }
     });
 
