@@ -4,7 +4,7 @@
     var assert = assert || buster.assertions.assert;
     var refute = refute || buster.assertions.refute;
 
-    buster.testCase('Real life test', {
+    buster.testCase('Arc test', {
 
         setUp: function () {
 
