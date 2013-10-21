@@ -29,15 +29,17 @@ var SOSIDemo = window.SOSIDemo || {};
         }
     });
 
+    function zfill(num, len) {return (Array(len).join("0") + num).slice(-len);}
+
     function formatPopup(properties, indent) {
         indent = typeof indent !== 'undefined' ? indent : 0;
         return "<div style='margin-left:"+indent+"mm'>" + 
                _.map(properties, function (value, key) {
                  if (value instanceof Date) {      // treat objects one by one for now...
-                   return key + ": " + value.getFullYear()+"-"+(value.getMonth()+1)+"-"+value.getDate();
+                   return key + ": " + value.getFullYear()+"-"+zfill((value.getMonth()+1),2)+"-"+zfill(value.getDate(),2);
                  } else if (_.isObject(value)) { // breaks for actual objects as value, e.g. Date
                    return key + ":<br/>" + formatPopup(value, indent+5);
-                 } else if (_.isNan(value)) { 
+                 } else if (_.isNaN(value)) { 
                    return key + ": ukjent";
                  }
                  return key + ": " + value;
