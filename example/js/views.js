@@ -47,6 +47,8 @@ var SOSIDemo = window.SOSIDemo || {};
                "</div>";
     }
 
+
+
     ns.Menu = Backbone.View.extend({
 
         className: "menu panel panel-default",
@@ -66,18 +68,22 @@ var SOSIDemo = window.SOSIDemo || {};
             _.bindAll(this, "minimize", "maximize");
         },
 
-        render: function () {
-            this.$el.html(_.template(this.template));
-            this.$(".content").append(this.form.render().$el);
-            return this;
-        },
-
         parseSosi: function (sosidata) {
             if (this.layer) {
                 this.layer.clearLayers();
             }
+
             this.$el.find(".alert").remove();
-            //try {
+            
+            try {
+                if (sosidata.match(/^http/)) { /* if this is a URL, fetch and retry */
+                  $.ajax({url:sosidata, 
+                         async:false,
+                         success:function(data) {
+                    sosidata = data;
+                  }});
+                }
+
                 var json = this.sosiparser.parse(sosidata).dumps("geojson");
                 $("#jsondata")[0].innerText = JSON.stringify(json);
                 var layer = L.Proj.geoJson(
@@ -93,9 +99,16 @@ var SOSIDemo = window.SOSIDemo || {};
                 this.layer = layer;
                 this.minimize();
 
-            //} catch (error) {
-            //    this.showError(error);
-            //}
+            } catch (error) {
+                this.showError(error);
+            }
+        }, 
+
+
+        render: function () {
+            this.$el.html(_.template(this.template));
+            this.$(".content").append(this.form.render().$el);
+            return this;
         },
 
         showError: function (error) {
