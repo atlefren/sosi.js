@@ -32,8 +32,8 @@
 
             var flate_50 = sosidata.features.getById(50);
 
-            assert(flate_50.attributes.ID, "VV00000688");
-            assert(flate_50.attributes.NAVN, "Gaulosen");
+            assert(flate_50.attributes.identifikasjon, "VV00000688");
+            assert(flate_50.attributes.navn, "Gaulosen");
         }
 
 

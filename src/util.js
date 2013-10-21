@@ -81,9 +81,54 @@ var SOSI = window.SOSI || {};
         }, {objects: {}}).objects;
     }
 
+    function setDataType(key, value) {
+      var type = _.isArray(key) ? key : SOSI.types[key];
+      if (type) {
+        if (typeof(type[0]) == 'Object') {
+        } else {
+          if (type[1]=="Integer") {
+            return parseInt(value);
+          } else if (type[1]=="Real") {
+            return parseFloat(value);
+          } else if (type[1]=="Date") {
+            if (value.length==8) {
+              return new Date(parseInt(value.substring(0,4)), parseInt(value.substring(4,6))-1, parseInt(value.substring(6,8)));
+            } else if (value.length==14) {
+              return new Date(parseInt(value.substring(0,4)), parseInt(value.substring(4,6))-1, parseInt(value.substring(6,8)), 
+                              parseInt(value.substring(8,10)), parseInt(value.substring(10,12)), parseInt(value.substring(12,14)));
+            }
+          } else if (type[1]=="String") {
+            if (value[0] == '"' || value[0]=="'") return value.substring(1,value.length-1);
+            return value;
+          }
+        }
+      }
+      return value;
+    }
+
+    function parseSpecial(key, subfields) { 
+          return function (data) {
+            if (!data) return null;
+            if (_.isObject(data)) return data; // extended subfields
+
+            if (_.isString(data)) { 
+              return _.reduce(data.match(/"[^"]*"|'[^']*'|\S+/g), function (res, chunk, i) {
+                res[subfields[i][0]] = setDataType(subfields[i], chunk);
+                return res;
+              }, {});
+            }
+          }
+    };
+
+    function getLongname (key) { // not tested
+          var type = SOSI.types[key];
+          return !!type && type[0] || key;
+    };
+
+
     function parseSubdict(lines) {
         return _.reduce(parseTree(lines, 3), function (subdict, value, key) {
-            subdict[key] = value[0];
+            subdict[getLongname(key)] = setDataType(key, value[0]);
             return subdict;
         }, {});
     }
@@ -93,45 +138,30 @@ var SOSI = window.SOSI || {};
         parseTree: parseTree,
         cleanupLine: cleanupLine,
 
+
         parseFromLevel2: function (data) {
             return _.reduce(parseTree(data, 2), function (dict, lines, key) {
                 if (lines.length) {
                     if (lines[0][0] === ".") {
-                        dict[key] = parseSubdict(lines);
+                        dict[getLongname(key)] = parseSubdict(lines);
                     } else if (lines.length > 1) {
-                        dict[key] = lines;
+                        dict[getLongname(key)] = _.map(lines, function(value){return setDataType(key, value);});
                     } else {
-                        dict[key] = lines[0];
+                        dict[getLongname(key)] = setDataType(key, lines[0]);
                     }
                 }
                 return dict;
             }, {});
         },
 
-        parseQuality: function (data) {
-
-            if (!data) {
-                return null;
-            }
-
-            var qualityShorthand = [
-                "målemetode",
-                "nøyaktighet",
-                "synbarhet",
-                "h-målemetode",
-                "h-nøyaktighet",
-                "max-avvik"
-            ];
-
-            if (_.isString(data)) {
-                return _.reduce(data.split(/\s+/), function (res, number, i) {
-                    var asInt = parseInt(number, 10);
-                    res[qualityShorthand[i]] = isNaN(asInt) ? number : asInt;
-                    return res;
-                }, {});
-            }
-            throw new Error("Reading KVALITET as subfields not implemented!");
-        },
+        specialAttributes: function() {
+          var atts = {};
+          _.each(SOSI.types, function(type,key) {
+            if (_.isObject(type[1])) { // true for complex datatypes
+              atts[type[0]]={name:type[0], createFunction:parseSpecial(key, type[1])};
+          }});
+          return atts;
+        }(),
 
         round: function (number, numDecimals) {
             var pow = Math.pow(10, numDecimals);

@@ -22,7 +22,7 @@
             assert(sosidata.features.all());
 
             var flate = sosidata.features.getById(5);
-            assert.equals(flate.attributes.KVALITET.målemetode, "*");
+            assert.equals(flate.attributes.kvalitet.målemetode, NaN);
 
 
  

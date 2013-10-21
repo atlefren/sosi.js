@@ -9,6 +9,7 @@ var SOSI = window.SOSI || {};
             "PUNKT": ns.Point,
             "TEKST": ns.Point, // a point feature with exsta styling hints - the geometry actually consists of up to three points
             "KURVE": ns.LineString,
+            "BUEP" : ns.LineStringFromArc,
             "LINJE": ns.LineString, // old 4.0 name for unsmoothed KURVE
             "FLATE": ns.Polygon
         };
@@ -18,13 +19,6 @@ var SOSI = window.SOSI || {};
         }
         return new geometryTypes[geometryType](lines, origo, unit);
     }
-
-    var specialAttributes = {
-        "KVALITET": {
-            "name": "kvalitet",
-            "createFunction": ns.util.parseQuality
-        }
-    };
 
     ns.Feature = ns.Base.extend({
 
@@ -71,8 +65,8 @@ var SOSI = window.SOSI || {};
 
             this.attributes = ns.util.parseFromLevel2(split.attributes);
             this.attributes = _.reduce(this.attributes, function (attrs, value, key) {
-                if (specialAttributes[key]) {
-                    attrs[key] = specialAttributes[key].createFunction(value);
+                if (ns.util.specialAttributes[key]) {
+                    attrs[key] = ns.util.specialAttributes[key].createFunction(value);
                 } else {
                     attrs[key] = value;
                 }
