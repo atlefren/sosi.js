@@ -2780,618 +2780,618 @@ sositypes["FAGOMRÅDE_LINK"]=["link til fagområde", "String"];
 sositypes["PRODUKT_LINK"]=["produktLink", "String"];
 
 
-sositypes["ADRESSEBRUKSENHET"] = Array(3);
+sositypes["ADRESSEBRUKSENHET"] = ["adresseBruksenhet", Array(3)];
 
-sositypes["ADRESSEKOMMENTAR"] = Array(5);
+sositypes["ADRESSEKOMMENTAR"] = ["adresseKommentar", Array(5)];
 
-sositypes["ADRESSEREFERANSE"] = Array(2);
+sositypes["ADRESSEREFERANSE"] = ["adresseReferanse", Array(2)];
 
-sositypes["ADRESSETILLEGG"] = Array(3);
+sositypes["ADRESSETILLEGG"] = ["adresseTillegg", Array(3)];
 
-sositypes["AID"] = Array(3);
+sositypes["AID"] = ["gateadresseId",Array(3)];
 
-sositypes["AJOURFØRING"] = Array(2);
+sositypes["AJOURFØRING"] = ["ajourføring",Array(2)];
 
-sositypes["AKVA_KONS_INFO"] = Array(7);
+sositypes["AKVA_KONS_INFO"] = ["akvaKonsesjonsinformasjon", Array(7)];
 
-sositypes["AKVA_PRØVE_INFO"] = Array(9);
+sositypes["AKVA_PRØVE_INFO"] = ["akvaPrøvetakinformasjon", Array(9)];
 
-sositypes["ANDEL"] = Array(2);
+sositypes["ANDEL"] = ["andel", Array(2)];
 
-sositypes["AREALFORDELING"] = Array(5);
+sositypes["AREALFORDELING"] = ["arealfordeling",Array(5)];
 
-sositypes["BELASTNINGBOF5"] = Array(4);
+sositypes["BELASTNINGBOF5"] = ["belastningBOF5",Array(4)];
 
-sositypes["BELASTNINGFOSFOR"] = Array(4);
+sositypes["BELASTNINGFOSFOR"] = ["belastningFosfor",Array(4)];
 
-sositypes["BEREGNETAREAL"] = Array(2);
+sositypes["BEREGNETAREAL"] = ["beregnetAreal",Array(2)];
 
-sositypes["BILDEINFORMASJON"] = Array(3);
+sositypes["BILDEINFORMASJON"] = ["bildeinformasjon",Array(3)];
 
-sositypes["BMARTOBS"] = Array(4);
+sositypes["BMARTOBS"] = ["bmArtsobservasjon",Array(4)];
 
-sositypes["BMARTREG"] = Array(8);
+sositypes["BMARTREG"] = ["bmArtsregistrering",Array(8)];
 
-sositypes["BMKILDE"] = Array(2);
+sositypes["BMKILDE"] = ["bmKilde",Array(2)];
 
-sositypes["BMNATYPTILLEGG"] = Array(2);
+sositypes["BMNATYPTILLEGG"] = ["bmNaturtypeTillegg",Array(2)];
 
-sositypes["BRUKSENHET"] = Array(10);
+sositypes["BRUKSENHET"] = ["bruksenhet",Array(10)];
 
-sositypes["BYDELID"] = Array(2);
+sositypes["BYDELID"] = ["bydelId",Array(2)];
 
-sositypes["BYGG_KOMMENTARER"] = Array(5);
+sositypes["BYGG_KOMMENTARER"] = ["bygningKommentar",Array(5)];
 
-sositypes["BYGN_STAT_HIST"] = Array(3);
+sositypes["BYGN_STAT_HIST"] = ["bygningsstatusHistorikk",Array(3)];
 
-sositypes["BYGNING_TILLEGG"] = Array(15);
+sositypes["BYGNING_TILLEGG"] = ["bygningTillegg",Array(15)];
 
-sositypes["BYGNINGSREF"] = Array(2);
+sositypes["BYGNINGSREF"] = ["bygningsreferanse",Array(2)];
 
-sositypes["DELOMRåDEID"] = Array(2);
+sositypes["DELOMRåDEID"] = ["delområdeId",Array(2)];
 
-sositypes["DPOT_GRAS"] = Array(4);
+sositypes["DPOT_GRAS"] = ["dyrkingpotensjalGras",Array(4)];
 
-sositypes["DPOT_KORN"] = Array(4);
+sositypes["DPOT_KORN"] = ["dyrkingpotensjalKorn",Array(4)];
 
-sositypes["DPOT_POTET"] = Array(4);
+sositypes["DPOT_POTET"] = ["dyrkingpotensjalPotet",Array(4)];
 
-sositypes["EKOORD"] = Array(3);
+sositypes["EKOORD"] = ["jordregisterEiendomsteigkoordinat",Array(3)];
 
-sositypes["ENDRINGSFLAGG"] = Array(2);
+sositypes["ENDRINGSFLAGG"] = ["endringsflagg",Array(2)];
 
-sositypes["ENDRINGSVURDERING"] = Array(2);
+sositypes["ENDRINGSVURDERING"] = ["endringsvurdering",Array(2)];
 
-sositypes["ETASJE"] = Array(8);
+sositypes["ETASJE"] = ["etasje",Array(8)];
 
-sositypes["ETASJEDATA"] = Array(6);
+sositypes["ETASJEDATA"] = ["etasjedata",Array(6)];
 
-sositypes["FELTREGISTRERT"] = Array(3);
+sositypes["FELTREGISTRERT"] = ["feltregistrert",Array(3)];
 
-sositypes["FIRMA_EIER"] = Array(7);
+sositypes["FIRMA_EIER"] = ["firmaeier",Array(7)];
 
-sositypes["FISKE_BEDR_ID"] = Array(6);
+sositypes["FISKE_BEDR_ID"] = ["fiskebedriftsidentifikasjon",Array(6)];
 
-sositypes["FISKE_BEDR_INFO"] = Array(2);
+sositypes["FISKE_BEDR_INFO"] = ["fiskebedriftsinformasjon",Array(2)];
 
-sositypes["FISKE_BEDR_MARKED"] = Array(2);
+sositypes["FISKE_BEDR_MARKED"] = ["fiskebedriftsmarked",Array(2)];
 
-sositypes["FISKE_BEDR_TJENESTE"] = Array(3);
+sositypes["FISKE_BEDR_TJENESTE"] = ["fiskebedriftstjeneste",Array(3)];
 
-sositypes["FISKERI_REDSKAP"] = Array(4);
+sositypes["FISKERI_REDSKAP"] = ["fiskeriredskap",Array(4)];
 
-sositypes["FISKERI_RESS_ART"] = Array(6);
+sositypes["FISKERI_RESS_ART"] = ["fiskeriressursomrÃadeArt",Array(6)];
 
-sositypes["FISKERI_RESSURS"] = Array(2);
+sositypes["FISKERI_RESSURS"] = ["fiskeriressurs",Array(2)];
 
-sositypes["FMDATO"] = Array(2);
+sositypes["FMDATO"] = ["fastmerkeDato",Array(2)];
 
-sositypes["FMIDNY"] = Array(4);
+sositypes["FMIDNY"] = ["fastmerkeIdNy",Array(4)];
 
-sositypes["FMSIGN"] = Array(2);
+sositypes["FMSIGN"] = ["fastmerkeSignal",Array(2)];
 
-sositypes["FMSTATUS"] = Array(2);
+sositypes["FMSTATUS"] = ["fastmerkeStatus",Array(2)];
 
-sositypes["FMTYPE"] = Array(5);
+sositypes["FMTYPE"] = ["fastmerkeType",Array(5)];
 
-sositypes["FORUR_GRUNN_EIENDOM"] = Array(2);
+sositypes["FORUR_GRUNN_EIENDOM"] = ["forurensetGrunnEiendom",Array(2)];
 
-sositypes["GRENSE_MELLOM"] = Array(2);
+sositypes["GRENSE_MELLOM"] = ["grenseMellomNasjonerSjÃ",Array(2)];
 
-sositypes["GRUNNKRETSID"] = Array(2);
+sositypes["GRUNNKRETSID"] = ["grunnkretsId",Array(2)];
 
-sositypes["HAVNE_D_INFO"] = Array(2);
+sositypes["HAVNE_D_INFO"] = ["havnedistriktInformasjon",Array(2)];
 
-sositypes["HOVEDMåLRUBRIKK"] = Array(2);
+sositypes["HOVEDMåLRUBRIKK"] = ["hovedmålRubrikk",Array(2)];
 
-sositypes["HOVEDNR"] = Array(1);
+sositypes["HOVEDNR"] = ["landbruksregHovedNR",Array(1)];
 
-sositypes["HYTTEINFORMASJON"] = Array(3);
+sositypes["HYTTEINFORMASJON"] = ["hytteinformasjon",Array(3)];
 
-sositypes["JORDTYPE"] = Array(6);
+sositypes["JORDTYPE"] = ["jordtype",Array(6)];
 
-sositypes["JREGMARK"] = Array(10);
+sositypes["JREGMARK"] = ["jordregisterMarkslag",Array(10)];
 
-sositypes["JREGTEIG"] = Array(4);
+sositypes["JREGTEIG"] = ["jordregisterEiendomsteig",Array(4)];
 
-sositypes["KAI_INFO"] = Array(3);
+sositypes["KAI_INFO"] = ["kaiInformasjon",Array(3)];
 
-sositypes["KAMERAINFORMASJON"] = Array(9);
+sositypes["KAMERAINFORMASJON"] = ["kamerainformasjon",Array(9)];
 
-sositypes["KM_DAT_INFO"] = Array(2);
+sositypes["KM_DAT_INFO"] = ["kulturminneDateringInfo",Array(2)];
 
-sositypes["KM_DATERING"] = Array(2);
+sositypes["KM_DATERING"] = ["kulturminneDateringGruppe",Array(2)];
 
-sositypes["KOMMUNALKRETS"] = Array(4);
+sositypes["KOMMUNALKRETS"] = ["kommunalKrets",Array(4)];
 
-sositypes["KOPIDATA"] = Array(3);
+sositypes["KOPIDATA"] = ["kopidata",Array(3)];
 
-sositypes["KOPLING"] = Array(8);
+sositypes["KOPLING"] = ["koplingsegenskaper",Array(8)];
 
-sositypes["KURSLINJE_INFO"] = Array(4);
+sositypes["KURSLINJE_INFO"] = ["kurslinjeinformasjon",Array(4)];
 
-sositypes["KVALITET"] = Array(6);
+sositypes["KVALITET"] = ["kvalitet",Array(6)];
 
-sositypes["LEDNING"] = Array(8);
+sositypes["LEDNING"] = ["ledningsegenskaper",Array(8)];
 
-sositypes["LEGGEåR"] = Array(2);
+sositypes["LEGGEåR"] = ["leggeÅr",Array(2)];
 
-sositypes["LGID"] = Array(8);
+sositypes["LGID"] = ["landbruksregGrunneiendomNr",Array(8)];
 
-sositypes["MATRIKKELADRESSEID"] = Array(2);
+sositypes["MATRIKKELADRESSEID"] = ["matrikkeladresseId",Array(2)];
 
-sositypes["MATRIKKELNUMMER"] = Array(5);
+sositypes["MATRIKKELNUMMER"] = ["matrikkelnummer",Array(5)];
 
-sositypes["OVERLAPP"] = Array(2);
+sositypes["OVERLAPP"] = ["overlapp",Array(2)];
 
-sositypes["POST"] = Array(2);
+sositypes["POST"] = ["postadministrativeOmråder",Array(2)];
 
-sositypes["REGISTRERINGSVERSJON"] = Array(2);
+sositypes["REGISTRERINGSVERSJON"] = ["registreringsversjon",Array(2)];
 
-sositypes["RESIPIENT"] = Array(5);
+sositypes["RESIPIENT"] = ["resipient",Array(5)];
 
-sositypes["RETNING"] = Array(3);
+sositypes["RETNING"] = ["retningsvektor",Array(3)];
 
-sositypes["RØR_DIMENSJON"] = Array(2);
+sositypes["RØR_DIMENSJON"] = ["ledningsdimensjon",Array(2)];
 
-sositypes["SAK"] = Array(4);
+sositypes["SAK"] = ["saksinformasjon",Array(4)];
 
-sositypes["SEFRAK_ID"] = Array(3);
+sositypes["SEFRAK_ID"] = ["sefrakId",Array(3)];
 
-sositypes["SEFRAKFUNKSJON"] = Array(2);
+sositypes["SEFRAKFUNKSJON"] = ["sefrakFunksjon",Array(2)];
 
-sositypes["SENTRUMSSONEID"] = Array(2);
+sositypes["SENTRUMSSONEID"] = ["sentrumssoneId",Array(2)];
 
-sositypes["SERV"] = Array(3);
+sositypes["SERV"] = ["servituttgruppe",Array(3)];
 
-sositypes["SKRETSID"] = Array(2);
+sositypes["SKRETSID"] = ["skolekretsID",Array(2)];
 
-sositypes["SP_ADM"] = Array(2);
+sositypes["SP_ADM"] = ["skogbrplanAdmDataGruppe",Array(2)];
 
-sositypes["SP_AKLASS"] = Array(6);
+sositypes["SP_AKLASS"] = ["skogbrplanKlassGruppe",Array(6)];
 
-sositypes["SP_BESTAND"] = Array(2);
+sositypes["SP_BESTAND"] = ["skogbrplanBestandGruppe", Array(2)];
 
-sositypes["SP_BSKRIV"] = Array(13);
+sositypes["SP_BSKRIV"] = ["skogbrplanBeskrivBestandGruppe",Array(13)];
 
-sositypes["SP_FLBRELEM"] = Array(5);
+sositypes["SP_FLBRELEM"] = ["skogbrplanFlerKoderGruppe",Array(5)];
 
-sositypes["SP_GRLVOL"] = Array(8);
+sositypes["SP_GRLVOL"] = ["skogbrplanGrunnlagVolBer",Array(8)];
 
-sositypes["SP_TEIG"] = Array(4);
+sositypes["SP_TEIG"] = ["skogbrplanTeigGruppe",Array(4)];
 
-sositypes["SP_TERKLASS"] = Array(5);
+sositypes["SP_TERKLASS"] = ["skogbrplanTerrengGruppe",Array(5)];
 
-sositypes["SP_TETTHOYD"] = Array(2);
+sositypes["SP_TETTHOYD"] = ["skogbrplanTetthetGruppe",Array(2)];
 
-sositypes["SP_TILTAK"] = Array(5);
+sositypes["SP_TILTAK"] = ["skogbrplanTiltakGruppe",Array(5)];
 
-sositypes["SP_TILVVOL"] = Array(4);
+sositypes["SP_TILVVOL"] = ["skogbrplanTilvekstGruppe",Array(4)];
 
-sositypes["SP_TRESL"] = Array(8);
+sositypes["SP_TRESL"] = ["skogbrplanTreslagGruppe",Array(8)];
 
-sositypes["TETTSTEDID"] = Array(2);
+sositypes["TETTSTEDID"] = ["tettstedId",Array(2)];
 
-sositypes["UNIVERSELLUTFORMING"] = Array(3);
+sositypes["UNIVERSELLUTFORMING"] = ["universellUtforming",Array(3)];
 
-sositypes["UTNYTT"] = Array(2);
+sositypes["UTNYTT"] = ["utnytting",Array(2)];
 
-sositypes["UTSLIPP"] = Array(3);
+sositypes["UTSLIPP"] = ["utslipp",Array(3)];
 
-sositypes["UTV_TILL_PART"] = Array(2);
+sositypes["UTV_TILL_PART"] = ["utvinningstillatelsespartner",Array(2)];
 
-sositypes["VERN"] = Array(4);
+sositypes["VERN"] = ["vern",Array(4)];
 
-sositypes["VKRETS"] = Array(2);
+sositypes["VKRETS"] = ["valgkretsId",Array(2)];
 
-sositypes["VNR"] = Array(3);
+sositypes["VNR"] = ["vegident",Array(3)];
 
-sositypes["VPA"] = Array(3);
+sositypes["VPA"] = ["vegparsell",Array(3)];
 
-sositypes["ADRESSEBRUKSENHET"][1] = ["etasjenummer","Integer"];
-sositypes["ADRESSEBRUKSENHET"][2] = ["etasjeplan","String"];
-sositypes["ADRESSEBRUKSENHET"][0] = ["bruksenhetLøpenr","Integer"];
-sositypes["ADRESSEKOMMENTAR"][0] = ["etat","String"];
-sositypes["ADRESSEKOMMENTAR"][2] = ["kommentar","String"];
-sositypes["ADRESSEKOMMENTAR"][1] = ["kommentarType","String"];
-sositypes["ADRESSEKOMMENTAR"][4] = ["lagretDato","Date"];
-sositypes["ADRESSEKOMMENTAR"][3] = ["saksnummer","Integer"];
-sositypes["ADRESSEREFERANSE"][1] = ["adresseReferansekode","String"];
-sositypes["ADRESSEREFERANSE"][0] = ["referanse","String"];
-sositypes["ADRESSETILLEGG"][1] = ["adresseKommentar","String"];
-sositypes["ADRESSETILLEGG"][2] = ["adresseReferanse","String"];
-sositypes["ADRESSETILLEGG"][0] = ["kartbladindeks","String"];
-sositypes["AID"][2] = ["bokstav","String"];
-sositypes["AID"][0] = ["gatenummer","Integer"];
-sositypes["AID"][1] = ["husnummer","Integer"];
-sositypes["AJOURFØRING"][1] = ["ajourførtAv","String"];
-sositypes["AJOURFØRING"][0] = ["ajourførtDato","Date"];
-sositypes["AKVA_KONS_INFO"][1] = ["akvaKonsesjonsnummer","Integer"];
-sositypes["AKVA_KONS_INFO"][4] = ["konsesjonsstatus","String"];
-sositypes["AKVA_KONS_INFO"][6] = ["konsesjonstype","String"];
-sositypes["AKVA_KONS_INFO"][5] = ["konsesjonsformål","String"];
-sositypes["AKVA_KONS_INFO"][0] = ["fiskebruksnummerFylke","String"];
-sositypes["AKVA_KONS_INFO"][2] = ["lokalitetsnavn","String"];
-sositypes["AKVA_KONS_INFO"][3] = ["lokalitetsnummer","Integer"];
-sositypes["AKVA_PRØVE_INFO"][7] = ["akvaTemperatur","Integer"];
-sositypes["AKVA_PRØVE_INFO"][1] = ["algekonsentrasjon","Integer"];
-sositypes["AKVA_PRØVE_INFO"][0] = ["algetype","String"];
-sositypes["AKVA_PRØVE_INFO"][5] = ["klorofyllMaksimum","Integer"];
-sositypes["AKVA_PRØVE_INFO"][8] = ["salinitet","Integer"];
-sositypes["AKVA_PRØVE_INFO"][6] = ["sikteDyp","Integer"];
-sositypes["AKVA_PRØVE_INFO"][2] = ["strømretning","Integer"];
-sositypes["AKVA_PRØVE_INFO"][4] = ["vindretning","Integer"];
-sositypes["ANDEL"][1] = ["nevner","Real"];
-sositypes["ANDEL"][0] = ["teller","Real"];
-sositypes["AREALFORDELING"][4] = ["prosentElv","Real"];
-sositypes["AREALFORDELING"][2] = ["prosentHav","Real"];
-sositypes["AREALFORDELING"][3] = ["prosentInnsjø","Real"];
-sositypes["AREALFORDELING"][1] = ["prosentLand","Real"];
-sositypes["AREALFORDELING"][0] = ["totalarealKm2","Real"];
-sositypes["BELASTNINGBOF5"][2] = ["andrekilderBelastning","Integer"];
-sositypes["BELASTNINGBOF5"][0] = ["husholdBelastning","Integer"];
-sositypes["BELASTNINGBOF5"][1] = ["industriBelastning","Integer"];
-sositypes["BELASTNINGBOF5"][3] = ["totalbelastning","Integer"];
-sositypes["BELASTNINGFOSFOR"][2] = ["andrekilderBelastning","Integer"];
-sositypes["BELASTNINGFOSFOR"][0] = ["husholdBelastning","Integer"];
-sositypes["BELASTNINGFOSFOR"][1] = ["industriBelastning","Integer"];
-sositypes["BELASTNINGFOSFOR"][3] = ["totalbelastning","Integer"];
-sositypes["BEREGNETAREAL"][0] = ["areal","Real"];
-sositypes["BEREGNETAREAL"][1] = ["arealmerknad","String"];
-sositypes["BILDEINFORMASJON"][1] = ["brennvidde","Real"];
-sositypes["BILDEINFORMASJON"][2] = ["fotograf","String"];
-sositypes["BILDEINFORMASJON"][0] = ["kameratype","String"];
-sositypes["BMARTOBS"][1] = ["bmAntall","Integer"];
-sositypes["BMARTOBS"][0] = ["bmArt","String"];
-sositypes["BMARTOBS"][2] = ["bmEnhet","Integer"];
-sositypes["BMARTOBS"][3] = ["bmRegistreringsdato","Date"];
-sositypes["BMARTREG"][6] = ["bmÅrstid","Integer"];
-sositypes["BMARTREG"][0] = ["bmArt","String"];
-sositypes["BMARTREG"][2] = ["bmOmrådefunksjon","Integer"];
-sositypes["BMARTREG"][5] = ["bmFunksjonskvalitet","Integer"];
-sositypes["BMARTREG"][7] = ["bmKilde","String"];
-sositypes["BMARTREG"][1] = ["bmRegistreringsdato","Date"];
-sositypes["BMARTREG"][3] = ["bmTruethetskategori","String"];
-sositypes["BMARTREG"][4] = ["bmViltvekt","Integer"];
-sositypes["BMKILDE"][1] = ["bmKildetype","Integer"];
-sositypes["BMKILDE"][0] = ["bmKildevurdering","Integer"];
-sositypes["BMNATYPTILLEGG"][1] = ["bmAndel","Integer"];
-sositypes["BMNATYPTILLEGG"][0] = ["bmNaturtype","String"];
-sositypes["BRUKSENHET"][7] = ["antallBad","Integer"];
-sositypes["BRUKSENHET"][6] = ["antallRom","Integer"];
-sositypes["BRUKSENHET"][8] = ["antallWC","Integer"];
-sositypes["BRUKSENHET"][5] = ["bruksareal","Real"];
-sositypes["BRUKSENHET"][4] = ["bruksenhetstype","String"];
-sositypes["BRUKSENHET"][2] = ["etasjenummer","Integer"];
-sositypes["BRUKSENHET"][1] = ["etasjeplan","String"];
-sositypes["BRUKSENHET"][9] = ["kjøkkenTilgang","Integer"];
-sositypes["BRUKSENHET"][3] = ["bruksenhetLøpenr","Integer"];
-sositypes["BRUKSENHET"][0] = ["matrikkelnummer","String"];
-sositypes["BYDELID"][0] = ["bydelsnavn","String"];
-sositypes["BYDELID"][1] = ["bydelsnummer","Integer"];
-sositypes["BYGG_KOMMENTARER"][3] = ["bygnSaksnr","String"];
-sositypes["BYGG_KOMMENTARER"][0] = ["etat","String"];
-sositypes["BYGG_KOMMENTARER"][2] = ["kommentar","String"];
-sositypes["BYGG_KOMMENTARER"][1] = ["kommentarType","String"];
-sositypes["BYGG_KOMMENTARER"][4] = ["lagretDato","Date"];
-sositypes["BYGN_STAT_HIST"][0] = ["bygningsstatus","String"];
-sositypes["BYGN_STAT_HIST"][1] = ["bygningshistorikkDato","Date"];
-sositypes["BYGN_STAT_HIST"][2] = ["registrertDato","Date"];
-sositypes["BYGNING_TILLEGG"][0] = ["alternativtArealBygning","Real"];
-sositypes["BYGNING_TILLEGG"][1] = ["antallEtasjer","Integer"];
-sositypes["BYGNING_TILLEGG"][2] = ["antallRøkløp","Real"];
-sositypes["BYGNING_TILLEGG"][3] = ["brenseltankNedgravd","Integer"];
-sositypes["BYGNING_TILLEGG"][14] = ["bygningKommentar","String"];
-sositypes["BYGNING_TILLEGG"][13] = ["bygningsreferanse","String"];
-sositypes["BYGNING_TILLEGG"][9] = ["fundamentering","Integer"];
-sositypes["BYGNING_TILLEGG"][12] = ["horisontalBærekonstr","Integer"];
-sositypes["BYGNING_TILLEGG"][5] = ["kartbladindeks","String"];
-sositypes["BYGNING_TILLEGG"][6] = ["kildePrivatVannforsyning","Integer"];
-sositypes["BYGNING_TILLEGG"][10] = ["materialeIYttervegg","Integer"];
-sositypes["BYGNING_TILLEGG"][7] = ["privatKloakkRensing","Integer"];
-sositypes["BYGNING_TILLEGG"][8] = ["renovasjon","Integer"];
-sositypes["BYGNING_TILLEGG"][4] = ["septiktank","String"];
-sositypes["BYGNING_TILLEGG"][11] = ["vertikalBærekonstr","Integer"];
-sositypes["BYGNINGSREF"][1] = ["bygningReferansetype","String"];
-sositypes["BYGNINGSREF"][0] = ["referanse","String"];
-sositypes["DELOMRåDEID"][0] = ["delområdenavn","String"];
-sositypes["DELOMRåDEID"][1] = ["delområdenummer","String"];
-sositypes["DPOT_GRAS"][2] = ["nedbørsbasert","Integer"];
-sositypes["DPOT_GRAS"][3] = ["nedklassifiseringNedbør","Integer"];
-sositypes["DPOT_GRAS"][0] = ["vanningsbasert","Integer"];
-sositypes["DPOT_GRAS"][1] = ["nedklassifiseringVanning","Integer"];
-sositypes["DPOT_KORN"][2] = ["nedbørsbasert","Integer"];
-sositypes["DPOT_KORN"][3] = ["nedklassifiseringNedbør","Integer"];
-sositypes["DPOT_KORN"][0] = ["vanningsbasert","Integer"];
-sositypes["DPOT_KORN"][1] = ["nedklassifiseringVanning","Integer"];
-sositypes["DPOT_POTET"][2] = ["nedbørsbasert","Integer"];
-sositypes["DPOT_POTET"][3] = ["nedklassifiseringNedbør","Integer"];
-sositypes["DPOT_POTET"][0] = ["vanningsbasert","Integer"];
-sositypes["DPOT_POTET"][1] = ["nedklassifiseringVanning","Integer"];
-sositypes["EKOORD"][2] = ["jordregisterKoordinatHøyde","Integer"];
-sositypes["EKOORD"][0] = ["jordregisterKoordinatNord","Integer"];
-sositypes["EKOORD"][1] = ["jordregisterKoordinatØst","Integer"];
-sositypes["ENDRINGSFLAGG"][1] = ["tidspunktEndring","Date"];
-sositypes["ENDRINGSFLAGG"][0] = ["typeEndring","String"];
-sositypes["ENDRINGSVURDERING"][0] = ["endringsgrad","String"];
-sositypes["ENDRINGSVURDERING"][1] = ["vurdertDato","Date"];
-sositypes["ETASJE"][2] = ["antallBoenheter","Integer"];
-sositypes["ETASJE"][4] = ["bruksarealTilAnnet","Real"];
-sositypes["ETASJE"][3] = ["bruksarealTilBolig","Real"];
-sositypes["ETASJE"][5] = ["bruksarealTotalt","Real"];
-sositypes["ETASJE"][1] = ["etasjenummer","Integer"];
-sositypes["ETASJE"][0] = ["etasjeplan","String"];
-sositypes["ETASJE"][6] = ["kommAlternativtAreal","Real"];
-sositypes["ETASJE"][7] = ["kommAlternativtAreal2","Real"];
-sositypes["ETASJEDATA"][4] = ["sumAlternativtAreal","Real"];
-sositypes["ETASJEDATA"][5] = ["sumAlternativtAreal2","Real"];
-sositypes["ETASJEDATA"][0] = ["sumAntallBoenheter","Integer"];
-sositypes["ETASJEDATA"][3] = ["sumBruksarealTotalt","Real"];
-sositypes["ETASJEDATA"][2] = ["sumBruksarealTilAnnet","Real"];
-sositypes["ETASJEDATA"][1] = ["sumBruksarealTilBolig","Real"];
-sositypes["FELTREGISTRERT"][2] = ["ajourføring","String"];
-sositypes["FELTREGISTRERT"][1] = ["datafangstdato","Date"];
-sositypes["FELTREGISTRERT"][0] = ["feltregistrertAv","String"];
-sositypes["FIRMA_EIER"][2] = ["adresse","String"];
-sositypes["FIRMA_EIER"][0] = ["firmanavn","String"];
-sositypes["FIRMA_EIER"][1] = ["bedriftseier","String"];
-sositypes["FIRMA_EIER"][6] = ["kontaktperson","String"];
-sositypes["FIRMA_EIER"][3] = ["postnummer","Integer"];
-sositypes["FIRMA_EIER"][5] = ["telefaxnummer","Integer"];
-sositypes["FIRMA_EIER"][4] = ["telefonnummer","Integer"];
-sositypes["FISKE_BEDR_ID"][4] = ["antallAnsatte","Integer"];
-sositypes["FISKE_BEDR_ID"][5] = ["antallÅrsverk","Integer"];
-sositypes["FISKE_BEDR_ID"][0] = ["fiskebedriftsnavn","String"];
-sositypes["FISKE_BEDR_ID"][2] = ["fiskebruksnummer","Integer"];
-sositypes["FISKE_BEDR_ID"][1] = ["fiskebruksnummerFylke","String"];
-sositypes["FISKE_BEDR_ID"][3] = ["firmaeier","String"];
-sositypes["FISKE_BEDR_INFO"][1] = ["artskode","Integer"];
-sositypes["FISKE_BEDR_INFO"][0] = ["fisketype","Integer"];
-sositypes["FISKE_BEDR_MARKED"][0] = ["fiskebedriftsandel","Integer"];
-sositypes["FISKE_BEDR_MARKED"][1] = ["fiskebedriftsområde","Integer"];
-sositypes["FISKE_BEDR_TJENESTE"][2] = ["fiskebedriftservice","Integer"];
-sositypes["FISKE_BEDR_TJENESTE"][1] = ["fiskekapasitetEnhet","Integer"];
-sositypes["FISKE_BEDR_TJENESTE"][0] = ["fiskekapasitet","Integer"];
-sositypes["FISKERI_REDSKAP"][0] = ["fiskeriredskapGenAktiv","Integer"];
-sositypes["FISKERI_REDSKAP"][1] = ["fiskeriredskapGenPassiv","Integer"];
-sositypes["FISKERI_REDSKAP"][2] = ["fiskeriredskapSpesAktiv","Integer"];
-sositypes["FISKERI_REDSKAP"][3] = ["fiskeriredskapSpesPassiv","Integer"];
-sositypes["FISKERI_RESS_ART"][3] = ["engelskArtsnavn","String"];
-sositypes["FISKERI_RESS_ART"][2] = ["vitenskapeligArtsnavn","String"];
-sositypes["FISKERI_RESS_ART"][1] = ["norskArtsnavn","String"];
-sositypes["FISKERI_RESS_ART"][0] = ["taksonomiskKode","Integer"];
-sositypes["FISKERI_RESS_ART"][4] = ["faoKode","String"];
-sositypes["FISKERI_RESS_ART"][5] = ["artskode","Integer"];
-sositypes["FISKERI_RESSURS"][0] = ["fiskeriressursområdeArt","String"];
-sositypes["FISKERI_RESSURS"][1] = ["periode","String"];
-sositypes["FMDATO"][1] = ["beregningsDato","Date"];
-sositypes["FMDATO"][0] = ["fastmerkeEtableringsdato","Date"];
-sositypes["FMIDNY"][1] = ["fastmerkeInstitusjon","String"];
-sositypes["FMIDNY"][0] = ["fastmerkeKommune","Integer"];
-sositypes["FMIDNY"][2] = ["fastmerkeNummer","String"];
-sositypes["FMIDNY"][3] = ["indikatorFastmerkenummer","String"];
-sositypes["FMSIGN"][1] = ["signalHøyde","Real"];
-sositypes["FMSIGN"][0] = ["signalType","String"];
-sositypes["FMSTATUS"][1] = ["typeStatus","Integer"];
-sositypes["FMSTATUS"][0] = ["verifiseringsdato","Date"];
-sositypes["FMTYPE"][0] = ["boltType","Integer"];
-sositypes["FMTYPE"][3] = ["fastmerkeDiameter","Integer"];
-sositypes["FMTYPE"][4] = ["gravertTekst","String"];
-sositypes["FMTYPE"][1] = ["materialeBolt","Integer"];
-sositypes["FMTYPE"][2] = ["fastmerkeUnderlag","Integer"];
-sositypes["FORUR_GRUNN_EIENDOM"][1] = ["arealbrukRestriksjon","Integer"];
-sositypes["FORUR_GRUNN_EIENDOM"][0] = ["matrikkelnummer","String"];
-sositypes["GRENSE_MELLOM"][0] = ["førsteLand","String"];
-sositypes["GRENSE_MELLOM"][1] = ["annetLand","String"];
-sositypes["GRUNNKRETSID"][1] = ["grunnkretsnavn","String"];
-sositypes["GRUNNKRETSID"][0] = ["grunnkretsnummer","Integer"];
-sositypes["HAVNE_D_INFO"][1] = ["havnedistriktAdministrasjon","Integer"];
-sositypes["HAVNE_D_INFO"][0] = ["kommune","Integer"];
-sositypes["HOVEDMåLRUBRIKK"][1] = ["bredde","Integer"];
-sositypes["HOVEDMåLRUBRIKK"][0] = ["lengde","Integer"];
-sositypes["HOVEDNR"][1] = [" kommunenummer","Integer"];
-sositypes["HOVEDNR"][0] = ["matrikkelnummer","String"];
-sositypes["HYTTEINFORMASJON"][1] = ["betjeningsgrad","String"];
-sositypes["HYTTEINFORMASJON"][0] = ["hytteId","Integer"];
-sositypes["HYTTEINFORMASJON"][2] = ["hytteeier","Integer"];
-sositypes["JORDTYPE"][0] = ["serie1","String"];
-sositypes["JORDTYPE"][2] = ["serie2","String"];
-sositypes["JORDTYPE"][4] = ["serie3","String"];
-sositypes["JORDTYPE"][1] = ["tekstur1","String"];
-sositypes["JORDTYPE"][3] = ["tekstur2","String"];
-sositypes["JORDTYPE"][5] = ["tekstur3","String"];
-sositypes["JREGMARK"][1] = ["potensiellSkogbonitetOmkodet","Integer"];
-sositypes["JREGMARK"][0] = ["arealtilstand","Integer"];
-sositypes["JREGMARK"][7] = ["jordregisterDyrkingsjord","String"];
-sositypes["JREGMARK"][6] = ["jordregisterFreg","Integer"];
-sositypes["JREGMARK"][5] = ["jordregisterLreg","String"];
-sositypes["JREGMARK"][3] = ["jordklassifikasjon","Integer"];
-sositypes["JREGMARK"][4] = ["myrklassifikasjon","Integer"];
-sositypes["JREGMARK"][8] = ["jordregisterSkogtype","Integer"];
-sositypes["JREGMARK"][9] = ["jordregisterSkogreisningsmark","Integer"];
-sositypes["JREGMARK"][2] = ["tilleggsopplysningerSkog","Integer"];
-sositypes["JREGTEIG"][2] = ["jordregisterDriftssenter","Integer"];
-sositypes["JREGTEIG"][3] = ["jordregisterStatusEiendom","Integer"];
-sositypes["JREGTEIG"][0] = ["matrikkelnummer","String"];
-sositypes["JREGTEIG"][1] = ["jordregisterEiendomTeigNummer","Integer"];
-sositypes["KAI_INFO"][1] = ["kaiDybde","Real"];
-sositypes["KAI_INFO"][0] = ["kaiType","Integer"];
-sositypes["KAI_INFO"][2] = ["kommunenummer","Integer"];
-sositypes["KAMERAINFORMASJON"][4] = ["bildekategori","Integer"];
-sositypes["KAMERAINFORMASJON"][3] = ["brennvidde","Real"];
-sositypes["KAMERAINFORMASJON"][7] = ["film","String"];
-sositypes["KAMERAINFORMASJON"][8] = ["kalibreringsrapport","String"];
-sositypes["KAMERAINFORMASJON"][1] = ["kameratype","String"];
-sositypes["KAMERAINFORMASJON"][0] = ["opptaksmetode","Integer"];
-sositypes["KM_DAT_INFO"][0] = ["sefrakTiltak","Integer"];
-sositypes["KM_DAT_INFO"][1] = ["tidsangivelse","Integer"];
-sositypes["KM_DATERING"][0] = ["kulturminneDatering","String"];
-sositypes["KM_DATERING"][1] = ["kulturminneDateringKvalitet","String"];
-sositypes["KOMMUNALKRETS"][3] = ["kretsnavn","String"];
-sositypes["KOMMUNALKRETS"][2] = ["kretsnummer","String"];
-sositypes["KOMMUNALKRETS"][0] = ["kretstypekode","String"];
-sositypes["KOMMUNALKRETS"][1] = ["kretstypenavn","String"];
-sositypes["KOPIDATA"][2] = ["kopidato","Date"];
-sositypes["KOPIDATA"][0] = ["områdeId","Integer"];
-sositypes["KOPIDATA"][1] = ["originalDatavert","String"];
-sositypes["KOPLING"][1] = ["fagområde","Integer"];
-sositypes["KOPLING"][4] = ["bruksområde","String"];
-sositypes["KOPLING"][2] = ["koplingskategori","Integer"];
-sositypes["KOPLING"][0] = ["koplingsnavn","String"];
-sositypes["KOPLING"][3] = ["koplingstype","String"];
-sositypes["KOPLING"][7] = ["bildelink","String"];
-sositypes["KOPLING"][5] = ["materiellkode","String"];
-sositypes["KOPLING"][6] = ["verdi","Integer"];
-sositypes["KURSLINJE_INFO"][0] = ["fartøyIdentifikasjon","String"];
-sositypes["KURSLINJE_INFO"][1] = ["satellittkommunikasjonsId","String"];
-sositypes["KURSLINJE_INFO"][3] = ["sporhastighet","Integer"];
-sositypes["KURSLINJE_INFO"][2] = ["tidspunkt","Date"];
-sositypes["KVALITET"][3] = ["målemetodeHøyde","Integer"];
-sositypes["KVALITET"][4] = ["nøyaktighetHøyde","Integer"];
-sositypes["KVALITET"][5] = ["maksimaltAvvik","Integer"];
-sositypes["KVALITET"][0] = ["målemetode","Integer"];
-sositypes["KVALITET"][1] = ["nøyaktighet","Integer"];
-sositypes["KVALITET"][2] = ["synbarhet","Integer"];
-sositypes["LEDNING"][1] = ["fagområde","Integer"];
-sositypes["LEDNING"][3] = ["bruksområde","String"];
-sositypes["LEDNING"][0] = ["ledningsnavn","String"];
-sositypes["LEDNING"][2] = ["ledningstype","Integer"];
-sositypes["LEDNING"][7] = ["leggeår","String"];
-sositypes["LEDNING"][6] = ["lengde","Real"];
-sositypes["LEDNING"][5] = ["materiellkode","String"];
-sositypes["LEDNING"][4] = ["nettnivå","String"];
-sositypes["LEGGEåR"][0] = ["alderReferanse","Integer"];
-sositypes["LEGGEåR"][1] = ["årstall","Integer"];
-sositypes["LGID"][7] = ["landbruksregAktiv","Integer"];
-sositypes["LGID"][6] = ["landbruksregType","Integer"];
-sositypes["LGID"][0] = ["matrikkelnummer","String"];
-sositypes["MATRIKKELADRESSEID"][0] = ["matrikkelnummer","String"];
-sositypes["MATRIKKELADRESSEID"][1] = ["undernr","Integer"];
-sositypes["MATRIKKELNUMMER"][2] = ["bruksnummer","Integer"];
-sositypes["MATRIKKELNUMMER"][3] = ["festenummer","Integer"];
-sositypes["MATRIKKELNUMMER"][1] = ["gårdsnummer","Integer"];
-sositypes["MATRIKKELNUMMER"][0] = ["matrikkelkommune","Integer"];
-sositypes["MATRIKKELNUMMER"][4] = ["seksjonsnummer","Integer"];
-sositypes["OVERLAPP"][0] = ["lengdeoverlapp","Integer"];
-sositypes["OVERLAPP"][1] = ["sideoverlapp","Integer"];
-sositypes["POST"][1] = ["poststedsnavn","String"];
-sositypes["POST"][0] = ["postnummer","Integer"];
-sositypes["REGISTRERINGSVERSJON"][0] = ["produkt","String"];
-sositypes["REGISTRERINGSVERSJON"][1] = ["versjon","String"];
-sositypes["RESIPIENT"][2] = ["fjordId","String"];
-sositypes["RESIPIENT"][0] = ["resipientnavn","String"];
-sositypes["RESIPIENT"][4] = ["resipienttype","String"];
-sositypes["RESIPIENT"][1] = ["vassdragsnummer","String"];
-sositypes["RESIPIENT"][3] = ["vatnLøpenummer","Integer"];
-sositypes["RETNING"][1] = ["retningsenhet","Integer"];
-sositypes["RETNING"][2] = ["retningsreferanse","Integer"];
-sositypes["RETNING"][0] = ["retningsverdi","Real"];
-sositypes["RØR_DIMENSJON"][1] = ["lengdeenhet","String"];
-sositypes["RØR_DIMENSJON"][0] = ["måltall","Real"];
-sositypes["SAK"][3] = ["vedtaksmyndighet","String"];
-sositypes["SAK"][0] = ["saksnummer","Integer"];
-sositypes["SAK"][2] = ["utvalgssaksnummer","Integer"];
-sositypes["SAK"][1] = ["vedtaksdato","Date"];
-sositypes["SEFRAK_ID"][2] = ["husLøpenr","Integer"];
-sositypes["SEFRAK_ID"][1] = ["registreringKretsnr","Integer"];
-sositypes["SEFRAK_ID"][0] = ["SEFRAKkommune","Integer"];
-sositypes["SEFRAKFUNKSJON"][0] = ["sefrakFunksjonskode","Integer"];
-sositypes["SEFRAKFUNKSJON"][1] = ["sefrakFunksjonsstatus","String"];
-sositypes["SENTRUMSSONEID"][1] = ["sentrumssonenavn","String"];
-sositypes["SENTRUMSSONEID"][0] = ["sentrumssonenummer","Integer"];
-sositypes["SERV"][2] = ["informasjon","String"];
-sositypes["SERV"][0] = ["matrikkelnummer","String"];
-sositypes["SERV"][1] = ["servituttType","String"];
-sositypes["SKRETSID"][1] = ["skolekretsnavn","String"];
-sositypes["SKRETSID"][0] = ["skolekretsnummer","Integer"];
-sositypes["SP_ADM"][0] = ["skogbrplanAdmDatoEndring","Date"];
-sositypes["SP_ADM"][1] = ["skogbrplanAdmDatoEtablering","Date"];
-sositypes["SP_AKLASS"][0] = ["skogbrplanKlassAktueltTreslag","Integer"];
-sositypes["SP_AKLASS"][1] = ["skogbrplanKlassAktSnittBon","Integer"];
-sositypes["SP_AKLASS"][3] = ["skogbrplanKlassImpProsent","Integer"];
-sositypes["SP_AKLASS"][2] = ["skogbrplanKlassImpType","Integer"];
-sositypes["SP_AKLASS"][4] = ["skogbrplanKlassPotTreslag","Integer"];
-sositypes["SP_AKLASS"][5] = ["skogbrplanKlassPotSnittBon","Integer"];
-sositypes["SP_BESTAND"][1] = ["skogbrplanBestandDelNr","Integer"];
-sositypes["SP_BESTAND"][0] = ["skogbrplanBestandNr","Integer"];
-sositypes["SP_BSKRIV"][2] = ["skogbrplanBeskrivBestandAlder","Integer"];
-sositypes["SP_BSKRIV"][3] = ["skogbrplanBeskrivBestandDaa","Real"];
-sositypes["SP_BSKRIV"][6] = ["skogbrplanBeskrivBestSnittDiam","Integer"];
-sositypes["SP_BSKRIV"][4] = ["skogbrplanBeskrivBestandSnittM2","Integer"];
-sositypes["SP_BSKRIV"][5] = ["skogbrplanBeskrivBestandSnittH","Real"];
-sositypes["SP_BSKRIV"][7] = ["skogbrplanBeskrivBarHøydehkl2","Integer"];
-sositypes["SP_BSKRIV"][0] = ["skogbrplanBeskrivHogstklasse","Integer"];
-sositypes["SP_BSKRIV"][8] = ["skogbrplanBeskrivLauvHøydehkl2","Integer"];
-sositypes["SP_BSKRIV"][9] = ["skogbrplanBeskrivSjiktning","Integer"];
-sositypes["SP_BSKRIV"][1] = ["skogbrplanBeskrivSkogtype","Integer"];
-sositypes["SP_BSKRIV"][10] = ["skogbrplanBeskrivSunnhet","Integer"];
-sositypes["SP_BSKRIV"][11] = ["skogbrplanBeskrivTreERegulering","Integer"];
-sositypes["SP_BSKRIV"][12] = ["skogbrplanBeskrivTreFRegulering","Integer"];
-sositypes["SP_FLBRELEM"][0] = ["skogbrplanFlerKoderElementtype","Integer"];
-sositypes["SP_FLBRELEM"][1] = ["skogbrplanFlerKoderArealProsent","Integer"];
-sositypes["SP_FLBRELEM"][2] = ["skogbrplanFlerKoderArealDaa","Integer"];
-sositypes["SP_FLBRELEM"][3] = ["skogbrplanFlerKoderSpesBehPros","Integer"];
-sositypes["SP_FLBRELEM"][4] = ["skogbrplanFlerKoderSpesBehDaa","Integer"];
-sositypes["SP_GRLVOL"][3] = ["skogbrplanGrunnlagVolumDaaFelt","Real"];
-sositypes["SP_GRLVOL"][4] = ["skogbrplanGrunnlagVolumBestFelt","Integer"];
-sositypes["SP_GRLVOL"][0] = ["skogbrplanGrunnlagBerType","Integer"];
-sositypes["SP_GRLVOL"][2] = ["skogbrplanGrunnlagHovedgruppe","Integer"];
-sositypes["SP_GRLVOL"][6] = ["skogbrplanGrunnlagRegion","Integer"];
-sositypes["SP_GRLVOL"][5] = ["skogbrplanGrunnlagSvinnProsent","Integer"];
-sositypes["SP_GRLVOL"][1] = ["skogbrplanGrunnlagTaksttype","Integer"];
-sositypes["SP_GRLVOL"][7] = ["skogbrplanGrunnlagTilvekstkorr","Integer"];
-sositypes["SP_TEIG"][3] = ["matrikkelnummer","String"];
-sositypes["SP_TEIG"][2] = ["skogbrplanTeigGrend","Integer"];
-sositypes["SP_TEIG"][0] = ["skogbrplanTeigNr","Integer"];
-sositypes["SP_TEIG"][1] = ["skogbrplanTeigNavn","String"];
-sositypes["SP_TERKLASS"][0] = ["skogbrplanTerrengBæreevneBestand","Integer"];
-sositypes["SP_TERKLASS"][1] = ["skogbrplanTerrengBestandBratthet","Integer"];
-sositypes["SP_TERKLASS"][2] = ["skogbrplanTerrengLiLengde","Integer"];
-sositypes["SP_TERKLASS"][3] = ["skogbrplanTerrengMinTranspUtst","Integer"];
-sositypes["SP_TERKLASS"][4] = ["skogbrplanTerrengJevnhet","Integer"];
-sositypes["SP_TETTHOYD"][0] = ["skogbrplanTetthetGrunnflatesum","Integer"];
-sositypes["SP_TETTHOYD"][1] = ["skogbrplanTetthetMHøyde","Integer"];
-sositypes["SP_TILTAK"][3] = ["skogbrplanTiltakProritet","Integer"];
-sositypes["SP_TILTAK"][1] = ["skogbrplanTiltakProsent","Integer"];
-sositypes["SP_TILTAK"][4] = ["skogbrplanTiltakAreal","Real"];
-sositypes["SP_TILTAK"][0] = ["skogbrplanTiltakBestand","Integer"];
-sositypes["SP_TILTAK"][2] = ["skogbrplanTiltakÅr","Integer"];
-sositypes["SP_TILVVOL"][0] = ["skogbrplanTilvekstBeregnDaa","Real"];
-sositypes["SP_TILVVOL"][1] = ["skogbrplanTilvekstBeregnProsent","Real"];
-sositypes["SP_TILVVOL"][2] = ["skogbrplanTilvekstBeregnM3","Real"];
-sositypes["SP_TILVVOL"][3] = ["skogbrplanTilvekstVolumBestand","Integer"];
-sositypes["SP_TRESL"][4] = ["skogbrplanTreslagAntTreDaaEReg","Integer"];
-sositypes["SP_TRESL"][3] = ["skogbrplanTreslagAntTreDaaFReg","Integer"];
-sositypes["SP_TRESL"][0] = ["skogbrplanTreslag","Integer"];
-sositypes["SP_TRESL"][1] = ["skogbrplanTreslagHøyde","Integer"];
-sositypes["SP_TRESL"][2] = ["skogbrplanTreslagProsent","Integer"];
-sositypes["SP_TRESL"][5] = ["skogbrplanTreslagKorrVolumUBark","Integer"];
-sositypes["SP_TRESL"][7] = ["skogbrplanTreslagSalgsvolumUBark","Integer"];
-sositypes["SP_TRESL"][6] = ["skogbrplanTreslagUkorrVolumUBark","Integer"];
-sositypes["TETTSTEDID"][1] = ["tettstednavn","String"];
-sositypes["TETTSTEDID"][0] = ["tettstednummer","Integer"];
-sositypes["UNIVERSELLUTFORMING"][2] = ["informasjon","String"];
-sositypes["UNIVERSELLUTFORMING"][0] = ["tilgjengelighetsvurdering","String"];
-sositypes["UNIVERSELLUTFORMING"][1] = ["universellutformingFasilitet","String"];
-sositypes["UTNYTT"][1] = ["utnyttingstall","Real"];
-sositypes["UTNYTT"][0] = ["utnyttingstype","Integer"];
-sositypes["UTSLIPP"][0] = ["komponent","String"];
-sositypes["UTSLIPP"][1] = ["massestørrelse","String"];
-sositypes["UTSLIPP"][2] = ["utslippType","String"];
-sositypes["UTV_TILL_PART"][1] = ["petroleumsandel","Real"];
-sositypes["UTV_TILL_PART"][0] = ["petroleumspartnere","String"];
-sositypes["VERN"][0] = ["vernelov","String"];
-sositypes["VERN"][1] = ["verneparagraf","String"];
-sositypes["VERN"][3] = ["vernedato","Date"];
-sositypes["VERN"][2] = ["vernetype","String"];
-sositypes["VKRETS"][1] = ["valgkretsnavn","String"];
-sositypes["VKRETS"][0] = ["valgkretsnummer","Integer"];
-sositypes["VNR"][0] = ["vegkategori","String"];
-sositypes["VNR"][2] = ["vegnummer","Integer"];
-sositypes["VNR"][1] = ["vegstatus","String"];
-sositypes["VPA"][0] = ["hovedParsell","Integer"];
-sositypes["VPA"][1] = ["veglenkeMeterFra","Integer"];
-sositypes["VPA"][2] = ["veglenkeMeterTil","Integer"];
+sositypes["ADRESSEBRUKSENHET"][1][1] = ["etasjenummer","Integer"];
+sositypes["ADRESSEBRUKSENHET"][1][2] = ["etasjeplan","String"];
+sositypes["ADRESSEBRUKSENHET"][1][0] = ["bruksenhetLøpenr","Integer"];
+sositypes["ADRESSEKOMMENTAR"][1][0] = ["etat","String"];
+sositypes["ADRESSEKOMMENTAR"][1][2] = ["kommentar","String"];
+sositypes["ADRESSEKOMMENTAR"][1][1] = ["kommentarType","String"];
+sositypes["ADRESSEKOMMENTAR"][1][4] = ["lagretDato","Date"];
+sositypes["ADRESSEKOMMENTAR"][1][3] = ["saksnummer","Integer"];
+sositypes["ADRESSEREFERANSE"][1][1] = ["adresseReferansekode","String"];
+sositypes["ADRESSEREFERANSE"][1][0] = ["referanse","String"];
+sositypes["ADRESSETILLEGG"][1][1] = ["adresseKommentar","String"];
+sositypes["ADRESSETILLEGG"][1][2] = ["adresseReferanse","String"];
+sositypes["ADRESSETILLEGG"][1][0] = ["kartbladindeks","String"];
+sositypes["AID"][1][2] = ["bokstav","String"];
+sositypes["AID"][1][0] = ["gatenummer","Integer"];
+sositypes["AID"][1][1] = ["husnummer","Integer"];
+sositypes["AJOURFØRING"][1][1] = ["ajourførtAv","String"];
+sositypes["AJOURFØRING"][1][0] = ["ajourførtDato","Date"];
+sositypes["AKVA_KONS_INFO"][1][1] = ["akvaKonsesjonsnummer","Integer"];
+sositypes["AKVA_KONS_INFO"][1][4] = ["konsesjonsstatus","String"];
+sositypes["AKVA_KONS_INFO"][1][6] = ["konsesjonstype","String"];
+sositypes["AKVA_KONS_INFO"][1][5] = ["konsesjonsformål","String"];
+sositypes["AKVA_KONS_INFO"][1][0] = ["fiskebruksnummerFylke","String"];
+sositypes["AKVA_KONS_INFO"][1][2] = ["lokalitetsnavn","String"];
+sositypes["AKVA_KONS_INFO"][1][3] = ["lokalitetsnummer","Integer"];
+sositypes["AKVA_PRØVE_INFO"][1][7] = ["akvaTemperatur","Integer"];
+sositypes["AKVA_PRØVE_INFO"][1][1] = ["algekonsentrasjon","Integer"];
+sositypes["AKVA_PRØVE_INFO"][1][0] = ["algetype","String"];
+sositypes["AKVA_PRØVE_INFO"][1][5] = ["klorofyllMaksimum","Integer"];
+sositypes["AKVA_PRØVE_INFO"][1][8] = ["salinitet","Integer"];
+sositypes["AKVA_PRØVE_INFO"][1][6] = ["sikteDyp","Integer"];
+sositypes["AKVA_PRØVE_INFO"][1][2] = ["strømretning","Integer"];
+sositypes["AKVA_PRØVE_INFO"][1][4] = ["vindretning","Integer"];
+sositypes["ANDEL"][1][1] = ["nevner","Real"];
+sositypes["ANDEL"][1][0] = ["teller","Real"];
+sositypes["AREALFORDELING"][1][4] = ["prosentElv","Real"];
+sositypes["AREALFORDELING"][1][2] = ["prosentHav","Real"];
+sositypes["AREALFORDELING"][1][3] = ["prosentInnsjø","Real"];
+sositypes["AREALFORDELING"][1][1] = ["prosentLand","Real"];
+sositypes["AREALFORDELING"][1][0] = ["totalarealKm2","Real"];
+sositypes["BELASTNINGBOF5"][1][2] = ["andrekilderBelastning","Integer"];
+sositypes["BELASTNINGBOF5"][1][0] = ["husholdBelastning","Integer"];
+sositypes["BELASTNINGBOF5"][1][1] = ["industriBelastning","Integer"];
+sositypes["BELASTNINGBOF5"][1][3] = ["totalbelastning","Integer"];
+sositypes["BELASTNINGFOSFOR"][1][2] = ["andrekilderBelastning","Integer"];
+sositypes["BELASTNINGFOSFOR"][1][0] = ["husholdBelastning","Integer"];
+sositypes["BELASTNINGFOSFOR"][1][1] = ["industriBelastning","Integer"];
+sositypes["BELASTNINGFOSFOR"][1][3] = ["totalbelastning","Integer"];
+sositypes["BEREGNETAREAL"][1][0] = ["areal","Real"];
+sositypes["BEREGNETAREAL"][1][1] = ["arealmerknad","String"];
+sositypes["BILDEINFORMASJON"][1][1] = ["brennvidde","Real"];
+sositypes["BILDEINFORMASJON"][1][2] = ["fotograf","String"];
+sositypes["BILDEINFORMASJON"][1][0] = ["kameratype","String"];
+sositypes["BMARTOBS"][1][1] = ["bmAntall","Integer"];
+sositypes["BMARTOBS"][1][0] = ["bmArt","String"];
+sositypes["BMARTOBS"][1][2] = ["bmEnhet","Integer"];
+sositypes["BMARTOBS"][1][3] = ["bmRegistreringsdato","Date"];
+sositypes["BMARTREG"][1][6] = ["bmÅrstid","Integer"];
+sositypes["BMARTREG"][1][0] = ["bmArt","String"];
+sositypes["BMARTREG"][1][2] = ["bmOmrådefunksjon","Integer"];
+sositypes["BMARTREG"][1][5] = ["bmFunksjonskvalitet","Integer"];
+sositypes["BMARTREG"][1][7] = ["bmKilde","String"];
+sositypes["BMARTREG"][1][1] = ["bmRegistreringsdato","Date"];
+sositypes["BMARTREG"][1][3] = ["bmTruethetskategori","String"];
+sositypes["BMARTREG"][1][4] = ["bmViltvekt","Integer"];
+sositypes["BMKILDE"][1][1] = ["bmKildetype","Integer"];
+sositypes["BMKILDE"][1][0] = ["bmKildevurdering","Integer"];
+sositypes["BMNATYPTILLEGG"][1][1] = ["bmAndel","Integer"];
+sositypes["BMNATYPTILLEGG"][1][0] = ["bmNaturtype","String"];
+sositypes["BRUKSENHET"][1][7] = ["antallBad","Integer"];
+sositypes["BRUKSENHET"][1][6] = ["antallRom","Integer"];
+sositypes["BRUKSENHET"][1][8] = ["antallWC","Integer"];
+sositypes["BRUKSENHET"][1][5] = ["bruksareal","Real"];
+sositypes["BRUKSENHET"][1][4] = ["bruksenhetstype","String"];
+sositypes["BRUKSENHET"][1][2] = ["etasjenummer","Integer"];
+sositypes["BRUKSENHET"][1][1] = ["etasjeplan","String"];
+sositypes["BRUKSENHET"][1][9] = ["kjøkkenTilgang","Integer"];
+sositypes["BRUKSENHET"][1][3] = ["bruksenhetLøpenr","Integer"];
+sositypes["BRUKSENHET"][1][0] = ["matrikkelnummer","String"];
+sositypes["BYDELID"][1][0] = ["bydelsnavn","String"];
+sositypes["BYDELID"][1][1] = ["bydelsnummer","Integer"];
+sositypes["BYGG_KOMMENTARER"][1][3] = ["bygnSaksnr","String"];
+sositypes["BYGG_KOMMENTARER"][1][0] = ["etat","String"];
+sositypes["BYGG_KOMMENTARER"][1][2] = ["kommentar","String"];
+sositypes["BYGG_KOMMENTARER"][1][1] = ["kommentarType","String"];
+sositypes["BYGG_KOMMENTARER"][1][4] = ["lagretDato","Date"];
+sositypes["BYGN_STAT_HIST"][1][0] = ["bygningsstatus","String"];
+sositypes["BYGN_STAT_HIST"][1][1] = ["bygningshistorikkDato","Date"];
+sositypes["BYGN_STAT_HIST"][1][2] = ["registrertDato","Date"];
+sositypes["BYGNING_TILLEGG"][1][0] = ["alternativtArealBygning","Real"];
+sositypes["BYGNING_TILLEGG"][1][1] = ["antallEtasjer","Integer"];
+sositypes["BYGNING_TILLEGG"][1][2] = ["antallRøkløp","Real"];
+sositypes["BYGNING_TILLEGG"][1][3] = ["brenseltankNedgravd","Integer"];
+sositypes["BYGNING_TILLEGG"][1][14] = ["bygningKommentar","String"];
+sositypes["BYGNING_TILLEGG"][1][13] = ["bygningsreferanse","String"];
+sositypes["BYGNING_TILLEGG"][1][9] = ["fundamentering","Integer"];
+sositypes["BYGNING_TILLEGG"][1][12] = ["horisontalBærekonstr","Integer"];
+sositypes["BYGNING_TILLEGG"][1][5] = ["kartbladindeks","String"];
+sositypes["BYGNING_TILLEGG"][1][6] = ["kildePrivatVannforsyning","Integer"];
+sositypes["BYGNING_TILLEGG"][1][10] = ["materialeIYttervegg","Integer"];
+sositypes["BYGNING_TILLEGG"][1][7] = ["privatKloakkRensing","Integer"];
+sositypes["BYGNING_TILLEGG"][1][8] = ["renovasjon","Integer"];
+sositypes["BYGNING_TILLEGG"][1][4] = ["septiktank","String"];
+sositypes["BYGNING_TILLEGG"][1][11] = ["vertikalBærekonstr","Integer"];
+sositypes["BYGNINGSREF"][1][1] = ["bygningReferansetype","String"];
+sositypes["BYGNINGSREF"][1][0] = ["referanse","String"];
+sositypes["DELOMRåDEID"][1][0] = ["delområdenavn","String"];
+sositypes["DELOMRåDEID"][1][1] = ["delområdenummer","String"];
+sositypes["DPOT_GRAS"][1][2] = ["nedbørsbasert","Integer"];
+sositypes["DPOT_GRAS"][1][3] = ["nedklassifiseringNedbør","Integer"];
+sositypes["DPOT_GRAS"][1][0] = ["vanningsbasert","Integer"];
+sositypes["DPOT_GRAS"][1][1] = ["nedklassifiseringVanning","Integer"];
+sositypes["DPOT_KORN"][1][2] = ["nedbørsbasert","Integer"];
+sositypes["DPOT_KORN"][1][3] = ["nedklassifiseringNedbør","Integer"];
+sositypes["DPOT_KORN"][1][0] = ["vanningsbasert","Integer"];
+sositypes["DPOT_KORN"][1][1] = ["nedklassifiseringVanning","Integer"];
+sositypes["DPOT_POTET"][1][2] = ["nedbørsbasert","Integer"];
+sositypes["DPOT_POTET"][1][3] = ["nedklassifiseringNedbør","Integer"];
+sositypes["DPOT_POTET"][1][0] = ["vanningsbasert","Integer"];
+sositypes["DPOT_POTET"][1][1] = ["nedklassifiseringVanning","Integer"];
+sositypes["EKOORD"][1][2] = ["jordregisterKoordinatHøyde","Integer"];
+sositypes["EKOORD"][1][0] = ["jordregisterKoordinatNord","Integer"];
+sositypes["EKOORD"][1][1] = ["jordregisterKoordinatØst","Integer"];
+sositypes["ENDRINGSFLAGG"][1][1] = ["tidspunktEndring","Date"];
+sositypes["ENDRINGSFLAGG"][1][0] = ["typeEndring","String"];
+sositypes["ENDRINGSVURDERING"][1][0] = ["endringsgrad","String"];
+sositypes["ENDRINGSVURDERING"][1][1] = ["vurdertDato","Date"];
+sositypes["ETASJE"][1][2] = ["antallBoenheter","Integer"];
+sositypes["ETASJE"][1][4] = ["bruksarealTilAnnet","Real"];
+sositypes["ETASJE"][1][3] = ["bruksarealTilBolig","Real"];
+sositypes["ETASJE"][1][5] = ["bruksarealTotalt","Real"];
+sositypes["ETASJE"][1][1] = ["etasjenummer","Integer"];
+sositypes["ETASJE"][1][0] = ["etasjeplan","String"];
+sositypes["ETASJE"][1][6] = ["kommAlternativtAreal","Real"];
+sositypes["ETASJE"][1][7] = ["kommAlternativtAreal2","Real"];
+sositypes["ETASJEDATA"][1][4] = ["sumAlternativtAreal","Real"];
+sositypes["ETASJEDATA"][1][5] = ["sumAlternativtAreal2","Real"];
+sositypes["ETASJEDATA"][1][0] = ["sumAntallBoenheter","Integer"];
+sositypes["ETASJEDATA"][1][3] = ["sumBruksarealTotalt","Real"];
+sositypes["ETASJEDATA"][1][2] = ["sumBruksarealTilAnnet","Real"];
+sositypes["ETASJEDATA"][1][1] = ["sumBruksarealTilBolig","Real"];
+sositypes["FELTREGISTRERT"][1][2] = ["ajourføring","String"];
+sositypes["FELTREGISTRERT"][1][1] = ["datafangstdato","Date"];
+sositypes["FELTREGISTRERT"][1][0] = ["feltregistrertAv","String"];
+sositypes["FIRMA_EIER"][1][2] = ["adresse","String"];
+sositypes["FIRMA_EIER"][1][0] = ["firmanavn","String"];
+sositypes["FIRMA_EIER"][1][1] = ["bedriftseier","String"];
+sositypes["FIRMA_EIER"][1][6] = ["kontaktperson","String"];
+sositypes["FIRMA_EIER"][1][3] = ["postnummer","Integer"];
+sositypes["FIRMA_EIER"][1][5] = ["telefaxnummer","Integer"];
+sositypes["FIRMA_EIER"][1][4] = ["telefonnummer","Integer"];
+sositypes["FISKE_BEDR_ID"][1][4] = ["antallAnsatte","Integer"];
+sositypes["FISKE_BEDR_ID"][1][5] = ["antallÅrsverk","Integer"];
+sositypes["FISKE_BEDR_ID"][1][0] = ["fiskebedriftsnavn","String"];
+sositypes["FISKE_BEDR_ID"][1][2] = ["fiskebruksnummer","Integer"];
+sositypes["FISKE_BEDR_ID"][1][1] = ["fiskebruksnummerFylke","String"];
+sositypes["FISKE_BEDR_ID"][1][3] = ["firmaeier","String"];
+sositypes["FISKE_BEDR_INFO"][1][1] = ["artskode","Integer"];
+sositypes["FISKE_BEDR_INFO"][1][0] = ["fisketype","Integer"];
+sositypes["FISKE_BEDR_MARKED"][1][0] = ["fiskebedriftsandel","Integer"];
+sositypes["FISKE_BEDR_MARKED"][1][1] = ["fiskebedriftsområde","Integer"];
+sositypes["FISKE_BEDR_TJENESTE"][1][2] = ["fiskebedriftservice","Integer"];
+sositypes["FISKE_BEDR_TJENESTE"][1][1] = ["fiskekapasitetEnhet","Integer"];
+sositypes["FISKE_BEDR_TJENESTE"][1][0] = ["fiskekapasitet","Integer"];
+sositypes["FISKERI_REDSKAP"][1][0] = ["fiskeriredskapGenAktiv","Integer"];
+sositypes["FISKERI_REDSKAP"][1][1] = ["fiskeriredskapGenPassiv","Integer"];
+sositypes["FISKERI_REDSKAP"][1][2] = ["fiskeriredskapSpesAktiv","Integer"];
+sositypes["FISKERI_REDSKAP"][1][3] = ["fiskeriredskapSpesPassiv","Integer"];
+sositypes["FISKERI_RESS_ART"][1][3] = ["engelskArtsnavn","String"];
+sositypes["FISKERI_RESS_ART"][1][2] = ["vitenskapeligArtsnavn","String"];
+sositypes["FISKERI_RESS_ART"][1][1] = ["norskArtsnavn","String"];
+sositypes["FISKERI_RESS_ART"][1][0] = ["taksonomiskKode","Integer"];
+sositypes["FISKERI_RESS_ART"][1][4] = ["faoKode","String"];
+sositypes["FISKERI_RESS_ART"][1][5] = ["artskode","Integer"];
+sositypes["FISKERI_RESSURS"][1][0] = ["fiskeriressursområdeArt","String"];
+sositypes["FISKERI_RESSURS"][1][1] = ["periode","String"];
+sositypes["FMDATO"][1][1] = ["beregningsDato","Date"];
+sositypes["FMDATO"][1][0] = ["fastmerkeEtableringsdato","Date"];
+sositypes["FMIDNY"][1][1] = ["fastmerkeInstitusjon","String"];
+sositypes["FMIDNY"][1][0] = ["fastmerkeKommune","Integer"];
+sositypes["FMIDNY"][1][2] = ["fastmerkeNummer","String"];
+sositypes["FMIDNY"][1][3] = ["indikatorFastmerkenummer","String"];
+sositypes["FMSIGN"][1][1] = ["signalHøyde","Real"];
+sositypes["FMSIGN"][1][0] = ["signalType","String"];
+sositypes["FMSTATUS"][1][1] = ["typeStatus","Integer"];
+sositypes["FMSTATUS"][1][0] = ["verifiseringsdato","Date"];
+sositypes["FMTYPE"][1][0] = ["boltType","Integer"];
+sositypes["FMTYPE"][1][3] = ["fastmerkeDiameter","Integer"];
+sositypes["FMTYPE"][1][4] = ["gravertTekst","String"];
+sositypes["FMTYPE"][1][1] = ["materialeBolt","Integer"];
+sositypes["FMTYPE"][1][2] = ["fastmerkeUnderlag","Integer"];
+sositypes["FORUR_GRUNN_EIENDOM"][1][1] = ["arealbrukRestriksjon","Integer"];
+sositypes["FORUR_GRUNN_EIENDOM"][1][0] = ["matrikkelnummer","String"];
+sositypes["GRENSE_MELLOM"][1][0] = ["førsteLand","String"];
+sositypes["GRENSE_MELLOM"][1][1] = ["annetLand","String"];
+sositypes["GRUNNKRETSID"][1][1] = ["grunnkretsnavn","String"];
+sositypes["GRUNNKRETSID"][1][0] = ["grunnkretsnummer","Integer"];
+sositypes["HAVNE_D_INFO"][1][1] = ["havnedistriktAdministrasjon","Integer"];
+sositypes["HAVNE_D_INFO"][1][0] = ["kommune","Integer"];
+sositypes["HOVEDMåLRUBRIKK"][1][1] = ["bredde","Integer"];
+sositypes["HOVEDMåLRUBRIKK"][1][0] = ["lengde","Integer"];
+sositypes["HOVEDNR"][1][1] = [" kommunenummer","Integer"];
+sositypes["HOVEDNR"][1][0] = ["matrikkelnummer","String"];
+sositypes["HYTTEINFORMASJON"][1][1] = ["betjeningsgrad","String"];
+sositypes["HYTTEINFORMASJON"][1][0] = ["hytteId","Integer"];
+sositypes["HYTTEINFORMASJON"][1][2] = ["hytteeier","Integer"];
+sositypes["JORDTYPE"][1][0] = ["serie1","String"];
+sositypes["JORDTYPE"][1][2] = ["serie2","String"];
+sositypes["JORDTYPE"][1][4] = ["serie3","String"];
+sositypes["JORDTYPE"][1][1] = ["tekstur1","String"];
+sositypes["JORDTYPE"][1][3] = ["tekstur2","String"];
+sositypes["JORDTYPE"][1][5] = ["tekstur3","String"];
+sositypes["JREGMARK"][1][1] = ["potensiellSkogbonitetOmkodet","Integer"];
+sositypes["JREGMARK"][1][0] = ["arealtilstand","Integer"];
+sositypes["JREGMARK"][1][7] = ["jordregisterDyrkingsjord","String"];
+sositypes["JREGMARK"][1][6] = ["jordregisterFreg","Integer"];
+sositypes["JREGMARK"][1][5] = ["jordregisterLreg","String"];
+sositypes["JREGMARK"][1][3] = ["jordklassifikasjon","Integer"];
+sositypes["JREGMARK"][1][4] = ["myrklassifikasjon","Integer"];
+sositypes["JREGMARK"][1][8] = ["jordregisterSkogtype","Integer"];
+sositypes["JREGMARK"][1][9] = ["jordregisterSkogreisningsmark","Integer"];
+sositypes["JREGMARK"][1][2] = ["tilleggsopplysningerSkog","Integer"];
+sositypes["JREGTEIG"][1][2] = ["jordregisterDriftssenter","Integer"];
+sositypes["JREGTEIG"][1][3] = ["jordregisterStatusEiendom","Integer"];
+sositypes["JREGTEIG"][1][0] = ["matrikkelnummer","String"];
+sositypes["JREGTEIG"][1][1] = ["jordregisterEiendomTeigNummer","Integer"];
+sositypes["KAI_INFO"][1][1] = ["kaiDybde","Real"];
+sositypes["KAI_INFO"][1][0] = ["kaiType","Integer"];
+sositypes["KAI_INFO"][1][2] = ["kommunenummer","Integer"];
+sositypes["KAMERAINFORMASJON"][1][4] = ["bildekategori","Integer"];
+sositypes["KAMERAINFORMASJON"][1][3] = ["brennvidde","Real"];
+sositypes["KAMERAINFORMASJON"][1][7] = ["film","String"];
+sositypes["KAMERAINFORMASJON"][1][8] = ["kalibreringsrapport","String"];
+sositypes["KAMERAINFORMASJON"][1][1] = ["kameratype","String"];
+sositypes["KAMERAINFORMASJON"][1][0] = ["opptaksmetode","Integer"];
+sositypes["KM_DAT_INFO"][1][0] = ["sefrakTiltak","Integer"];
+sositypes["KM_DAT_INFO"][1][1] = ["tidsangivelse","Integer"];
+sositypes["KM_DATERING"][1][0] = ["kulturminneDatering","String"];
+sositypes["KM_DATERING"][1][1] = ["kulturminneDateringKvalitet","String"];
+sositypes["KOMMUNALKRETS"][1][3] = ["kretsnavn","String"];
+sositypes["KOMMUNALKRETS"][1][2] = ["kretsnummer","String"];
+sositypes["KOMMUNALKRETS"][1][0] = ["kretstypekode","String"];
+sositypes["KOMMUNALKRETS"][1][1] = ["kretstypenavn","String"];
+sositypes["KOPIDATA"][1][2] = ["kopidato","Date"];
+sositypes["KOPIDATA"][1][0] = ["områdeId","Integer"];
+sositypes["KOPIDATA"][1][1] = ["originalDatavert","String"];
+sositypes["KOPLING"][1][1] = ["fagområde","Integer"];
+sositypes["KOPLING"][1][4] = ["bruksområde","String"];
+sositypes["KOPLING"][1][2] = ["koplingskategori","Integer"];
+sositypes["KOPLING"][1][0] = ["koplingsnavn","String"];
+sositypes["KOPLING"][1][3] = ["koplingstype","String"];
+sositypes["KOPLING"][1][7] = ["bildelink","String"];
+sositypes["KOPLING"][1][5] = ["materiellkode","String"];
+sositypes["KOPLING"][1][6] = ["verdi","Integer"];
+sositypes["KURSLINJE_INFO"][1][0] = ["fartøyIdentifikasjon","String"];
+sositypes["KURSLINJE_INFO"][1][1] = ["satellittkommunikasjonsId","String"];
+sositypes["KURSLINJE_INFO"][1][3] = ["sporhastighet","Integer"];
+sositypes["KURSLINJE_INFO"][1][2] = ["tidspunkt","Date"];
+sositypes["KVALITET"][1][3] = ["målemetodeHøyde","Integer"];
+sositypes["KVALITET"][1][4] = ["nøyaktighetHøyde","Integer"];
+sositypes["KVALITET"][1][5] = ["maksimaltAvvik","Integer"];
+sositypes["KVALITET"][1][0] = ["målemetode","Integer"];
+sositypes["KVALITET"][1][1] = ["nøyaktighet","Integer"];
+sositypes["KVALITET"][1][2] = ["synbarhet","Integer"];
+sositypes["LEDNING"][1][1] = ["fagområde","Integer"];
+sositypes["LEDNING"][1][3] = ["bruksområde","String"];
+sositypes["LEDNING"][1][0] = ["ledningsnavn","String"];
+sositypes["LEDNING"][1][2] = ["ledningstype","Integer"];
+sositypes["LEDNING"][1][7] = ["leggeår","String"];
+sositypes["LEDNING"][1][6] = ["lengde","Real"];
+sositypes["LEDNING"][1][5] = ["materiellkode","String"];
+sositypes["LEDNING"][1][4] = ["nettnivå","String"];
+sositypes["LEGGEåR"][1][0] = ["alderReferanse","Integer"];
+sositypes["LEGGEåR"][1][1] = ["årstall","Integer"];
+sositypes["LGID"][1][7] = ["landbruksregAktiv","Integer"];
+sositypes["LGID"][1][6] = ["landbruksregType","Integer"];
+sositypes["LGID"][1][0] = ["matrikkelnummer","String"];
+sositypes["MATRIKKELADRESSEID"][1][0] = ["matrikkelnummer","String"];
+sositypes["MATRIKKELADRESSEID"][1][1] = ["undernr","Integer"];
+sositypes["MATRIKKELNUMMER"][1][2] = ["bruksnummer","Integer"];
+sositypes["MATRIKKELNUMMER"][1][3] = ["festenummer","Integer"];
+sositypes["MATRIKKELNUMMER"][1][1] = ["gårdsnummer","Integer"];
+sositypes["MATRIKKELNUMMER"][1][0] = ["matrikkelkommune","Integer"];
+sositypes["MATRIKKELNUMMER"][1][4] = ["seksjonsnummer","Integer"];
+sositypes["OVERLAPP"][1][0] = ["lengdeoverlapp","Integer"];
+sositypes["OVERLAPP"][1][1] = ["sideoverlapp","Integer"];
+sositypes["POST"][1][1] = ["poststedsnavn","String"];
+sositypes["POST"][1][0] = ["postnummer","Integer"];
+sositypes["REGISTRERINGSVERSJON"][1][0] = ["produkt","String"];
+sositypes["REGISTRERINGSVERSJON"][1][1] = ["versjon","String"];
+sositypes["RESIPIENT"][1][2] = ["fjordId","String"];
+sositypes["RESIPIENT"][1][0] = ["resipientnavn","String"];
+sositypes["RESIPIENT"][1][4] = ["resipienttype","String"];
+sositypes["RESIPIENT"][1][1] = ["vassdragsnummer","String"];
+sositypes["RESIPIENT"][1][3] = ["vatnLøpenummer","Integer"];
+sositypes["RETNING"][1][1] = ["retningsenhet","Integer"];
+sositypes["RETNING"][1][2] = ["retningsreferanse","Integer"];
+sositypes["RETNING"][1][0] = ["retningsverdi","Real"];
+sositypes["RØR_DIMENSJON"][1][1] = ["lengdeenhet","String"];
+sositypes["RØR_DIMENSJON"][1][0] = ["måltall","Real"];
+sositypes["SAK"][1][3] = ["vedtaksmyndighet","String"];
+sositypes["SAK"][1][0] = ["saksnummer","Integer"];
+sositypes["SAK"][1][2] = ["utvalgssaksnummer","Integer"];
+sositypes["SAK"][1][1] = ["vedtaksdato","Date"];
+sositypes["SEFRAK_ID"][1][2] = ["husLøpenr","Integer"];
+sositypes["SEFRAK_ID"][1][1] = ["registreringKretsnr","Integer"];
+sositypes["SEFRAK_ID"][1][0] = ["SEFRAKkommune","Integer"];
+sositypes["SEFRAKFUNKSJON"][1][0] = ["sefrakFunksjonskode","Integer"];
+sositypes["SEFRAKFUNKSJON"][1][1] = ["sefrakFunksjonsstatus","String"];
+sositypes["SENTRUMSSONEID"][1][1] = ["sentrumssonenavn","String"];
+sositypes["SENTRUMSSONEID"][1][0] = ["sentrumssonenummer","Integer"];
+sositypes["SERV"][1][2] = ["informasjon","String"];
+sositypes["SERV"][1][0] = ["matrikkelnummer","String"];
+sositypes["SERV"][1][1] = ["servituttType","String"];
+sositypes["SKRETSID"][1][1] = ["skolekretsnavn","String"];
+sositypes["SKRETSID"][1][0] = ["skolekretsnummer","Integer"];
+sositypes["SP_ADM"][1][0] = ["skogbrplanAdmDatoEndring","Date"];
+sositypes["SP_ADM"][1][1] = ["skogbrplanAdmDatoEtablering","Date"];
+sositypes["SP_AKLASS"][1][0] = ["skogbrplanKlassAktueltTreslag","Integer"];
+sositypes["SP_AKLASS"][1][1] = ["skogbrplanKlassAktSnittBon","Integer"];
+sositypes["SP_AKLASS"][1][3] = ["skogbrplanKlassImpProsent","Integer"];
+sositypes["SP_AKLASS"][1][2] = ["skogbrplanKlassImpType","Integer"];
+sositypes["SP_AKLASS"][1][4] = ["skogbrplanKlassPotTreslag","Integer"];
+sositypes["SP_AKLASS"][1][5] = ["skogbrplanKlassPotSnittBon","Integer"];
+sositypes["SP_BESTAND"][1][1] = ["skogbrplanBestandDelNr","Integer"];
+sositypes["SP_BESTAND"][1][0] = ["skogbrplanBestandNr","Integer"];
+sositypes["SP_BSKRIV"][1][2] = ["skogbrplanBeskrivBestandAlder","Integer"];
+sositypes["SP_BSKRIV"][1][3] = ["skogbrplanBeskrivBestandDaa","Real"];
+sositypes["SP_BSKRIV"][1][6] = ["skogbrplanBeskrivBestSnittDiam","Integer"];
+sositypes["SP_BSKRIV"][1][4] = ["skogbrplanBeskrivBestandSnittM2","Integer"];
+sositypes["SP_BSKRIV"][1][5] = ["skogbrplanBeskrivBestandSnittH","Real"];
+sositypes["SP_BSKRIV"][1][7] = ["skogbrplanBeskrivBarHøydehkl2","Integer"];
+sositypes["SP_BSKRIV"][1][0] = ["skogbrplanBeskrivHogstklasse","Integer"];
+sositypes["SP_BSKRIV"][1][8] = ["skogbrplanBeskrivLauvHøydehkl2","Integer"];
+sositypes["SP_BSKRIV"][1][9] = ["skogbrplanBeskrivSjiktning","Integer"];
+sositypes["SP_BSKRIV"][1][1] = ["skogbrplanBeskrivSkogtype","Integer"];
+sositypes["SP_BSKRIV"][1][10] = ["skogbrplanBeskrivSunnhet","Integer"];
+sositypes["SP_BSKRIV"][1][11] = ["skogbrplanBeskrivTreERegulering","Integer"];
+sositypes["SP_BSKRIV"][1][12] = ["skogbrplanBeskrivTreFRegulering","Integer"];
+sositypes["SP_FLBRELEM"][1][0] = ["skogbrplanFlerKoderElementtype","Integer"];
+sositypes["SP_FLBRELEM"][1][1] = ["skogbrplanFlerKoderArealProsent","Integer"];
+sositypes["SP_FLBRELEM"][1][2] = ["skogbrplanFlerKoderArealDaa","Integer"];
+sositypes["SP_FLBRELEM"][1][3] = ["skogbrplanFlerKoderSpesBehPros","Integer"];
+sositypes["SP_FLBRELEM"][1][4] = ["skogbrplanFlerKoderSpesBehDaa","Integer"];
+sositypes["SP_GRLVOL"][1][3] = ["skogbrplanGrunnlagVolumDaaFelt","Real"];
+sositypes["SP_GRLVOL"][1][4] = ["skogbrplanGrunnlagVolumBestFelt","Integer"];
+sositypes["SP_GRLVOL"][1][0] = ["skogbrplanGrunnlagBerType","Integer"];
+sositypes["SP_GRLVOL"][1][2] = ["skogbrplanGrunnlagHovedgruppe","Integer"];
+sositypes["SP_GRLVOL"][1][6] = ["skogbrplanGrunnlagRegion","Integer"];
+sositypes["SP_GRLVOL"][1][5] = ["skogbrplanGrunnlagSvinnProsent","Integer"];
+sositypes["SP_GRLVOL"][1][1] = ["skogbrplanGrunnlagTaksttype","Integer"];
+sositypes["SP_GRLVOL"][1][7] = ["skogbrplanGrunnlagTilvekstkorr","Integer"];
+sositypes["SP_TEIG"][1][3] = ["matrikkelnummer","String"];
+sositypes["SP_TEIG"][1][2] = ["skogbrplanTeigGrend","Integer"];
+sositypes["SP_TEIG"][1][0] = ["skogbrplanTeigNr","Integer"];
+sositypes["SP_TEIG"][1][1] = ["skogbrplanTeigNavn","String"];
+sositypes["SP_TERKLASS"][1][0] = ["skogbrplanTerrengBæreevneBestand","Integer"];
+sositypes["SP_TERKLASS"][1][1] = ["skogbrplanTerrengBestandBratthet","Integer"];
+sositypes["SP_TERKLASS"][1][2] = ["skogbrplanTerrengLiLengde","Integer"];
+sositypes["SP_TERKLASS"][1][3] = ["skogbrplanTerrengMinTranspUtst","Integer"];
+sositypes["SP_TERKLASS"][1][4] = ["skogbrplanTerrengJevnhet","Integer"];
+sositypes["SP_TETTHOYD"][1][0] = ["skogbrplanTetthetGrunnflatesum","Integer"];
+sositypes["SP_TETTHOYD"][1][1] = ["skogbrplanTetthetMHøyde","Integer"];
+sositypes["SP_TILTAK"][1][3] = ["skogbrplanTiltakProritet","Integer"];
+sositypes["SP_TILTAK"][1][1] = ["skogbrplanTiltakProsent","Integer"];
+sositypes["SP_TILTAK"][1][4] = ["skogbrplanTiltakAreal","Real"];
+sositypes["SP_TILTAK"][1][0] = ["skogbrplanTiltakBestand","Integer"];
+sositypes["SP_TILTAK"][1][2] = ["skogbrplanTiltakÅr","Integer"];
+sositypes["SP_TILVVOL"][1][0] = ["skogbrplanTilvekstBeregnDaa","Real"];
+sositypes["SP_TILVVOL"][1][1] = ["skogbrplanTilvekstBeregnProsent","Real"];
+sositypes["SP_TILVVOL"][1][2] = ["skogbrplanTilvekstBeregnM3","Real"];
+sositypes["SP_TILVVOL"][1][3] = ["skogbrplanTilvekstVolumBestand","Integer"];
+sositypes["SP_TRESL"][1][4] = ["skogbrplanTreslagAntTreDaaEReg","Integer"];
+sositypes["SP_TRESL"][1][3] = ["skogbrplanTreslagAntTreDaaFReg","Integer"];
+sositypes["SP_TRESL"][1][0] = ["skogbrplanTreslag","Integer"];
+sositypes["SP_TRESL"][1][1] = ["skogbrplanTreslagHøyde","Integer"];
+sositypes["SP_TRESL"][1][2] = ["skogbrplanTreslagProsent","Integer"];
+sositypes["SP_TRESL"][1][5] = ["skogbrplanTreslagKorrVolumUBark","Integer"];
+sositypes["SP_TRESL"][1][7] = ["skogbrplanTreslagSalgsvolumUBark","Integer"];
+sositypes["SP_TRESL"][1][6] = ["skogbrplanTreslagUkorrVolumUBark","Integer"];
+sositypes["TETTSTEDID"][1][1] = ["tettstednavn","String"];
+sositypes["TETTSTEDID"][1][0] = ["tettstednummer","Integer"];
+sositypes["UNIVERSELLUTFORMING"][1][2] = ["informasjon","String"];
+sositypes["UNIVERSELLUTFORMING"][1][0] = ["tilgjengelighetsvurdering","String"];
+sositypes["UNIVERSELLUTFORMING"][1][1] = ["universellutformingFasilitet","String"];
+sositypes["UTNYTT"][1][1] = ["utnyttingstall","Real"];
+sositypes["UTNYTT"][1][0] = ["utnyttingstype","Integer"];
+sositypes["UTSLIPP"][1][0] = ["komponent","String"];
+sositypes["UTSLIPP"][1][1] = ["massestørrelse","String"];
+sositypes["UTSLIPP"][1][2] = ["utslippType","String"];
+sositypes["UTV_TILL_PART"][1][1] = ["petroleumsandel","Real"];
+sositypes["UTV_TILL_PART"][1][0] = ["petroleumspartnere","String"];
+sositypes["VERN"][1][0] = ["vernelov","String"];
+sositypes["VERN"][1][1] = ["verneparagraf","String"];
+sositypes["VERN"][1][3] = ["vernedato","Date"];
+sositypes["VERN"][1][2] = ["vernetype","String"];
+sositypes["VKRETS"][1][1] = ["valgkretsnavn","String"];
+sositypes["VKRETS"][1][0] = ["valgkretsnummer","Integer"];
+sositypes["VNR"][1][0] = ["vegkategori","String"];
+sositypes["VNR"][1][2] = ["vegnummer","Integer"];
+sositypes["VNR"][1][1] = ["vegstatus","String"];
+sositypes["VPA"][1][0] = ["hovedParsell","Integer"];
+sositypes["VPA"][1][1] = ["veglenkeMeterFra","Integer"];
+sositypes["VPA"][1][2] = ["veglenkeMeterTil","Integer"];
 window.SOSI.types = sositypes;
 ;var SOSI = window.SOSI || {};
 
@@ -3477,7 +3477,7 @@ window.SOSI.types = sositypes;
     }
 
     function setDataType(key, value) {
-      var type = _.isArray(key) ? key : window.SOSI.types[key];
+      var type = _.isArray(key) ? key : SOSI.types[key];
       if (type) {
         if (typeof(type[0]) == 'Object') {
         } else {
@@ -3516,9 +3516,8 @@ window.SOSI.types = sositypes;
     };
 
     function getLongname (key) { // not tested
-          var type = window.SOSI.types[key];
-          if (!type || _.isArray(type[0])) return key;
-          return type[0];
+          var type = SOSI.types[key];
+          return !!type && type[0] || key;
     };
 
 
@@ -3539,7 +3538,7 @@ window.SOSI.types = sositypes;
             return _.reduce(parseTree(data, 2), function (dict, lines, key) {
                 if (lines.length) {
                     if (lines[0][0] === ".") {
-                        dict[key] = parseSubdict(lines);
+                        dict[getLongname(key)] = parseSubdict(lines);
                     } else if (lines.length > 1) {
                         dict[getLongname(key)] = _.map(lines, function(value){return setDataType(key, value);});
                     } else {
@@ -3553,8 +3552,8 @@ window.SOSI.types = sositypes;
         specialAttributes: function() {
           var atts = {};
           _.each(SOSI.types, function(type,key) {
-            if (_.isObject(type[0])) { // true for complex datatypes
-              atts[key]={name:key, createFunction:parseSpecial(key, type)};
+            if (_.isObject(type[1])) { // true for complex datatypes
+              atts[type[0]]={name:type[0], createFunction:parseSpecial(key, type[1])};
           }});
           return atts;
         }(),
@@ -3695,7 +3694,7 @@ window.SOSI.types = sositypes;
             this.verifiseringsdato = data["verifiseringsdato"];
             this.version = getNumber(data, "sosiVersjon");
             this.level = getNumber(data, "sosiKompleksitetNivå");
-            this.kvalitet = ns.util.specialAttributes["KVALITET"].createFunction(data["KVALITET"]);
+            this.kvalitet = ns.util.specialAttributes["kvalitet"].createFunction(data["kvalitet"]);
             this.bbox = parseBbox(data["OMRÅDE"]);
             this.origo = parseOrigo(data["TRANSPAR"]["ORIGO-NØ"]);
             this.enhet = parseFloat(data["TRANSPAR"]["enhet"]);
