@@ -82,49 +82,64 @@ var SOSI = window.SOSI || {};
     }
 
     function setDataType(key, value) {
-      var type = _.isArray(key) ? key : SOSI.types[key];
-      if (type) {
-        if (typeof(type[0]) == 'Object') {
-        } else {
-          if (type[1]=="Integer") {
-            return parseInt(value);
-          } else if (type[1]=="Real") {
-            return parseFloat(value);
-          } else if (type[1]=="Date") {
-            if (value.length==8) {
-              return new Date(parseInt(value.substring(0,4)), parseInt(value.substring(4,6))-1, parseInt(value.substring(6,8)));
-            } else if (value.length==14) {
-              return new Date(parseInt(value.substring(0,4)), parseInt(value.substring(4,6))-1, parseInt(value.substring(6,8)), 
-                              parseInt(value.substring(8,10)), parseInt(value.substring(10,12)), parseInt(value.substring(12,14)));
+        var type = _.isArray(key) ? key : SOSI.types[key];
+        if (type) {
+            if (typeof (type[0]) === 'Object') {
+
+            } else {
+                if (type[1] === "Integer") {
+                    return parseInt(value, 10);
+                } else if (type[1] === "Real") {
+                    return parseFloat(value);
+                } else if (type[1] === "Date") {
+                    if (value.length === 8) {
+                        return new Date(
+                            parseInt(value.substring(0, 4), 10),
+                            parseInt(value.substring(4, 6), 10) - 1,
+                            parseInt(value.substring(6, 8), 10)
+                        );
+                    } else if (value.length === 14) {
+                        return new Date(
+                            parseInt(value.substring(0, 4), 10),
+                            parseInt(value.substring(4, 6), 10) - 1,
+                            parseInt(value.substring(6, 8), 10),
+                            parseInt(value.substring(8, 10), 10),
+                            parseInt(value.substring(10, 12), 10),
+                            parseInt(value.substring(12, 14), 10)
+                        );
+                    }
+                } else if (type[1] === "String") {
+                    if (value[0] === '"' || value[0] === "'") {
+                        return value.substring(1, value.length - 1);
+                    }
+                    return value;
+                }
             }
-          } else if (type[1]=="String") {
-            if (value[0] == '"' || value[0]=="'") return value.substring(1,value.length-1);
-            return value;
-          }
         }
-      }
-      return value;
+        return value;
     }
 
-    function parseSpecial(key, subfields) { 
-          return function (data) {
-            if (!data) return null;
-            if (_.isObject(data)) return data; // extended subfields
-
-            if (_.isString(data)) { 
-              return _.reduce(data.match(/"[^"]*"|'[^']*'|\S+/g), function (res, chunk, i) {
-                res[subfields[i][0]] = setDataType(subfields[i], chunk);
-                return res;
-              }, {});
+    function parseSpecial(key, subfields) {
+        return function (data) {
+            if (!data) {
+                return null;
             }
-          }
-    };
+            if (_.isObject(data)) {
+                return data; // extended subfields
+            }
+            if (_.isString(data)) {
+                return _.reduce(data.match(/"[^"]*"|'[^']*'|\S+/g), function (res, chunk, i) {
+                    res[subfields[i][0]] = setDataType(subfields[i], chunk);
+                    return res;
+                }, {});
+            }
+        };
+    }
 
-    function getLongname (key) { // not tested
-          var type = SOSI.types[key];
-          return !!type && type[0] || key;
-    };
-
+    function getLongname(key) { // not tested
+        var type = SOSI.types[key];
+        return !!type && type[0] || key; //ambiguity ahoy!
+    }
 
     function parseSubdict(lines) {
         return _.reduce(parseTree(lines, 3), function (subdict, value, key) {
@@ -136,8 +151,8 @@ var SOSI = window.SOSI || {};
     ns.util = {
 
         parseTree: parseTree,
-        cleanupLine: cleanupLine,
 
+        cleanupLine: cleanupLine,
 
         parseFromLevel2: function (data) {
             return _.reduce(parseTree(data, 2), function (dict, lines, key) {
@@ -154,14 +169,15 @@ var SOSI = window.SOSI || {};
             }, {});
         },
 
-        specialAttributes: function() {
-          var atts = {};
-          _.each(SOSI.types, function(type,key) {
-            if (_.isObject(type[1])) { // true for complex datatypes
-              atts[type[0]]={name:type[0], createFunction:parseSpecial(key, type[1])};
-          }});
-          return atts;
-        }(),
+        specialAttributes: (function () {
+            var atts = {};
+            _.each(SOSI.types, function (type, key) {
+                if (_.isObject(type[1])) { // true for complex datatypes
+                    atts[type[0]] = {name: type[0], createFunction: parseSpecial(key, type[1])};
+                }
+            });
+            return atts;
+        }()),
 
         round: function (number, numDecimals) {
             var pow = Math.pow(10, numDecimals);
