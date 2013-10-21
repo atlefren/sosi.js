@@ -33,8 +33,15 @@
             assert(bue26);
             assert.equals(bue26.geometry.kurve.length, 56);
             assert.equals(bue26.attributes.OPPDATERINGSDATO, "20130531092024");
-        }
+            assert.equals(bue26.geometry.kurve.length, 56);
+        },
 
+        "buer have joints": function () {
+            var sosidata = this.parser.parse(this.sosidata);
+            var bue26 = sosidata.features.getById(26);
+            assert.equals(bue26.geometry.knutepunkter.length, 2);
+            assert.equals(bue26.geometry.knutepunkter[1].x, 474237.85);
+        }
 
     });
 }(SOSI));
