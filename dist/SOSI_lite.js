@@ -37,7 +37,8 @@ var SOSI = window.SOSI || {};
         return child;
     };
 
-}(SOSI));;var SOSI = window.SOSI || {};
+}(SOSI));
+var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
     "use strict";
@@ -290,7 +291,8 @@ var SOSI = window.SOSI || {};
     });
 
 }(SOSI));
-;var SOSI = window.SOSI || {};
+
+var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
     "use strict";
@@ -383,7 +385,8 @@ var SOSI = window.SOSI || {};
     });
 
 }(SOSI));
-;var SOSI = window.SOSI || {};
+
+var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
     "use strict";
@@ -580,7 +583,8 @@ var SOSI = window.SOSI || {};
         }
     });
 }(SOSI));
-;var SOSI = window.SOSI || {};
+
+var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
     "use strict";
@@ -734,7 +738,8 @@ var SOSI = window.SOSI || {};
     });
 
 }(SOSI));
-;var SOSI = window.SOSI || {};
+
+var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
     "use strict";
@@ -921,7 +926,8 @@ var SOSI = window.SOSI || {};
     });
 
 }(SOSI));
-;var SOSI = window.SOSI || {};
+
+var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
     "use strict";

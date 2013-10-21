@@ -37,7 +37,8 @@ var SOSI = window.SOSI || {};
         return child;
     };
 
-}(SOSI));;/* automatic conversion from sosi.h - TODO convert to single json object */
+}(SOSI));
+/* automatic conversion from sosi.h - TODO convert to single json object */
 
 var sositypes = {
     "ADM_GRENSE": ["administrativGrense", "String"],
@@ -1921,7 +1922,8 @@ sositypes["VNR"][1][1] = ["vegstatus", "String"];
 sositypes["VPA"][1][0] = ["hovedParsell", "Integer"];
 sositypes["VPA"][1][1] = ["veglenkeMeterFra", "Integer"];
 sositypes["VPA"][1][2] = ["veglenkeMeterTil", "Integer"];
-window.SOSI.types = sositypes;;var SOSI = window.SOSI || {};
+window.SOSI.types = sositypes;
+var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
     "use strict";
@@ -2174,7 +2176,8 @@ window.SOSI.types = sositypes;;var SOSI = window.SOSI || {};
     });
 
 }(SOSI));
-;var SOSI = window.SOSI || {};
+
+var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
     "use strict";
@@ -2267,7 +2270,8 @@ window.SOSI.types = sositypes;;var SOSI = window.SOSI || {};
     });
 
 }(SOSI));
-;var SOSI = window.SOSI || {};
+
+var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
     "use strict";
@@ -2464,7 +2468,8 @@ window.SOSI.types = sositypes;;var SOSI = window.SOSI || {};
         }
     });
 }(SOSI));
-;var SOSI = window.SOSI || {};
+
+var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
     "use strict";
@@ -2618,7 +2623,8 @@ window.SOSI.types = sositypes;;var SOSI = window.SOSI || {};
     });
 
 }(SOSI));
-;var SOSI = window.SOSI || {};
+
+var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
     "use strict";
@@ -2805,7 +2811,8 @@ window.SOSI.types = sositypes;;var SOSI = window.SOSI || {};
     });
 
 }(SOSI));
-;var SOSI = window.SOSI || {};
+
+var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
     "use strict";
