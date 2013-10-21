@@ -23,8 +23,8 @@
             var feature1 = sosidata.features.at(4);
             assert.equals(feature1.attributes.objekttypenavn, "Tank");
 
-            assert.equals(feature1.attributes.KVALITET.målemetode, 82);
-            assert.equals(feature1.attributes["REGISTRERINGSVERSJON"].versjon, "3.4 eller eldre");
+            assert.equals(feature1.attributes.kvalitet.målemetode, 82);
+            assert.equals(feature1.attributes.registreringsversjon.versjon, "3.4 eller eldre");
         },
 
         "should get center point": function () {
@@ -85,7 +85,7 @@
             assert.equals(feature1.id, 651);
             assert.equals(feature1.properties.objekttypenavn, "Tank");
             assert.equals(feature1.properties.datafangstdato, new Date(2003,6,2));
-            assert.equals(feature1.properties.KVALITET.målemetode, 82);
+            assert.equals(feature1.properties.kvalitet.målemetode, 82);
 
 
             var geom = feature1.geometry;
@@ -117,7 +117,7 @@
             assert.equals(geom4.properties.id, 651);
             assert.equals(geom4.properties.objekttypenavn, "Tank");
             assert.equals(geom4.properties.datafangstdato, new Date(2003,6,2));
-            assert.equals(geom4.properties.KVALITET.målemetode, 82);
+            assert.equals(geom4.properties.kvalitet.målemetode, 82);
 
             assert.equals(geom4.arcs.length, 1);
             assert.equals(geom4.arcs[0].length, 4);

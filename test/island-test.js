@@ -132,7 +132,7 @@
             assert.equals(feature1.id, 600);
             assert.equals(feature1.properties.objekttypenavn, "Mahogney");
 
-            assert.equals(feature1.properties.KVALITET.målemetode, 82);
+            assert.equals(feature1.properties.kvalitet.målemetode, 82);
 
             var geom = feature1.geometry;
             assert.equals(geom.type, "Polygon");
@@ -165,8 +165,8 @@
 
             assert.equals(geom10.properties.id, 600);
             assert.equals(geom10.properties.objekttypenavn, "Mahogney");
-            assert.equals(typeof geom10.properties.KVALITET.målemetode ,  "number");
-            assert.equals(geom10.properties.KVALITET.målemetode,  82);
+            assert.equals(typeof geom10.properties.kvalitet.målemetode ,  "number");
+            assert.equals(geom10.properties.kvalitet.målemetode,  82);
 
             assert.equals(geom10.arcs.length, 2);
             assert.equals(geom10.arcs[0].length, 4);
@@ -191,7 +191,7 @@
 
             assert.equals(geom9.properties.id, 400);
             assert.equals(geom9.properties.objekttypenavn, "Mahogney");
-            assert.equals(geom9.properties.KVALITET.målemetode, 82);
+            assert.equals(geom9.properties.kvalitet.målemetode, 82);
 
             assert.equals(geom9.arcs.length, 2);
             assert.equals(geom9.arcs[0].length, 4);

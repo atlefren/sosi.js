@@ -82,7 +82,7 @@ var SOSI = window.SOSI || {};
     }
 
     function setDataType(key, value) {
-      var type = _.isArray(key) ? key : window.SOSI.types[key];
+      var type = _.isArray(key) ? key : SOSI.types[key];
       if (type) {
         if (typeof(type[0]) == 'Object') {
         } else {
@@ -121,9 +121,8 @@ var SOSI = window.SOSI || {};
     };
 
     function getLongname (key) { // not tested
-          var type = window.SOSI.types[key];
-          if (!type || _.isArray(type[0])) return key;
-          return type[0];
+          var type = SOSI.types[key];
+          return !!type && type[0] || key;
     };
 
 
@@ -144,7 +143,7 @@ var SOSI = window.SOSI || {};
             return _.reduce(parseTree(data, 2), function (dict, lines, key) {
                 if (lines.length) {
                     if (lines[0][0] === ".") {
-                        dict[key] = parseSubdict(lines);
+                        dict[getLongname(key)] = parseSubdict(lines);
                     } else if (lines.length > 1) {
                         dict[getLongname(key)] = _.map(lines, function(value){return setDataType(key, value);});
                     } else {
@@ -158,8 +157,8 @@ var SOSI = window.SOSI || {};
         specialAttributes: function() {
           var atts = {};
           _.each(SOSI.types, function(type,key) {
-            if (_.isObject(type[0])) { // true for complex datatypes
-              atts[key]={name:key, createFunction:parseSpecial(key, type)};
+            if (_.isObject(type[1])) { // true for complex datatypes
+              atts[type[0]]={name:type[0], createFunction:parseSpecial(key, type[1])};
           }});
           return atts;
         }(),
