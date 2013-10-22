@@ -81,55 +81,114 @@ var SOSI = window.SOSI || {};
         }, {objects: {}}).objects;
     }
 
+    function setDataType(key, value) {
+
+        if (!ns.types) {
+            return value;
+        }
+
+        var type = _.isArray(key) ? key : SOSI.types[key];
+        if (type) {
+            if (!_.isObject(type[0])) {
+                if (type[1] === "Integer") {
+                    return parseInt(value, 10);
+                } else if (type[1] === "Real") {
+                    return parseFloat(value);
+                } else if (type[1] === "Date") {
+                    if (value.length === 8) {
+                        return new Date(
+                            parseInt(value.substring(0, 4), 10),
+                            parseInt(value.substring(4, 6), 10) - 1,
+                            parseInt(value.substring(6, 8), 10)
+                        );
+                    } else if (value.length === 14) {
+                        return new Date(
+                            parseInt(value.substring(0, 4), 10),
+                            parseInt(value.substring(4, 6), 10) - 1,
+                            parseInt(value.substring(6, 8), 10),
+                            parseInt(value.substring(8, 10), 10),
+                            parseInt(value.substring(10, 12), 10),
+                            parseInt(value.substring(12, 14), 10)
+                        );
+                    }
+                } else if (_.isString(type[1])) {
+                    if (value[0] === '"' || value[0] === "'") {
+                        return value.substring(1, value.length - 1);
+                    }
+                    return value;
+                }
+            }
+        }
+        return value;
+    }
+
+    function parseSpecial(key, subfields) {
+        return function (data) {
+            if (!data) {
+                return null;
+            }
+            if (_.isObject(data)) {
+                return data; // extended subfields
+            }
+            if (_.isString(data)) {
+                return _.reduce(data.match(/"[^"]*"|'[^']*'|\S+/g), function (res, chunk, i) {
+                    res[subfields[i][0]] = setDataType(subfields[i], chunk);
+                    return res;
+                }, {});
+            }
+        };
+    }
+
+    function getLongname(key) { // not tested
+        if (ns.types && ns.types[key]) {
+            var type = ns.types[key];
+            return !!type && type[0] || key; //ambiguity ahoy!
+        }
+        return key;
+    }
+
+    function parseSubdict(lines) {
+        return _.reduce(parseTree(lines, 3), function (subdict, value, key) {
+            subdict[getLongname(key)] = setDataType(key, value[0]);
+            return subdict;
+        }, {});
+    }
+
     ns.util = {
 
         parseTree: parseTree,
+
         cleanupLine: cleanupLine,
 
         parseFromLevel2: function (data) {
             return _.reduce(parseTree(data, 2), function (dict, lines, key) {
-                if (lines.length && lines[0][0]==".") {
-                  dict[key] = _.reduce(parseTree(lines, 3), function (subdict, value, key) {
-                    subdict[key] = value[0];
-                      return subdict;
-                    }, {});
-                } else if (lines.length > 1) {
-                  dict[key] = lines;
-                } else if (lines.length) {
-                  dict[key] = lines[0];
+                if (lines.length) {
+                    if (lines[0][0] === ".") {
+                        dict[getLongname(key)] = parseSubdict(lines);
+                    } else if (lines.length > 1) {
+                        dict[getLongname(key)] = _.map(lines, function (value) {
+                            return setDataType(key, value);
+                        });
+                    } else {
+                        dict[getLongname(key)] = setDataType(key, lines[0]);
+                    }
                 }
                 return dict;
             }, {});
         },
 
-        parseQuality: function (data) {
-
-            if (!data) {
-                return null;
-            }
-
-            var qualityShorthand = [
-                "målemetode",
-                "nøyaktighet",
-                "synbarhet",
-                "h-målemetode",
-                "h-nøyaktighet",
-                "max-avvik"
-            ];
-
-            if (_.isString(data)) {
-                return _.reduce(data.split(/\s+/), function (res, number, i) {
-                    var asInt = parseInt(number, 10);
-                    res[qualityShorthand[i]] = isNaN(asInt) ? number : asInt;
-                    return res;
-                }, {});
-            }
-            throw new Error("Reading KVALITET as subfields not implemented!");
-        },
+        specialAttributes: (function () {
+            return _.reduce(SOSI.types, function (attrs, type, key) {
+                if (_.isObject(type[1])) { // true for complex datatypes
+                    attrs[type[0]] = {name: type[0], createFunction: parseSpecial(key, type[1])};
+                }
+                return attrs;
+            }, {});
+        }()),
 
         round: function (number, numDecimals) {
             var pow = Math.pow(10, numDecimals);
-            return Math.round(number * pow) / pow; 
+            return Math.round(number * pow) / pow;
         }
 
     };
@@ -183,11 +242,11 @@ var SOSI = window.SOSI || {};
 
     //add proj4 defs so that proj4js works
     _.each(ns.koordsysMap, function (koordsys) {
-      if (proj4) { // newer proj4js (>=1.3.1)
-        proj4.defs(koordsys.srid, koordsys.def);
-      } else if (Proj4js) { //older proj4js (=< 1.1.0)
-        Proj4js.defs[koordsys.srid] = koordsys.def;
-      }
+        if (proj4) { // newer proj4js (>=1.3.1)
+            proj4.defs(koordsys.srid, koordsys.def);
+        } else if (Proj4js) { //older proj4js (=< 1.1.0)
+            Proj4js.defs[koordsys.srid] = koordsys.def;
+        }
     });
 
 }(SOSI));

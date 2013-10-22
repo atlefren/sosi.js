@@ -37,7 +37,9 @@ var SOSI = window.SOSI || {};
         return child;
     };
 
-}(SOSI));;var SOSI = window.SOSI || {};
+}(SOSI));
+
+var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
     "use strict";
@@ -120,54 +122,120 @@ var SOSI = window.SOSI || {};
         }, {objects: {}}).objects;
     }
 
+    function setDataType(key, value) {
+
+        if (!ns.types) {
+            return value;
+        }
+
+        var type = _.isArray(key) ? key : SOSI.types[key];
+        if (type) {
+            if (!_.isObject(type[0])) {
+                if (type[1] === "Integer") {
+                    return parseInt(value, 10);
+                } else if (type[1] === "Real") {
+                    return parseFloat(value);
+                } else if (type[1] === "Date") {
+                    if (value.length === 8) {
+                        return new Date(
+                            parseInt(value.substring(0, 4), 10),
+                            parseInt(value.substring(4, 6), 10) - 1,
+                            parseInt(value.substring(6, 8), 10)
+                        );
+                    } else if (value.length === 14) {
+                        return new Date(
+                            parseInt(value.substring(0, 4), 10),
+                            parseInt(value.substring(4, 6), 10) - 1,
+                            parseInt(value.substring(6, 8), 10),
+                            parseInt(value.substring(8, 10), 10),
+                            parseInt(value.substring(10, 12), 10),
+                            parseInt(value.substring(12, 14), 10)
+                        );
+                    }
+                } else if (_.isString(type[1])) {
+                    if (value[0] === '"' || value[0] === "'") {
+                        return value.substring(1, value.length - 1);
+                    }
+                    return value;
+                }
+            }
+        }
+        return value;
+    }
+
+    function parseSpecial(key, subfields) {
+        return function (data) {
+            if (!data) {
+                return null;
+            }
+            if (_.isObject(data)) {
+                return data; // extended subfields
+            }
+            if (_.isString(data)) {
+                return _.reduce(data.match(/"[^"]*"|'[^']*'|\S+/g), function (res, chunk, i) {
+                    res[subfields[i][0]] = setDataType(subfields[i], chunk);
+                    return res;
+                }, {});
+            }
+        };
+    }
+
+    function getLongname(key) { // not tested
+        if (ns.types && ns.types[key]) {
+            var type = ns.types[key];
+            return !!type && type[0] || key; //ambiguity ahoy!
+        }
+        return key;
+    }
+
+    function parseSubdict(lines) {
+        return _.reduce(parseTree(lines, 3), function (subdict, value, key) {
+            subdict[getLongname(key)] = setDataType(key, value[0]);
+            return subdict;
+        }, {});
+    }
+
     ns.util = {
 
         parseTree: parseTree,
+
         cleanupLine: cleanupLine,
 
         parseFromLevel2: function (data) {
             return _.reduce(parseTree(data, 2), function (dict, lines, key) {
-                if (lines.length > 1) {
-                    dict[key] = _.reduce(parseTree(lines, 3), function (subdict, value, key) {
-                        subdict[key] = value[0];
-                        return subdict;
-                    }, {});
-                } else {
-                    dict[key] = lines[0];
+                if (lines.length) {
+                    if (lines[0][0] === ".") {
+                        dict[getLongname(key)] = parseSubdict(lines);
+                    } else if (lines.length > 1) {
+                        dict[getLongname(key)] = _.map(lines, function (value) {
+                            return setDataType(key, value);
+                        });
+                    } else {
+                        dict[getLongname(key)] = setDataType(key, lines[0]);
+                    }
                 }
                 return dict;
             }, {});
         },
 
-        parseQuality: function (data) {
-
-            if (!data) {
-                return null;
-            }
-
-            var qualityShorthand = [
-                "maalemetode",
-                "noyaktighet",
-                "synbarhet",
-                "h-maalemetode",
-                "h-noyaktighet",
-                "max-avvik"
-            ];
-
-            if (_.isString(data)) {
-                return _.reduce(data.split(/\s+/), function (res, number, i) {
-                    res[qualityShorthand[i]] = parseInt(number, 10);
-                    return res;
-                }, {});
-            }
-            throw new Error("Reading KVALITET as subfields not implemented!");
-        },
+        specialAttributes: (function () {
+            return _.reduce(SOSI.types, function (attrs, type, key) {
+                if (_.isObject(type[1])) { // true for complex datatypes
+                    attrs[type[0]] = {name: type[0], createFunction: parseSpecial(key, type[1])};
+                }
+                return attrs;
+            }, {});
+        }()),
 
         round: function (number, numDecimals) {
             var pow = Math.pow(10, numDecimals);
             return Math.round(number * pow) / pow;
         }
 
+    };
+
+    ns.geosysMap = {
+        2: {"srid": "EPSG:4326", def: "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs "}
     };
 
     ns.koordsysMap = {
@@ -215,15 +283,16 @@ var SOSI = window.SOSI || {};
 
     //add proj4 defs so that proj4js works
     _.each(ns.koordsysMap, function (koordsys) {
-      if (proj4) { // newer proj4js (>=1.3.1)
-        proj4.defs(koordsys.srid, koordsys.def);
-      } else if (Proj4js) { //older proj4js (=< 1.1.0)
-        Proj4js.defs[koordsys.srid] = koordsys.def;
-      }
+        if (proj4) { // newer proj4js (>=1.3.1)
+            proj4.defs(koordsys.srid, koordsys.def);
+        } else if (Proj4js) { //older proj4js (=< 1.1.0)
+            Proj4js.defs[koordsys.srid] = koordsys.def;
+        }
     });
 
 }(SOSI));
-;var SOSI = window.SOSI || {};
+
+var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
     "use strict";
@@ -245,9 +314,21 @@ var SOSI = window.SOSI || {};
         throw new Error("KOORDSYS = " + koordsys + " not found!");
     }
 
+    function getSridFromGeosys(geosys) {
+        if (_.isArray(geosys)) {
+            throw new Error("GEOSYS cannot be parsed in uncompacted form yet.");
+        } else {
+            geosys = geosys.split(/\s+/);
+        }
+        if (ns.geosysMap[geosys[0]]) {
+            return ns.geosysMap[geosys[0]];
+        }
+        throw new Error("GEOSYS = " + geosys + " not found!");
+    }
+
     function parseBbox(data) {
-        var ll = data["MIN-NØ"].split(" ");
-        var ur = data["MAX-NØ"].split(" ");
+        var ll = data["MIN-NØ"].split(/\s+/);
+        var ur = data["MAX-NØ"].split(/\s+/);
         return [
             parseFloat(ll[1]),
             parseFloat(ll[0]),
@@ -266,6 +347,13 @@ var SOSI = window.SOSI || {};
         };
     }
 
+    function parseUnit(data) {
+        if (data.TRANSPAR.enhet) {
+            return parseFloat(data.TRANSPAR.enhet);
+        }
+        return parseFloat(data.TRANSPAR.ENHET);
+    }
+
     ns.Head = ns.Base.extend({
         initialize: function (data) {
             this.setData(data);
@@ -277,22 +365,28 @@ var SOSI = window.SOSI || {};
 
         setData: function (data) {
             data = this.parse(data);
-            this.eier = getString(data, "EIER");
-            this.produsent = getString(data, "PRODUSENT");
+            this.eier = getString(data, "geodataeier");
+            this.produsent = getString(data, "geodataprodusent");
             this.objektkatalog = getString(data, "OBJEKTKATALOG");
-            this.verifiseringsdato = getString(data, "VERIFISERINGSDATO");
-            this.version = getNumber(data, "SOSI-VERSJON");
-            this.level = getNumber(data, "SOSI-NIVÅ");
-            this.kvalitet = ns.util.parseQuality(data["KVALITET"]);
+            this.verifiseringsdato = data["verifiseringsdato"];
+            this.version = getNumber(data, "sosiVersjon");
+            this.level = getNumber(data, "sosiKompleksitetNivå");
+            this.kvalitet = ns.util.specialAttributes["kvalitet"].createFunction(data["kvalitet"]);
             this.bbox = parseBbox(data["OMRÅDE"]);
             this.origo = parseOrigo(data["TRANSPAR"]["ORIGO-NØ"]);
-            this.enhet = parseFloat(data["TRANSPAR"]["ENHET"]);
+            this.enhet = parseUnit(data);
             this.vertdatum = getString(data["TRANSPAR"], "VERT-DATUM");
-            this.srid = getSrid(data["TRANSPAR"]["KOORDSYS"]);
+            if (data["TRANSPAR"]["KOORDSYS"]) {
+                this.srid = getSrid(data["TRANSPAR"]["KOORDSYS"]);
+            } else {
+                this.srid = getSridFromGeosys(data["TRANSPAR"]["GEOSYS"]);
+            }
         }
     });
 
-}(SOSI));;var SOSI = window.SOSI || {};
+}(SOSI));
+
+var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
     "use strict";
@@ -302,15 +396,21 @@ var SOSI = window.SOSI || {};
         knutepunkt: false,
 
         initialize: function (line, origo, unit) {
+            if (_.isNumber(line)) { /* initialized directly with x and y */
+                this.x = line;
+                this.y = origo;
+                return;
+            }
+
             if (_.isArray(line)) {
                 line = line[1];
             }
 
-            var coords = line.split(/\s+/); 
+            var coords = line.split(/\s+/);
 
             var numDecimals = 0;
             if (unit < 1) {
-                numDecimals = String(unit).split(".")[1].length;
+                numDecimals = -Math.floor(Math.log(unit) / Math.LN10);
             }
 
             this.y = ns.util.round((parseInt(coords[0], 10) * unit) + origo.y, numDecimals);
@@ -333,6 +433,7 @@ var SOSI = window.SOSI || {};
         }
     });
 
+
     ns.LineString = ns.Base.extend({
         initialize: function (lines, origo, unit) {
             this.kurve = _.compact(_.map(lines, function (line) {
@@ -343,6 +444,77 @@ var SOSI = window.SOSI || {};
 
             this.knutepunkter = _.filter(this.kurve, function (punkt) {
                 return punkt.has_tiepoint;
+            });
+        }
+    });
+
+    function cleanLines(lines) {
+        return _.filter(lines, function (line) {
+            return (line.indexOf("NØ") === -1);
+        });
+    }
+
+    ns.LineStringFromArc = ns.LineString.extend({ // BUEP - an arc defined by three points on a circle
+        initialize: function (lines, origo, unit) {
+            var p = _.map(cleanLines(lines), function (coord) {
+                return new ns.Point(coord, origo, unit);
+            });
+            if (p.length !== 3) {
+                throw new Error("BUEP er ikke definert med 3 punkter");
+            }
+            // in order to copy & paste my own formulas, we use the same variable names
+            var e1 = p[0].x, e2 = p[1].x, e3 = p[2].x;
+            var n1 = p[0].y, n2 = p[1].y, n3 = p[2].y;
+
+            // helper constants
+            var p12  = (e1 * e1 - e2 * e2 + n1 * n1 - n2 * n2) / 2.0;
+            var p13  = (e1 * e1 - e3 * e3 + n1 * n1 - n3 * n3) / 2.0;
+
+            var dE12 = e1 - e2,
+                dE13 = e1 - e3,
+                dN12 = n1 - n2,
+                dN13 = n1 - n3;
+
+            // center of the circle
+            var cE = (dN13 * p12 - dN12 * p13) / (dE12 * dN13 - dN12 * dE13);
+            var cN = (dE13 * p12 - dE12 * p13) / (dN12 * dE13 - dE12 * dN13);
+
+            // radius of the circle
+            var r = Math.sqrt(Math.pow(e1 - cE, 2) + Math.pow(n1 - cN, 2));
+
+            /* angles of points A and B (1 and 3) */
+            var th1 = Math.atan2(n1 - cN, e1 - cE);
+            var th3 = Math.atan2(n3 - cN, e3 - cE);
+
+            /* interpolation step in radians */
+            var dth = th3 - th1;
+            if (dth < 0) {
+                dth  += 2 * Math.PI;
+            }
+            if (dth > Math.PI) {
+                dth = -2 * Math.PI + dth;
+            }
+            var npt = Math.floor(32 * dth / 2 * Math.PI);
+            if (npt < 0) {
+                npt = -npt;
+            }
+            if (npt < 3) {
+                npt = 3;
+            }
+
+            dth = dth / (npt - 1);
+
+            this.kurve = _.map(_.range(npt), function (i) {
+                var x  = cE + r * Math.cos(th1 + dth * i);
+                var y = cN + r * Math.sin(th1 + dth * i);
+                if (isNaN(x)) {
+                    throw new Error("BUEP: Interpolated " + x + " for point " + i + " of " + npt + " in curve.");
+                }
+                return new ns.Point(x, y);
+            });
+
+            this.knutepunkter = _.filter(p, function (point) {
+                return point.has_tiepoint;
             });
         }
     });
@@ -409,7 +581,8 @@ var SOSI = window.SOSI || {};
         }
     });
 }(SOSI));
-;var SOSI = window.SOSI || {};
+
+var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
     "use strict";
@@ -420,6 +593,7 @@ var SOSI = window.SOSI || {};
             "PUNKT": ns.Point,
             "TEKST": ns.Point, // a point feature with exsta styling hints - the geometry actually consists of up to three points
             "KURVE": ns.LineString,
+            "BUEP" : ns.LineStringFromArc,
             "LINJE": ns.LineString, // old 4.0 name for unsmoothed KURVE
             "FLATE": ns.Polygon
         };
@@ -429,13 +603,6 @@ var SOSI = window.SOSI || {};
         }
         return new geometryTypes[geometryType](lines, origo, unit);
     }
-
-    var specialAttributes = {
-        "KVALITET": {
-            "name": "kvalitet",
-            "createFunction": ns.util.parseQuality
-        }
-    };
 
     ns.Feature = ns.Base.extend({
 
@@ -450,7 +617,6 @@ var SOSI = window.SOSI || {};
 
         parseData: function (data, origo, unit) {
 
-
             var split = _.reduce(data.lines, function (dict, line) {
                 if (line.indexOf("..NØ") !== -1) {
                     dict.foundGeom = true;
@@ -463,14 +629,13 @@ var SOSI = window.SOSI || {};
                         line = line.replace("..REF", "");
                     }
                     if (dict.foundRef) {
-                      if (line[0] == '.') {
-                        dict.foundRef = false;
-                      } else {
-                        dict.refs.push(line);
-                      }
-                    }
-                    if (!dict.foundRef) {
-                      dict.attributes.push(line);
+                        if (line[0] === '.') {
+                            dict.foundRef = false;
+                        } else {
+                            dict.refs.push(line);
+                        }
+                    } else {
+                        dict.attributes.push(line);
                     }
                 }
                 return dict;
@@ -484,19 +649,19 @@ var SOSI = window.SOSI || {};
 
             this.attributes = ns.util.parseFromLevel2(split.attributes);
             this.attributes = _.reduce(this.attributes, function (attrs, value, key) {
-                if (specialAttributes[key]) {
-                    attrs[key] = specialAttributes[key].createFunction(value);
+                if (ns.util.specialAttributes[key]) {
+                    attrs[key] = ns.util.specialAttributes[key].createFunction(value);
                 } else {
                     attrs[key] = value;
                 }
                 return attrs;
             }, {});
 
-            if (split.refs) {
+            if (split.refs.length > 0) {
                 this.attributes.REF = split.refs.join(" ");
             }
             if (this.attributes.ENHET) {
-              unit = parseFloat(this.attributes.ENHET);
+                unit = parseFloat(this.attributes.ENHET);
             }
 
             this.raw_data = {
@@ -571,7 +736,8 @@ var SOSI = window.SOSI || {};
     });
 
 }(SOSI));
-;var SOSI = window.SOSI || {};
+
+var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
     "use strict";
@@ -740,7 +906,7 @@ var SOSI = window.SOSI || {};
 
                 arcs = arcs.concat(_.map(polygon.geometry.holeRefs, function (hole) {
                     if (hole.length === 1) {
-                        var feature = this.sosidata.features.getById(hole[0]);
+                        var feature = this.sosidata.features.getById(Math.abs(hole[0]));
                         if (feature.geometry instanceof ns.Polygon) {
                             return mapArcs(feature.geometry.shellRefs, lines);
                         }
@@ -757,7 +923,9 @@ var SOSI = window.SOSI || {};
         }
     });
 
-}(SOSI));;var SOSI = window.SOSI || {};
+}(SOSI));
+
+var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
     "use strict";
@@ -793,11 +961,11 @@ var SOSI = window.SOSI || {};
     });
 
     function splitOnNewline(data) {
-        return _.map(data.split("\n"), function(line) {
-          if (line.indexOf("!")) { //ignore comments starting with ! also in the middle of the line
-            line = line.split("!")[0];
-          }
-          return line.replace(/^\s+|\s+$/g, ''); // trim whitespace padding comments and elsewhere
+        return _.map(data.split("\n"), function (line) {
+            if (line.indexOf("!") !== 0) { //ignore comments starting with ! also in the middle of the line
+                line = line.split("!")[0];
+            }
+            return line.replace(/^\s+|\s+$/g, ''); // trim whitespace padding comments and elsewhere
         });
     }
 

@@ -29,11 +29,11 @@
         "should be able to read attributes": function () {
             var sosidata = this.parser.parse(this.sosidata);
             var feature1 = sosidata.features.at(0);
-            assert.equals(feature1.attributes["OBJTYPE"], "EiendomsGrense");
+            assert.equals(feature1.attributes.objekttypenavn, "EiendomsGrense");
 
 
-            assert.equals(feature1.attributes.KVALITET.målemetode, 40);
-            assert.equals(feature1.attributes.KVALITET.nøyaktighet, 58);
+            assert.equals(feature1.attributes.kvalitet.målemetode, 40);
+            assert.equals(feature1.attributes.kvalitet.nøyaktighet, 58);
 
         },
 
@@ -89,8 +89,8 @@
 
             assert.equals(feature1.type, "Feature");
             assert.equals(feature1.id, 250);
-            assert.equals(feature1.properties.KVALITET.målemetode, 40);
-            assert.equals(feature1.properties.KVALITET.nøyaktighet, 58);
+            assert.equals(feature1.properties.kvalitet.målemetode, 40);
+            assert.equals(feature1.properties.kvalitet.nøyaktighet, 58);
 
             var geom = feature1.geometry;
             assert.equals(geom.type, "LineString");
@@ -119,8 +119,8 @@
             assert.equals(geom1.type, "LineString");
 
             assert.equals(geom1.properties.id, 250);
-            assert.equals(geom1.properties.KVALITET.målemetode, 40);
-            assert.equals(geom1.properties.KVALITET.nøyaktighet, 58);
+            assert.equals(geom1.properties.kvalitet.målemetode, 40);
+            assert.equals(geom1.properties.kvalitet.nøyaktighet, 58);
 
             assert.equals(geom1.arcs.length, 1);
             assert.equals(geom1.arcs[0], 0);

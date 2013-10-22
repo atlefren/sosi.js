@@ -5,7 +5,7 @@ Library to read SOSI files in Javascript
 
 Status
 ------
-This is just an attempt to see if it's posible to parse SOSI-files at all in javascript without too much hassle.
+This is just an attempt to see if it's possible to parse SOSI-files at all in javascript without too much hassle.
 The data/testfile.sos is the example file found in the document ["SOSI standard - versjon 4.5 Del 1: Realisering i SOSI-format og GML"](http://www.statkart.no/Documents/Standard/SOSI-standarden%20del%201%20og%202/SOSI%20standarden/del1_2_RealiseringSosiGml_45_20120608.pdf) (pdf).
 
 There will obviously be some shortcuts, so the goals are as follows:
@@ -28,6 +28,16 @@ There will obviously be some shortcuts, so the goals are as follows:
     - OpenLayers (2 or 3) features
     - Leaflet Layers
 - ignore backwards compability
+
+Versions
+--------
+The dist folder contains two versions of sosi.js:
+- SOSI.js (and SOSI.min.js)
+- SOSI_lite.js (and SOSI_lite.min.js)
+
+The difference (and hence the file size difference) stems from the fact that the full version includes a lookup table to
+translate the SOSI attribute names into their logical names according to the specification (Thanks to Thomas Hirsch).
+If this is unimportant for you, you can save about 85K in minified size by choosing the SOSI_lite.min.js version.
 
 Demo
 ----
@@ -79,7 +89,7 @@ Running tests
 Dependencies
 ------------
 The only hard dependency is underscore.js (although jQuery is used for the tests and leaflet and backbone is used for the example)
-Optional support for proj4js (loads the proj4 definitions for crses known to sosi.js)
+Optional support for proj4js (loads the proj4 definitions for CRSes known to sosi.js)
 
 Contribute
 ----------
@@ -87,6 +97,13 @@ All contributions welcome! If you speak SOSI _and_ Javascript fluently you are m
 Otherwise, send pull requests or ask for commit privileges. If you by chance have any SOSI files that are freely
 usable I'd appreciate some input so that the test set can be expanded.
 
+Contributors
+------------
+In addition to myself (atlefren) some people have contributed code and/or input to this project:
+- Thomas Hirsch (relet)
+- Torbjørn Auglænd Vilhelmsen (torbjvi)
+- SigTill
+
 Disclaimer
 ----------
-This lib must not be used for critical applications, as the test set is veeeeeery limited.
+This lib must not be used for critical applications, as the test set is rather limited.

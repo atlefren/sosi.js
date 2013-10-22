@@ -19,16 +19,17 @@ var SOSI = window.SOSI || {};
         }
         throw new Error("KOORDSYS = " + koordsys + " not found!");
     }
+
     function getSridFromGeosys(geosys) {
-      if (_.isArray(geosys)) {
-        throw new Error("GEOSYS cannot be parsed in uncompacted form yet.");
-      } else {
-        geosys = geosys.split(/\s+/);
-      }
-      if (ns.geosysMap[geosys[0]]) { 
-        return ns.geosysMap[geosys[0]];
-      }
-      throw new Error("GEOSYS = " + geosys + " not found!");
+        if (_.isArray(geosys)) {
+            throw new Error("GEOSYS cannot be parsed in uncompacted form yet.");
+        } else {
+            geosys = geosys.split(/\s+/);
+        }
+        if (ns.geosysMap[geosys[0]]) {
+            return ns.geosysMap[geosys[0]];
+        }
+        throw new Error("GEOSYS = " + geosys + " not found!");
     }
 
     function parseBbox(data) {
@@ -52,6 +53,13 @@ var SOSI = window.SOSI || {};
         };
     }
 
+    function parseUnit(data) {
+        if (data.TRANSPAR.enhet) {
+            return parseFloat(data.TRANSPAR.enhet);
+        }
+        return parseFloat(data.TRANSPAR.ENHET);
+    }
+
     ns.Head = ns.Base.extend({
         initialize: function (data) {
             this.setData(data);
@@ -63,21 +71,21 @@ var SOSI = window.SOSI || {};
 
         setData: function (data) {
             data = this.parse(data);
-            this.eier = getString(data, "EIER");
-            this.produsent = getString(data, "PRODUSENT");
+            this.eier = getString(data, "geodataeier");
+            this.produsent = getString(data, "geodataprodusent");
             this.objektkatalog = getString(data, "OBJEKTKATALOG");
-            this.verifiseringsdato = getString(data, "VERIFISERINGSDATO");
-            this.version = getNumber(data, "SOSI-VERSJON");
-            this.level = getNumber(data, "SOSI-NIVÅ");
-            this.kvalitet = ns.util.parseQuality(data["KVALITET"]);
+            this.verifiseringsdato = data["verifiseringsdato"];
+            this.version = getNumber(data, "sosiVersjon");
+            this.level = getNumber(data, "sosiKompleksitetNivå");
+            this.kvalitet = ns.util.specialAttributes["kvalitet"].createFunction(data["kvalitet"]);
             this.bbox = parseBbox(data["OMRÅDE"]);
             this.origo = parseOrigo(data["TRANSPAR"]["ORIGO-NØ"]);
-            this.enhet = parseFloat(data["TRANSPAR"]["ENHET"]);
+            this.enhet = parseUnit(data);
             this.vertdatum = getString(data["TRANSPAR"], "VERT-DATUM");
             if (data["TRANSPAR"]["KOORDSYS"]) {
-              this.srid = getSrid(data["TRANSPAR"]["KOORDSYS"]);
-            } else { 
-              this.srid = getSridFromGeosys(data["TRANSPAR"]["GEOSYS"]);
+                this.srid = getSrid(data["TRANSPAR"]["KOORDSYS"]);
+            } else {
+                this.srid = getSridFromGeosys(data["TRANSPAR"]["GEOSYS"]);
             }
         }
     });
