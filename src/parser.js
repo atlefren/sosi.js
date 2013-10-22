@@ -45,6 +45,9 @@ var SOSI = window.SOSI || {};
     ns.Parser = ns.Base.extend({
         parse: function (data) {
             return new SosiData(ns.util.parseTree(splitOnNewline(data), 1));
+        },
+        getFormats: function() {
+            return _.keys(dumpTypes);
         }
     });
 }(SOSI));
