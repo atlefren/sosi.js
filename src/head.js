@@ -44,7 +44,7 @@ var SOSI = window.SOSI || {};
     }
 
     function parseOrigo(data) {
-        data = _.filter(data.split(" "), function (element) {
+        data = _.filter(data.split(/\s+/), function (element) {
             return element !== "";
         });
         return {
