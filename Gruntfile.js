@@ -23,13 +23,15 @@ module.exports = function(grunt) {
             },
             lite: {
                 src: [
+                    "src/cli_header.js",
                     "src/class_system.js",
                     "src/util.js",
                     "src/head.js",
                     "src/geometry.js",
                     "src/feature.js",
                     "src/dumpers.js",
-                    "src/parser.js"
+                    "src/parser.js",
+                    "src/cli.js"
                 ],
                 dest: 'dist/<%= pkg.name %>_lite.js'
             }
