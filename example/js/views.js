@@ -79,6 +79,7 @@ var SOSIDemo = window.SOSIDemo || {};
                 if (sosidata.match(/^http/)) { /* if this is a URL, fetch and retry */
                   $.ajax({url:sosidata, 
                          async:false,
+                         dataType: "text", // fixes firefox intelligently guessing SOSI is XML 
                          success:function(data) {
                     sosidata = data;
                   }});
