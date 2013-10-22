@@ -1,4 +1,4 @@
-Contibuting to sosi.js
+Contributing to sosi.js
 ======================
 
 There are in general few requirements for contributors. Fixes on existing code as well as new features are welcome.

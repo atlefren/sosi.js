@@ -25,14 +25,10 @@
             assert(sosidata.def);
             assert(sosidata.objdef);
             assert(sosidata.features);
-
             assert(sosidata.features.length(), 127);
-
 
             var bue26 = sosidata.features.getById(26);
             assert(bue26);
-            assert.equals(bue26.geometry.kurve.length, 56);
-            assert.equals(bue26.attributes.oppdateringsdato, new Date(2013,4,31,9,20,24));
             assert.equals(bue26.geometry.kurve.length, 56);
         },
 
@@ -41,6 +37,20 @@
             var bue26 = sosidata.features.getById(26);
             assert.equals(bue26.geometry.knutepunkter.length, 2);
             assert.equals(bue26.geometry.knutepunkter[1].x, 474237.85);
+        },
+
+        "should be able to write to GeoJSON": function () {
+            var sosidata = this.parser.parse(this.sosidata);
+            var name = "testdata";
+            var json =  sosidata.dumps("geojson", name);
+            assert(json);
+        },
+
+        "should be able to write to TopoJSON": function () {
+            var sosidata = this.parser.parse(this.sosidata);
+            var name = "testdata";
+            var json =  sosidata.dumps("topojson", name);
+            assert(json);
         }
 
     });
