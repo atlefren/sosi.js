@@ -345,7 +345,7 @@ var SOSI = window.SOSI || {};
     }
 
     function parseOrigo(data) {
-        data = _.filter(data.split(" "), function (element) {
+        data = _.filter(data.split(/\s+/), function (element) {
             return element !== "";
         });
         return {
@@ -994,23 +994,32 @@ if (!(typeof require == "undefined")) { /* we are running inside nodejs */
   
   if (process.argv.length < 4) { 
     util.print("\nusage: nodejs SOSI.js.js format infile.sos > outfile\n\n"
-               + "where: format    : one of [" + parser.getFormats() + "]\n"
-               + "       infile.sos: a file in SOSI format\n"
-               + "       outfile   : an output file name, omit for stdout\n\n"
+               + "where: format     : one of [" + parser.getFormats() + "]\n"
+               + "       infile.sos : a file in SOSI format\n"
+               + "       outfile    : an output file name, omit for stdout\n\n"
     );
     process.exit(1);
   } 
 
   var format   = process.argv[2],
       filename = process.argv[3];
-  fs.readFile(filename, "utf8", function(err, data) {
-    /* todo: detect TEGNSETT/encoding in the first bytes and re-read the file with the proper encoding */
-    if (err) {
-      return util.print(err);
-    }
+
+  function convert(data, format) { 
     json       = parser.parse(data).dumps(format);
-    util.print(JSON.stringify(json)); /* only for GeoJSON or TopoJSON */
-  });
+    return JSON.stringify(json); /* only for GeoJSON or TopoJSON */
+  }
+
+  data = fs.readFileSync(filename, "utf8");
+
+  var encoding = data.substring(0,100).match(/TEGNSETT.*/).toString();
+  encoding = encoding.split(/\s+/)[1].match(/\S+/).toString(); //sprit at white space, trim
+  if (encoding && encoding != "UTF8") { /* if unlike UTF8, we need iconv, but only then */
+    var Iconv = require("iconv").Iconv; /* needed for non UTF8 encodings */
+    converter = new Iconv(encoding, "UTF-8");
+    data = fs.readFileSync(filename, encoding=null);
+    data = converter.convert(data).toString();
+  }
+  util.print(convert(data,format));
 
 }
 
