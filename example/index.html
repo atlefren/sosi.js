@@ -74,13 +74,14 @@
         <label for="sosidata">SOSI-data or URL</label>
         <textarea id="sosidata" rows="10" cols="10" class="form-control sosi_textarea"></textarea>
     </div>
-    <button type="submit" class="btn btn-default">Parse!</button>
+    <div id="buttons">
+      <button type="submit" id="parse" class="btn btn-default">Parse!</button>
+    </div>
     <hr/>
     <div class="form-group">
         <label for="jsondata">GeoJSON output</label>
         <textarea readonly id="jsondata" rows="10" cols="10" class="form-control sosi_textarea"></textarea>
     </div>
-
 </script>
 
 
@@ -111,6 +112,26 @@
         leafletUtils.SkTiles({layers: "norges_grunnkart"}).addTo(map);
         $("body").append(new SOSIDemo.Menu({"map": map}).render().$el);
     }());
+</script>
+<script type="text/javascript">
+  function openFile(evt) {
+    var file = evt.target.files[0];
+    var reader = new FileReader();
+    reader.onload = function() { 
+      $("#sosidata")[0].innerHTML = this.result;
+      //todo: handle non UTF-8 encodings
+      if (this.result.substr(0,5) == ".HODE") {
+        $("#parse")[0].click();
+      }
+    }
+    reader.readAsText(file);
+  }
+
+  if (window.File && window.FileReader && window.FileList && window.Blob) {
+    //$("#buttons")[0].innerHTML += "<button class='btn btn-default' onclick='openFile()'>Open File</button>";
+    $("#buttons")[0].innerHTML = "<input type='file' id='fileselect' class='btn btn-default'/><br/>" + $("#buttons")[0].innerHTML;
+    $("#fileselect")[0].addEventListener('change',openFile, false);
+  }
 </script>
 </body>
 </html>
