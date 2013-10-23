@@ -27,7 +27,7 @@ var SOSI = window.SOSI || {};
             geosys = geosys.split(/\s+/);
         }
         if (ns.geosysMap[geosys[0]]) {
-            return ns.geosysMap[geosys[0]];
+            return ns.geosysMap[geosys[0]].srid;
         }
         throw new Error("GEOSYS = " + geosys + " not found!");
     }
