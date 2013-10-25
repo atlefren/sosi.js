@@ -328,7 +328,7 @@ var SOSI = window.SOSI || {};
             geosys = geosys.split(/\s+/);
         }
         if (ns.geosysMap[geosys[0]]) {
-            return ns.geosysMap[geosys[0]];
+            return ns.geosysMap[geosys[0]].srid;
         }
         throw new Error("GEOSYS = " + geosys + " not found!");
     }
@@ -1011,7 +1011,7 @@ if (!(typeof require == "undefined")) { /* we are running inside nodejs */
 
   data = fs.readFileSync(filename, "utf8");
 
-  var encoding = data.substring(0,100).match(/TEGNSETT.*/).toString();
+  var encoding = data.substring(0,500).match(/TEGNSETT.*/).toString();
   encoding = encoding.split(/\s+/)[1].match(/\S+/).toString(); //sprit at white space, trim
   if (encoding && encoding != "UTF8") { /* if unlike UTF8, we need iconv, but only then */
     var Iconv = require("iconv").Iconv; /* needed for non UTF8 encodings */
