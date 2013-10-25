@@ -113,16 +113,16 @@ var SOSI = window.SOSI || {};
 
         initialize: function (elements, head) {
             this.head = head;
-            this.features = [];
-            this.features = _.map(elements, function (value, key) {
+            this.features = {};
+            this.features = _.object(_.map(elements, function (value, key) {
                 key = key.replace(":", "").split(/\s+/);
                 var data = {
                     id: parseInt(key[1], 10),
                     geometryType: key[0],
                     lines: _.rest(value)
                 };
-                return new ns.Feature(data, head.origo, head.enhet);
-            }, this);
+                return [data.id, new ns.Feature(data, head.origo, head.enhet)];
+            }, this));
         },
 
         ensureGeom: function (feature) {
@@ -133,17 +133,11 @@ var SOSI = window.SOSI || {};
         },
 
         length: function () {
-            return this.features.length;
-        },
-
-        at: function (idx) {
-            return this.ensureGeom(this.features[idx]);
+            return _.size(this.features);
         },
 
         getById: function (id) {
-            return this.ensureGeom(_.find(this.features, function (feature) {
-                return (feature.id === id);
-            }));
+            return this.ensureGeom(this.features[id]);
         },
 
         all: function () {

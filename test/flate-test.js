@@ -20,7 +20,7 @@
 
         "should be able to read attributes": function () {
             var sosidata = this.parser.parse(this.sosidata);
-            var feature1 = sosidata.features.at(4);
+            var feature1 = sosidata.features.getById(651);
             assert.equals(feature1.attributes.objekttypenavn, "Tank");
 
             assert.equals(feature1.attributes.kvalitet.målemetode, 82);
@@ -29,7 +29,7 @@
 
         "should get center point": function () {
             var sosidata = this.parser.parse(this.sosidata);
-            var flate = sosidata.features.at(4);
+            var flate = sosidata.features.getById(651);
             var center = flate.geometry.center;
             assert(center);
             assert.equals(center.x, 341822.16);
@@ -38,7 +38,7 @@
 
         "should be able to read geometry": function () {
             var sosidata = this.parser.parse(this.sosidata);
-            var flate = sosidata.features.at(4);
+            var flate = sosidata.features.getById(651);
             assert(flate.geometry instanceof ns.Polygon);
 
             assert.equals(flate.geometry.flate.length, 9);
@@ -110,7 +110,7 @@
 
             assert.equals(json.objects[name].geometries.length, 5);
 
-            var geom4 = json.objects[name].geometries[4];
+            var geom4 = _.find(json.objects[name].geometries, function(x){return x.properties.id===651});
 
             assert.equals(geom4.type, "Polygon");
 
