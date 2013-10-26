@@ -22,7 +22,7 @@ var SOSI = window.SOSI || {};
         if (line.indexOf('!') !== -1) {
             line = line.substring(0, line.indexOf('!'));
         }
-        return line.replace(/\s\s*$/, '');
+        return line.replace(/\s+$/, '');
     }
 
     function getKey(line, parentLevel) {

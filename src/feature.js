@@ -113,7 +113,6 @@ var SOSI = window.SOSI || {};
 
         initialize: function (elements, head) {
             this.head = head;
-            this.features = {};
             this.features = _.object(_.map(elements, function (value, key) {
                 key = key.replace(":", "").split(/\s+/);
                 var data = {
