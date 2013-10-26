@@ -138,7 +138,7 @@ var SOSI = window.SOSI || {};
         },
 
         at: function(i) {
-          return this.ensureGeom(this.features[this.index[i]]);
+          return this.getById(this.index[i]);
         },
 
         getById: function (id) {
