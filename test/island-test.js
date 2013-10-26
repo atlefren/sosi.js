@@ -185,7 +185,7 @@
             assert.equals(hole10[3], 7);
 
 
-            var geom9 = json.objects[name].geometries[9];
+            var geom9 = _.find(json.objects[name].geometries, function(g){return g.properties.id === 400});
 
             assert.equals(geom9.type, "Polygon");
 
