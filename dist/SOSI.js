@@ -1955,7 +1955,7 @@ var SOSI = window.SOSI || {};
         if (line.indexOf('!') !== -1) {
             line = line.substring(0, line.indexOf('!'));
         }
-        return line.replace(/\s\s*$/, '');
+        return line.replace(/\s+$/, '');
     }
 
     function getKey(line, parentLevel) {
@@ -2093,6 +2093,8 @@ var SOSI = window.SOSI || {};
 
         cleanupLine: cleanupLine,
 
+        getLongname: getLongname,
+
         parseFromLevel2: function (data) {
             return _.reduce(parseTree(data, 2), function (dict, lines, key) {
                 if (lines.length) {
@@ -2111,12 +2113,14 @@ var SOSI = window.SOSI || {};
         },
 
         specialAttributes: (function () {
-            return _.reduce(SOSI.types, function (attrs, type, key) {
-                if (_.isObject(type[1])) { // true for complex datatypes
-                    attrs[type[0]] = {name: type[0], createFunction: parseSpecial(key, type[1])};
-                }
-                return attrs;
-            }, {});
+            if (!!SOSI.types) {
+              return _.reduce(SOSI.types, function (attrs, type, key) {
+                  if (_.isObject(type[1])) { // true for complex datatypes
+                      attrs[type[0]] = {name: type[0], createFunction: parseSpecial(key, type[1])};
+                  }
+                  return attrs;
+              }, {});
+            }
         }()),
 
         round: function (number, numDecimals) {
@@ -2257,13 +2261,17 @@ var SOSI = window.SOSI || {};
 
         setData: function (data) {
             data = this.parse(data);
-            this.eier = getString(data, "geodataeier");
-            this.produsent = getString(data, "geodataprodusent");
+            this.eier = getString(data, ns.util.getLongname("EIER"));
+            this.produsent = getString(data, ns.util.getLongname("PRODUSENT"));
             this.objektkatalog = getString(data, "OBJEKTKATALOG");
-            this.verifiseringsdato = data["verifiseringsdato"];
-            this.version = getNumber(data, "sosiVersjon");
-            this.level = getNumber(data, "sosiKompleksitetNivå");
-            this.kvalitet = ns.util.specialAttributes["kvalitet"].createFunction(data["kvalitet"]);
+            this.verifiseringsdato = data[ns.util.getLongname("VERIFISERINGSDATO")];
+            this.version = getNumber(data, ns.util.getLongname("SOSI-VERSJON"));
+            this.level = getNumber(data, ns.util.getLongname("SOSI-NIVÅ"));
+            if (!!SOSI.types) {
+                this.kvalitet = ns.util.specialAttributes[ns.util.getLongname("KVALITET")].createFunction(data[ns.util.getLongname("KVALITET")]);
+            } else {
+                this.kvalitet = getString(data, ns.util.getLongname("KVALITET"));
+            }
             this.bbox = parseBbox(data["OMRÅDE"]);
             this.origo = parseOrigo(data["TRANSPAR"]["ORIGO-NØ"]);
             this.enhet = parseUnit(data);
@@ -2541,7 +2549,7 @@ var SOSI = window.SOSI || {};
 
             this.attributes = ns.util.parseFromLevel2(split.attributes);
             this.attributes = _.reduce(this.attributes, function (attrs, value, key) {
-                if (ns.util.specialAttributes[key]) {
+                if (!!ns.util.specialAttributes && ns.util.specialAttributes[key]) {
                     attrs[key] = ns.util.specialAttributes[key].createFunction(value);
                 } else {
                     attrs[key] = value;
@@ -2589,16 +2597,17 @@ var SOSI = window.SOSI || {};
 
         initialize: function (elements, head) {
             this.head = head;
-            this.features = [];
-            this.features = _.map(elements, function (value, key) {
+            this.index = [];
+            this.features = _.object(_.map(elements, function (value, key) {
                 key = key.replace(":", "").split(/\s+/);
                 var data = {
                     id: parseInt(key[1], 10),
                     geometryType: key[0],
                     lines: _.rest(value)
                 };
-                return new ns.Feature(data, head.origo, head.enhet);
-            }, this);
+                this.index.push(data.id);
+                return [data.id, new ns.Feature(data, head.origo, head.enhet)];
+            }, this));
         },
 
         ensureGeom: function (feature) {
@@ -2609,21 +2618,23 @@ var SOSI = window.SOSI || {};
         },
 
         length: function () {
-            return this.features.length;
+            return _.size(this.features);
         },
 
-        at: function (idx) {
-            return this.ensureGeom(this.features[idx]);
+        at: function(i) {
+          return this.getById(this.index[i]);
         },
 
         getById: function (id) {
-            return this.ensureGeom(_.find(this.features, function (feature) {
-                return (feature.id === id);
-            }));
+            return this.ensureGeom(this.features[id]);
         },
 
-        all: function () {
-            return _.map(this.features, this.ensureGeom, this);
+        all: function (ordered) {
+            if (ordered) {
+              return _.map(this.index, this.getById, this); /* order comes at a 25% performance loss */ 
+            } else {
+              return _.map(this.features, this.ensureGeom, this);
+            }
         }
     });
 
