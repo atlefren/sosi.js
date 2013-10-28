@@ -1,3 +1,10 @@
+if (!(typeof require=="undefined")) { /* we are running inside node.js */
+  var _ = require("underscore");
+  var proj4 = require("proj4");
+  var window = window || {};
+  window.SOSI = window.SOSI || {};
+}
+
 var SOSI = window.SOSI || {};
 
 /**
@@ -38,6 +45,7 @@ var SOSI = window.SOSI || {};
     };
 
 }(SOSI));
+
 var SOSI = window.SOSI || {};
 
 (function (ns, undefined) {
@@ -62,7 +70,7 @@ var SOSI = window.SOSI || {};
         if (line.indexOf('!') !== -1) {
             line = line.substring(0, line.indexOf('!'));
         }
-        return line.replace(/\s\s*$/, '');
+        return line.replace(/\s+$/, '');
     }
 
     function getKey(line, parentLevel) {
@@ -200,6 +208,8 @@ var SOSI = window.SOSI || {};
 
         cleanupLine: cleanupLine,
 
+        getLongname: getLongname,
+
         parseFromLevel2: function (data) {
             return _.reduce(parseTree(data, 2), function (dict, lines, key) {
                 if (lines.length) {
@@ -218,13 +228,14 @@ var SOSI = window.SOSI || {};
         },
 
         specialAttributes: (function () {
-            var atts = {};
-            _.each(SOSI.types, function (type, key) {
-                if (_.isObject(type[1])) { // true for complex datatypes
-                    atts[type[0]] = {name: type[0], createFunction: parseSpecial(key, type[1])};
-                }
-            });
-            return atts;
+            if (!!SOSI.types) {
+              return _.reduce(SOSI.types, function (attrs, type, key) {
+                  if (_.isObject(type[1])) { // true for complex datatypes
+                      attrs[type[0]] = {name: type[0], createFunction: parseSpecial(key, type[1])};
+                  }
+                  return attrs;
+              }, {});
+            }
         }()),
 
         round: function (number, numDecimals) {
@@ -321,7 +332,7 @@ var SOSI = window.SOSI || {};
             geosys = geosys.split(/\s+/);
         }
         if (ns.geosysMap[geosys[0]]) {
-            return ns.geosysMap[geosys[0]];
+            return ns.geosysMap[geosys[0]].srid;
         }
         throw new Error("GEOSYS = " + geosys + " not found!");
     }
@@ -338,7 +349,7 @@ var SOSI = window.SOSI || {};
     }
 
     function parseOrigo(data) {
-        data = _.filter(data.split(" "), function (element) {
+        data = _.filter(data.split(/\s+/), function (element) {
             return element !== "";
         });
         return {
@@ -365,13 +376,17 @@ var SOSI = window.SOSI || {};
 
         setData: function (data) {
             data = this.parse(data);
-            this.eier = getString(data, "geodataeier");
-            this.produsent = getString(data, "geodataprodusent");
+            this.eier = getString(data, ns.util.getLongname("EIER"));
+            this.produsent = getString(data, ns.util.getLongname("PRODUSENT"));
             this.objektkatalog = getString(data, "OBJEKTKATALOG");
-            this.verifiseringsdato = data["verifiseringsdato"];
-            this.version = getNumber(data, "sosiVersjon");
-            this.level = getNumber(data, "sosiKompleksitetNivå");
-            this.kvalitet = ns.util.specialAttributes["kvalitet"].createFunction(data["kvalitet"]);
+            this.verifiseringsdato = data[ns.util.getLongname("VERIFISERINGSDATO")];
+            this.version = getNumber(data, ns.util.getLongname("SOSI-VERSJON"));
+            this.level = getNumber(data, ns.util.getLongname("SOSI-NIVÅ"));
+            if (!!SOSI.types) {
+                this.kvalitet = ns.util.specialAttributes[ns.util.getLongname("KVALITET")].createFunction(data[ns.util.getLongname("KVALITET")]);
+            } else {
+                this.kvalitet = getString(data, ns.util.getLongname("KVALITET"));
+            }
             this.bbox = parseBbox(data["OMRÅDE"]);
             this.origo = parseOrigo(data["TRANSPAR"]["ORIGO-NØ"]);
             this.enhet = parseUnit(data);
@@ -434,13 +449,27 @@ var SOSI = window.SOSI || {};
     });
 
 
+    ns.LineString = ns.Base.extend({
+        initialize: function (lines, origo, unit) {
+            this.kurve = _.compact(_.map(lines, function (line) {
+                if (line.indexOf("NØ") === -1) {
+                    return new ns.Point(line, origo, unit);
+                }
+            }));
+
+            this.knutepunkter = _.filter(this.kurve, function (punkt) {
+                return punkt.has_tiepoint;
+            });
+        }
+    });
+
     function cleanLines(lines) {
         return _.filter(lines, function (line) {
             return (line.indexOf("NØ") === -1);
         });
     }
 
-    ns.LineStringFromArc = ns.Base.extend({ // BUEP - an arc defined by three points on a circle
+    ns.LineStringFromArc = ns.LineString.extend({ // BUEP - an arc defined by three points on a circle
         initialize: function (lines, origo, unit) {
             var p = _.map(cleanLines(lines), function (coord) {
                 return new ns.Point(coord, origo, unit);
@@ -490,33 +519,17 @@ var SOSI = window.SOSI || {};
 
             dth = dth / (npt - 1);
 
-            this.kurve = Array(npt);
-            var i;
-            for (i = 0; i < npt; i++) {
+            this.kurve = _.map(_.range(npt), function (i) {
                 var x  = cE + r * Math.cos(th1 + dth * i);
                 var y = cN + r * Math.sin(th1 + dth * i);
                 if (isNaN(x)) {
                     throw new Error("BUEP: Interpolated " + x + " for point " + i + " of " + npt + " in curve.");
                 }
-                this.kurve[i] = new ns.Point(x, y);
-            }
-
-            this.knutepunkter = _.filter(p, function (punkt) {
-                return punkt.has_tiepoint;
+                return new ns.Point(x, y);
             });
-        }
-    });
 
-    ns.LineString = ns.Base.extend({
-        initialize: function (lines, origo, unit) {
-            this.kurve = _.compact(_.map(lines, function (line) {
-                if (line.indexOf("NØ") === -1) {
-                    return new ns.Point(line, origo, unit);
-                }
-            }));
-
-            this.knutepunkter = _.filter(this.kurve, function (punkt) {
-                return punkt.has_tiepoint;
+            this.knutepunkter = _.filter(p, function (point) {
+                return point.has_tiepoint;
             });
         }
     });
@@ -651,7 +664,7 @@ var SOSI = window.SOSI || {};
 
             this.attributes = ns.util.parseFromLevel2(split.attributes);
             this.attributes = _.reduce(this.attributes, function (attrs, value, key) {
-                if (ns.util.specialAttributes[key]) {
+                if (!!ns.util.specialAttributes && ns.util.specialAttributes[key]) {
                     attrs[key] = ns.util.specialAttributes[key].createFunction(value);
                 } else {
                     attrs[key] = value;
@@ -699,16 +712,17 @@ var SOSI = window.SOSI || {};
 
         initialize: function (elements, head) {
             this.head = head;
-            this.features = [];
-            this.features = _.map(elements, function (value, key) {
+            this.index = [];
+            this.features = _.object(_.map(elements, function (value, key) {
                 key = key.replace(":", "").split(/\s+/);
                 var data = {
                     id: parseInt(key[1], 10),
                     geometryType: key[0],
                     lines: _.rest(value)
                 };
-                return new ns.Feature(data, head.origo, head.enhet);
-            }, this);
+                this.index.push(data.id);
+                return [data.id, new ns.Feature(data, head.origo, head.enhet)];
+            }, this));
         },
 
         ensureGeom: function (feature) {
@@ -719,21 +733,23 @@ var SOSI = window.SOSI || {};
         },
 
         length: function () {
-            return this.features.length;
+            return _.size(this.features);
         },
 
-        at: function (idx) {
-            return this.ensureGeom(this.features[idx]);
+        at: function(i) {
+          return this.getById(this.index[i]);
         },
 
         getById: function (id) {
-            return this.ensureGeom(_.find(this.features, function (feature) {
-                return (feature.id === id);
-            }));
+            return this.ensureGeom(this.features[id]);
         },
 
-        all: function () {
-            return _.map(this.features, this.ensureGeom, this);
+        all: function (ordered) {
+            if (ordered) {
+              return _.map(this.index, this.getById, this); /* order comes at a 25% performance loss */ 
+            } else {
+              return _.map(this.features, this.ensureGeom, this);
+            }
         }
     });
 
@@ -787,7 +803,7 @@ var SOSI = window.SOSI || {};
                 };
             }
 
-            if ((geom instanceof ns.LineString) || (geom instanceof ns.LineStringFromArc)) {
+            if (geom instanceof ns.LineString) {
                 return {
                     "type": "LineString",
                     "coordinates": _.map(geom.kurve, writePoint)
@@ -974,6 +990,47 @@ var SOSI = window.SOSI || {};
     ns.Parser = ns.Base.extend({
         parse: function (data) {
             return new SosiData(ns.util.parseTree(splitOnNewline(data), 1));
+        },
+        getFormats: function() {
+            return _.keys(dumpTypes);
         }
     });
 }(SOSI));
+
+if (!(typeof require == "undefined")) { /* we are running inside nodejs */
+  var fs = require("fs")
+  var util = require("util")
+
+  var parser = new SOSI.Parser();
+  
+  if (process.argv.length < 4) { 
+    util.print("\nusage: nodejs SOSI.js.js format infile.sos > outfile\n\n"
+               + "where: format     : one of [" + parser.getFormats() + "]\n"
+               + "       infile.sos : a file in SOSI format\n"
+               + "       outfile    : an output file name, omit for stdout\n\n"
+    );
+    process.exit(1);
+  } 
+
+  var format   = process.argv[2],
+      filename = process.argv[3];
+
+  function convert(data, format) { 
+    json       = parser.parse(data).dumps(format);
+    return JSON.stringify(json); /* only for GeoJSON or TopoJSON */
+  }
+
+  data = fs.readFileSync(filename, "utf8");
+
+  var encoding = data.substring(0,500).match(/TEGNSETT.*/).toString();
+  encoding = encoding.split(/\s+/)[1].match(/\S+/).toString(); //sprit at white space, trim
+  if (encoding && encoding != "UTF8") { /* if unlike UTF8, we need iconv, but only then */
+    var Iconv = require("iconv").Iconv; /* needed for non UTF8 encodings */
+    converter = new Iconv(encoding, "UTF-8");
+    data = fs.readFileSync(filename, encoding=null);
+    data = converter.convert(data).toString();
+  }
+  util.print(convert(data,format));
+
+}
+

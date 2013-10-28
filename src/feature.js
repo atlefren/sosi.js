@@ -65,7 +65,7 @@ var SOSI = window.SOSI || {};
 
             this.attributes = ns.util.parseFromLevel2(split.attributes);
             this.attributes = _.reduce(this.attributes, function (attrs, value, key) {
-                if (ns.util.specialAttributes[key]) {
+                if (!!ns.util.specialAttributes && ns.util.specialAttributes[key]) {
                     attrs[key] = ns.util.specialAttributes[key].createFunction(value);
                 } else {
                     attrs[key] = value;
@@ -113,16 +113,17 @@ var SOSI = window.SOSI || {};
 
         initialize: function (elements, head) {
             this.head = head;
-            this.features = [];
-            this.features = _.map(elements, function (value, key) {
+            this.index = [];
+            this.features = _.object(_.map(elements, function (value, key) {
                 key = key.replace(":", "").split(/\s+/);
                 var data = {
                     id: parseInt(key[1], 10),
                     geometryType: key[0],
                     lines: _.rest(value)
                 };
-                return new ns.Feature(data, head.origo, head.enhet);
-            }, this);
+                this.index.push(data.id);
+                return [data.id, new ns.Feature(data, head.origo, head.enhet)];
+            }, this));
         },
 
         ensureGeom: function (feature) {
@@ -133,21 +134,23 @@ var SOSI = window.SOSI || {};
         },
 
         length: function () {
-            return this.features.length;
+            return _.size(this.features);
         },
 
-        at: function (idx) {
-            return this.ensureGeom(this.features[idx]);
+        at: function(i) {
+          return this.getById(this.index[i]);
         },
 
         getById: function (id) {
-            return this.ensureGeom(_.find(this.features, function (feature) {
-                return (feature.id === id);
-            }));
+            return this.ensureGeom(this.features[id]);
         },
 
-        all: function () {
-            return _.map(this.features, this.ensureGeom, this);
+        all: function (ordered) {
+            if (ordered) {
+              return _.map(this.index, this.getById, this); /* order comes at a 25% performance loss */ 
+            } else {
+              return _.map(this.features, this.ensureGeom, this);
+            }
         }
     });
 

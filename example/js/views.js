@@ -29,21 +29,25 @@ var SOSIDemo = window.SOSIDemo || {};
         }
     });
 
+    function zfill(num, len) {return (Array(len).join("0") + num).slice(-len);}
+
     function formatPopup(properties, indent) {
         indent = typeof indent !== 'undefined' ? indent : 0;
-        return "<div style='margin-left:" + indent + "mm'>" +
-            _.map(properties, function (value, key) {
-                if (value instanceof Date) {      // treat objects one by one for now...
-                    return key + ": " + value.getFullYear() + "-" + (value.getMonth() + 1) + "-" + value.getDate();
-                } else if (_.isObject(value)) { // breaks for actual objects as value, e.g. Date
-                    return key + ":<br/>" + formatPopup(value, indent + 5);
-                } else if (_.isNan(value)) {
-                    return key + ": ukjent";
-                }
-                return key + ": " + value;
-            }).join("<br/>") +
-            "</div>";
+        return "<div style='margin-left:"+indent+"mm'>" + 
+               _.map(properties, function (value, key) {
+                 if (value instanceof Date) {      // treat objects one by one for now...
+                   return key + ": " + value.getFullYear()+"-"+zfill((value.getMonth()+1),2)+"-"+zfill(value.getDate(),2);
+                 } else if (_.isObject(value)) { // breaks for actual objects as value, e.g. Date
+                   return key + ":<br/>" + formatPopup(value, indent+5);
+                 } else if (_.isNaN(value)) { 
+                   return key + ": ukjent";
+                 }
+                 return key + ": " + value;
+               }).join("<br/>") +
+               "</div>";
     }
+
+
 
     ns.Menu = Backbone.View.extend({
 
@@ -64,18 +68,23 @@ var SOSIDemo = window.SOSIDemo || {};
             _.bindAll(this, "minimize", "maximize");
         },
 
-        render: function () {
-            this.$el.html(_.template(this.template));
-            this.$(".content").append(this.form.render().$el);
-            return this;
-        },
-
         parseSosi: function (sosidata) {
             if (this.layer) {
                 this.layer.clearLayers();
             }
+
             this.$el.find(".alert").remove();
-            //try {
+            
+            try {
+                if (sosidata.match(/^http/)) { /* if this is a URL, fetch and retry */
+                  $.ajax({url:sosidata, 
+                         async:false,
+                         dataType: "text", // fixes firefox intelligently guessing SOSI is XML 
+                         success:function(data) {
+                    sosidata = data;
+                  }});
+                }
+
                 var json = this.sosiparser.parse(sosidata).dumps("geojson");
                 $("#jsondata")[0].innerText = JSON.stringify(json);
                 var layer = L.Proj.geoJson(
@@ -91,9 +100,16 @@ var SOSIDemo = window.SOSIDemo || {};
                 this.layer = layer;
                 this.minimize();
 
-            //} catch (error) {
-            //    this.showError(error);
-            //}
+            } catch (error) {
+                this.showError(error);
+            }
+        }, 
+
+
+        render: function () {
+            this.$el.html(_.template(this.template));
+            this.$(".content").append(this.form.render().$el);
+            return this;
         },
 
         showError: function (error) {

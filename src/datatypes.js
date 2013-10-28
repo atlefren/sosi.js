@@ -1,5 +1,4 @@
 /* automatic conversion from sosi.h - TODO convert to single json object */
-
 var sositypes = {
     "ADM_GRENSE": ["administrativGrense", "String"],
     "ADRESSE": ["adresse", "String"],
