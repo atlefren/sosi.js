@@ -71,13 +71,17 @@ var SOSI = window.SOSI || {};
 
         setData: function (data) {
             data = this.parse(data);
-            this.eier = getString(data, "geodataeier");
-            this.produsent = getString(data, "geodataprodusent");
+            this.eier = getString(data, ns.util.getLongname("EIER"));
+            this.produsent = getString(data, ns.util.getLongname("PRODUSENT"));
             this.objektkatalog = getString(data, "OBJEKTKATALOG");
-            this.verifiseringsdato = data["verifiseringsdato"];
-            this.version = getNumber(data, "sosiVersjon");
-            this.level = getNumber(data, "sosiKompleksitetNivå");
-            this.kvalitet = ns.util.specialAttributes["kvalitet"].createFunction(data["kvalitet"]);
+            this.verifiseringsdato = data[ns.util.getLongname("VERIFISERINGSDATO")];
+            this.version = getNumber(data, ns.util.getLongname("SOSI-VERSJON"));
+            this.level = getNumber(data, ns.util.getLongname("SOSI-NIVÅ"));
+            if (!!SOSI.types) {
+                this.kvalitet = ns.util.specialAttributes[ns.util.getLongname("KVALITET")].createFunction(data[ns.util.getLongname("KVALITET")]);
+            } else {
+                this.kvalitet = getString(data, ns.util.getLongname("KVALITET"));
+            }
             this.bbox = parseBbox(data["OMRÅDE"]);
             this.origo = parseOrigo(data["TRANSPAR"]["ORIGO-NØ"]);
             this.enhet = parseUnit(data);

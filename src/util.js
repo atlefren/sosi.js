@@ -160,6 +160,8 @@ var SOSI = window.SOSI || {};
 
         cleanupLine: cleanupLine,
 
+        getLongname: getLongname,
+
         parseFromLevel2: function (data) {
             return _.reduce(parseTree(data, 2), function (dict, lines, key) {
                 if (lines.length) {
@@ -178,12 +180,14 @@ var SOSI = window.SOSI || {};
         },
 
         specialAttributes: (function () {
-            return _.reduce(SOSI.types, function (attrs, type, key) {
-                if (_.isObject(type[1])) { // true for complex datatypes
-                    attrs[type[0]] = {name: type[0], createFunction: parseSpecial(key, type[1])};
-                }
-                return attrs;
-            }, {});
+            if (!!SOSI.types) {
+              return _.reduce(SOSI.types, function (attrs, type, key) {
+                  if (_.isObject(type[1])) { // true for complex datatypes
+                      attrs[type[0]] = {name: type[0], createFunction: parseSpecial(key, type[1])};
+                  }
+                  return attrs;
+              }, {});
+            }
         }()),
 
         round: function (number, numDecimals) {

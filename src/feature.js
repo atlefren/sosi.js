@@ -65,7 +65,7 @@ var SOSI = window.SOSI || {};
 
             this.attributes = ns.util.parseFromLevel2(split.attributes);
             this.attributes = _.reduce(this.attributes, function (attrs, value, key) {
-                if (ns.util.specialAttributes[key]) {
+                if (!!ns.util.specialAttributes && ns.util.specialAttributes[key]) {
                     attrs[key] = ns.util.specialAttributes[key].createFunction(value);
                 } else {
                     attrs[key] = value;
