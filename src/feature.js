@@ -137,8 +137,8 @@ var SOSI = window.SOSI || {};
             return _.size(this.features);
         },
 
-        at: function(i) {
-          return this.getById(this.index[i]);
+        at: function (i) {
+            return this.getById(this.index[i]);
         },
 
         getById: function (id) {
@@ -147,9 +147,9 @@ var SOSI = window.SOSI || {};
 
         all: function (ordered) {
             if (ordered) {
-              return _.map(this.index, this.getById, this); /* order comes at a 25% performance loss */ 
+                return _.map(this.index, this.getById, this); /* order comes at a 25% performance loss */
             } else {
-              return _.map(this.features, this.ensureGeom, this);
+                return _.map(this.features, this.ensureGeom, this);
             }
         }
     });

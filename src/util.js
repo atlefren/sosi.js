@@ -181,12 +181,12 @@ var SOSI = window.SOSI || {};
 
         specialAttributes: (function () {
             if (!!SOSI.types) {
-              return _.reduce(SOSI.types, function (attrs, type, key) {
-                  if (_.isObject(type[1])) { // true for complex datatypes
-                      attrs[type[0]] = {name: type[0], createFunction: parseSpecial(key, type[1])};
-                  }
-                  return attrs;
-              }, {});
+                return _.reduce(SOSI.types, function (attrs, type, key) {
+                    if (_.isObject(type[1])) { // true for complex datatypes
+                        attrs[type[0]] = {name: type[0], createFunction: parseSpecial(key, type[1])};
+                    }
+                    return attrs;
+                }, {});
             }
         }()),
 
@@ -194,7 +194,6 @@ var SOSI = window.SOSI || {};
             var pow = Math.pow(10, numDecimals);
             return Math.round(number * pow) / pow;
         }
-
     };
 
     ns.geosysMap = {
