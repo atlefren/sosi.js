@@ -63,6 +63,9 @@ Usage
     //get all features
     var features = sosidata.features.all();
 
+    //get all features in the order they appear in the SOSI file
+    var features = sosidata.features.all(true);
+
     //get feature by index
     var feature1 = sosidata.features.at(0); //0-indexed
 

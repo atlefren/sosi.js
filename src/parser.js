@@ -46,7 +46,7 @@ var SOSI = window.SOSI || {};
         parse: function (data) {
             return new SosiData(ns.util.parseTree(splitOnNewline(data), 1));
         },
-        getFormats: function() {
+        getFormats: function () {
             return _.keys(dumpTypes);
         }
     });
