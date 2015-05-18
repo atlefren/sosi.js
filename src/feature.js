@@ -35,7 +35,20 @@ var SOSI = window.SOSI || {};
 
             var split = _.reduce(data.lines, function (dict, line) {
                 if (line.indexOf("..NØ") !== -1) {
-                    dict.foundGeom = true;
+                    /**
+                     * The coordinates for a feature may be either on the same line
+                     * as NØ[H], or on lines following it.
+                     * Therefore we need to check this when encountering ..NØ.
+                     * If the line contains more elements we assume the line is «..NØ[H] x y [h]», and push
+                     * «..NØ[H]» and «x y [h]» to geom.
+                     */
+                    var splitLine = line.split(" ");
+                    if(splitLine.length > 1){
+                        dict.geom.push(splitLine[0]);
+                        dict.geom.push(line.replace(splitLine[0] + " ", ""));
+                    } else {
+                        dict.foundGeom = true;
+                    }
                 }
                 if (dict.foundGeom) {
                     dict.geom.push(line);
