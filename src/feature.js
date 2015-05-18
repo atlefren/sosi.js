@@ -43,12 +43,11 @@ var SOSI = window.SOSI || {};
                      * «..NØ[H]» and «x y [h]» to geom.
                      */
                     var splitLine = line.split(" ");
-                    if(splitLine.length > 1){
+                    if (splitLine.length > 1) {
                         dict.geom.push(splitLine[0]);
                         dict.geom.push(line.replace(splitLine[0] + " ", ""));
-                    } else {
-                        dict.foundGeom = true;
                     }
+                    dict.foundGeom = true;
                 }
                 if (dict.foundGeom) {
                     dict.geom.push(line);

@@ -1,8 +1,8 @@
 if (!(typeof require=="undefined")) { /* we are running inside node.js */
-  var _ = require("underscore");
-  var proj4 = require("proj4");
-  var window = window || {};
-  window.SOSI = window.SOSI || {};
+    var _ = require("underscore");
+    var proj4 = require("proj4");
+    var window = window || {};
+    window.SOSI = window.SOSI || {};
 }
 
 var SOSI = window.SOSI || {};
@@ -2114,12 +2114,12 @@ var SOSI = window.SOSI || {};
 
         specialAttributes: (function () {
             if (!!SOSI.types) {
-              return _.reduce(SOSI.types, function (attrs, type, key) {
-                  if (_.isObject(type[1])) { // true for complex datatypes
-                      attrs[type[0]] = {name: type[0], createFunction: parseSpecial(key, type[1])};
-                  }
-                  return attrs;
-              }, {});
+                return _.reduce(SOSI.types, function (attrs, type, key) {
+                    if (_.isObject(type[1])) { // true for complex datatypes
+                        attrs[type[0]] = {name: type[0], createFunction: parseSpecial(key, type[1])};
+                    }
+                    return attrs;
+                }, {});
             }
         }()),
 
@@ -2127,7 +2127,6 @@ var SOSI = window.SOSI || {};
             var pow = Math.pow(10, numDecimals);
             return Math.round(number * pow) / pow;
         }
-
     };
 
     ns.geosysMap = {
@@ -2263,7 +2262,7 @@ var SOSI = window.SOSI || {};
             data = this.parse(data);
             this.eier = getString(data, ns.util.getLongname("EIER"));
             this.produsent = getString(data, ns.util.getLongname("PRODUSENT"));
-            this.objektkatalog = getString(data, "OBJEKTKATALOG");
+            this.objektkatalog = data[ns.util.getLongname("OBJEKTKATALOG")];
             this.verifiseringsdato = data[ns.util.getLongname("VERIFISERINGSDATO")];
             this.version = getNumber(data, ns.util.getLongname("SOSI-VERSJON"));
             this.level = getNumber(data, ns.util.getLongname("SOSI-NIVÅ"));
@@ -2519,6 +2518,18 @@ var SOSI = window.SOSI || {};
 
             var split = _.reduce(data.lines, function (dict, line) {
                 if (line.indexOf("..NØ") !== -1) {
+                    /**
+                     * The coordinates for a feature may be either on the same line
+                     * as NØ[H], or on lines following it.
+                     * Therefore we need to check this when encountering ..NØ.
+                     * If the line contains more elements we assume the line is «..NØ[H] x y [h]», and push
+                     * «..NØ[H]» and «x y [h]» to geom.
+                     */
+                    var splitLine = line.split(" ");
+                    if (splitLine.length > 1) {
+                        dict.geom.push(splitLine[0]);
+                        dict.geom.push(line.replace(splitLine[0] + " ", ""));
+                    }
                     dict.foundGeom = true;
                 }
                 if (dict.foundGeom) {
@@ -2621,8 +2632,8 @@ var SOSI = window.SOSI || {};
             return _.size(this.features);
         },
 
-        at: function(i) {
-          return this.getById(this.index[i]);
+        at: function (i) {
+            return this.getById(this.index[i]);
         },
 
         getById: function (id) {
@@ -2631,9 +2642,9 @@ var SOSI = window.SOSI || {};
 
         all: function (ordered) {
             if (ordered) {
-              return _.map(this.index, this.getById, this); /* order comes at a 25% performance loss */ 
+                return _.map(this.index, this.getById, this); /* order comes at a 25% performance loss */
             } else {
-              return _.map(this.features, this.ensureGeom, this);
+                return _.map(this.features, this.ensureGeom, this);
             }
         }
     });
@@ -2876,46 +2887,44 @@ var SOSI = window.SOSI || {};
         parse: function (data) {
             return new SosiData(ns.util.parseTree(splitOnNewline(data), 1));
         },
-        getFormats: function() {
+        getFormats: function () {
             return _.keys(dumpTypes);
         }
     });
 }(SOSI));
 
 if (!(typeof require == "undefined")) { /* we are running inside nodejs */
-  var fs = require("fs")
-  var util = require("util")
+    var fs = require("fs");
+    var util = require("util");
 
-  var parser = new SOSI.Parser();
-  
-  if (process.argv.length < 4) { 
-    util.print("\nusage: nodejs SOSI.js.js format infile.sos > outfile\n\n"
-               + "where: format     : one of [" + parser.getFormats() + "]\n"
-               + "       infile.sos : a file in SOSI format\n"
-               + "       outfile    : an output file name, omit for stdout\n\n"
-    );
-    process.exit(1);
-  } 
+    var parser = new SOSI.Parser();
 
-  var format   = process.argv[2],
-      filename = process.argv[3];
+    if (process.argv.length < 4) {
+        util.print("\nusage: nodejs SOSI.js.js format infile.sos > outfile\n\n"
+            + "where: format     : one of [" + parser.getFormats() + "]\n"
+            + "       infile.sos : a file in SOSI format\n"
+            + "       outfile    : an output file name, omit for stdout\n\n"
+            );
+        process.exit(1);
+    }
 
-  function convert(data, format) { 
-    json       = parser.parse(data).dumps(format);
-    return JSON.stringify(json); /* only for GeoJSON or TopoJSON */
-  }
+    var format   = process.argv[2],
+        filename = process.argv[3];
 
-  data = fs.readFileSync(filename, "utf8");
+    function convert(data, format) {
+        var json = parser.parse(data).dumps(format);
+        return JSON.stringify(json); /* only for GeoJSON or TopoJSON */
+    }
 
-  var encoding = data.substring(0,500).match(/TEGNSETT.*/).toString();
-  encoding = encoding.split(/\s+/)[1].match(/\S+/).toString(); //sprit at white space, trim
-  if (encoding && encoding != "UTF8") { /* if unlike UTF8, we need iconv, but only then */
-    var Iconv = require("iconv").Iconv; /* needed for non UTF8 encodings */
-    converter = new Iconv(encoding, "UTF-8");
-    data = fs.readFileSync(filename, encoding=null);
-    data = converter.convert(data).toString();
-  }
-  util.print(convert(data,format));
+    var data = fs.readFileSync(filename, "utf8");
 
+    var encoding = data.substring(0, 500).match(/TEGNSETT.*/).toString();
+    encoding = encoding.split(/\s+/)[1].match(/\S+/).toString(); //sprit at white space, trim
+    if (encoding && encoding !== "UTF8") { /* if unlike UTF8, we need iconv, but only then */
+        var Iconv = require("iconv").Iconv; /* needed for non UTF8 encodings */
+        var converter = new Iconv(encoding, "UTF-8");
+        data = fs.readFileSync(filename, encoding = null);
+        data = converter.convert(data).toString();
+    }
+    util.print(convert(data, format));
 }
-
