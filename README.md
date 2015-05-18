@@ -87,6 +87,7 @@ Building
 Running tests
 -------------
     $ buster-server &
+    Now open browser to http://localhost:1111 and click «Capture slave»
     $ buster-test
 
 Dependencies
