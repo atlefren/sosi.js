@@ -32,7 +32,7 @@
             assert(feature2.geometry instanceof ns.LineString);
             var kurve = feature2.geometry.kurve;
             assert.equals(kurve.length, 9);
-            console.log(kurve[0])
+
             assert.equals(kurve[0].x, 10116.68);
             assert.equals(kurve[0].y, 100029.8);
             assert.equals(kurve[0].z, 9.95);
