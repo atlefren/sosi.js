@@ -107,6 +107,7 @@ In addition to myself (atlefren) some people have contributed code and/or input 
 - Thomas Hirsch (relet)
 - Torbjørn Auglænd Vilhelmsen (torbjvi)
 - SigTill
+- Marvin Bredal Lillehaug (computerlove)
 
 Disclaimer
 ----------
