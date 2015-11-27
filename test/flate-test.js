@@ -45,6 +45,8 @@
 
             assert.equals(flate.geometry.flate[0].x, 341824.03);
             assert.equals(flate.geometry.flate[0].y, 7661347.45);
+            assert.equals(flate.geometry.flate[0].z, 368.15);
+            
 
             assert.equals(flate.geometry.flate[1].x, 341817.18);
             assert.equals(flate.geometry.flate[1].y, 7661352.50);
@@ -94,6 +96,7 @@
 
             assert.equals(geom.coordinates[0][0][0], 341824.03);
             assert.equals(geom.coordinates[0][0][1], 7661347.45);
+            assert.equals(geom.coordinates[0][0][2], 368.15);
             assert.equals(geom.coordinates[0][8][0], 341824.03);
             assert.equals(geom.coordinates[0][8][1], 7661347.45);
 

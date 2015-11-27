@@ -4,7 +4,11 @@ var SOSI = window.SOSI || {};
     "use strict";
 
     function writePoint(point) {
-        return [point.x, point.y];
+        var p = [point.x, point.y];
+        if (_.has(point, 'z')) {
+            p.push(point.z);
+        }
+        return p;
     }
 
     ns.Sosi2GeoJSON = ns.Base.extend({
