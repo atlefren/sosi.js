@@ -2178,9 +2178,9 @@ var SOSI = window.SOSI || {};
 
     //add proj4 defs so that proj4js works
     _.each(ns.koordsysMap, function (koordsys) {
-        if (proj4) { // newer proj4js (>=1.3.1)
+        if (!_.isUndefined(window.proj4)) { // newer proj4js (>=1.3.1)
             proj4.defs(koordsys.srid, koordsys.def);
-        } else if (Proj4js) { //older proj4js (=< 1.1.0)
+        } else if (!_.isUndefined(window.Proj4js)) { //older proj4js (=< 1.1.0)
             Proj4js.defs[koordsys.srid] = koordsys.def;
         }
     });
@@ -2657,7 +2657,11 @@ var SOSI = window.SOSI || {};
     "use strict";
 
     function writePoint(point) {
-        return [point.x, point.y];
+        var p = [point.x, point.y];
+        if (_.has(point, 'z')) {
+            p.push(point.z);
+        }
+        return p;
     }
 
     ns.Sosi2GeoJSON = ns.Base.extend({
