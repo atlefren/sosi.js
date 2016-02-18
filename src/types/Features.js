@@ -43,7 +43,8 @@ var Features = Base.extend({
 
     all: function (ordered) {
         if (ordered) {
-            return _.map(this.index, this.getById, this); /* order comes at a 25% performance loss */
+            /* order comes at a 25% performance loss */
+            return _.map(this.index, this.getById, this);
         } else {
             return _.map(this.features, this.ensureGeom, this);
         }

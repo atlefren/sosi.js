@@ -1,6 +1,12 @@
 'use strict';
 var _ = require('underscore');
 
+/**
+ * This is adopted from backbone.js which
+ * is available for use under the MIT software license.
+ * see http://github.com/jashkenas/backbone/blob/master/LICENSE
+ */
+
 var Base = function () {
     this.initialize.apply(this, arguments);
 };
