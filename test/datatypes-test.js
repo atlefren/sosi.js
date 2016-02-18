@@ -1,40 +1,41 @@
-(function (ns) {
-    "use strict";
+'use strict';
+/*eslint-env  mocha */
 
-    var assert = assert || buster.assertions.assert;
-    var refute = refute || buster.assertions.refute;
+var _ = require('underscore');
+var referee = require('referee');
+var assert = referee.assert;
+var refute = referee.refute;
+var SOSI = require('../src/sosi');
+var fs = require('fs');
+var datatypes = require('../src/util/datatypes');
 
-    buster.testCase('Datatypes test', {
 
-        setUp: function () {
-            $.ajax({
-                async: false,
-                url: buster.env.contextPath + "/buer.sos",
-                success: _.bind(function (data) {
-                    this.sosidata = data;
-                }, this)
-            });
-            this.parser = new ns.Parser();
-            this.parser.sosi_types = undefined;
+describe('Datatypes', function () {
+    var parser, 
+        data;
 
-            this.types = _.clone(ns.types);
-        },
+    before(function () {
+        parser = new SOSI.Parser();
+        data = fs.readFileSync('./data/buer.sos', 'utf8');
+        //this.parser.sosi_types = undefined;
 
-        tearDown: function () {
-            ns.types = this.types;
-        },
-
-        "should not use datatypes.js if not window.SOSI.types is defined": function () {
-            ns.types = undefined;
-            var sosidata = this.parser.parse(this.sosidata);
-            var bue26 = sosidata.features.getById(26);
-            assert.equals(bue26.attributes.OPPDATERINGSDATO, "20130531092024");
-        },
-
-        "should convert OPPDATERINGSDATO to oppdateringsdato and display as date": function () {
-            var sosidata = this.parser.parse(this.sosidata);
-            var bue26 = sosidata.features.getById(26);
-            assert.equals(bue26.attributes.oppdateringsdato, new Date(2013, 4, 31, 9, 20, 24));
-        }
+        //this.types = _.clone(datatypes);
     });
-}(SOSI));
+
+    after(function () {
+        // runs after all tests in this block
+    });
+
+    //TODO: find a node-ish way of a lite build
+    xit('should not use datatypes.js if not window.SOSI.types is defined', function () {
+        var sosidata = parser.parse(data);
+        var bue26 = sosidata.features.getById(26);
+        assert.equals(bue26.attributes.OPPDATERINGSDATO, '20130531092024');
+    });
+
+    it('should convert OPPDATERINGSDATO to oppdateringsdato and display as date', function () {
+        var sosidata = parser.parse(data);
+        var bue26 = sosidata.features.getById(26);
+        assert.equals(bue26.attributes.oppdateringsdato, new Date(2013, 4, 31, 9, 20, 24));
+    });
+});

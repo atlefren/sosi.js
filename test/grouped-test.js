@@ -1,43 +1,42 @@
-(function (ns) {
-    "use strict";
+'use strict';
+/*eslint-env  mocha */
 
-    var assert = assert || buster.assertions.assert;
-    var refute = refute || buster.assertions.refute;
+var _ = require('underscore');
+var referee = require('referee');
+var assert = referee.assert;
+var refute = referee.refute;
+var SOSI = require('../src/sosi');
+var Polygon = require('../src/geometry/Polygon');
+var fs = require('fs');
 
-    buster.testCase('Grouped attributes test', {
+describe('Grouped attributes', function () {
+    var parser, 
+        data;
 
-        setUp: function () {
-
-            $.ajax({
-                async: false,
-                url: buster.env.contextPath + "/fastmerke.sos",
-                success: _.bind(function (data) {
-                    this.sosidata = data;
-                }, this)
-            });
-            this.parser = new ns.Parser();
-        },
-
-        "should read fastmerke.sos": function () {
-
-            var sosidata = this.parser.parse(this.sosidata);
-            assert(sosidata.hode);
-            assert(sosidata.def);
-            assert(sosidata.objdef);
-            assert(sosidata.features);
-
-            assert(sosidata.features.length(), 1);
-
-
-            var fastmerke = sosidata.features.getById(1);
-            assert(fastmerke);
-            assert.equals(fastmerke.attributes.kvalitet.synbarhet, NaN);
-            assert.equals(fastmerke.attributes.fastmerkeSentrumRef, "TB");
-            assert.equals(fastmerke.attributes.fastmerkeType.fastmerkeUnderlag, 1);
-            assert.equals(fastmerke.attributes.høydeOverBakken, 0.02);
-            assert(fastmerke.attributes.punktBeskrivelse.match(/BIL\.$/));
-        }
-
-
+    before(function () {
+        parser = new SOSI.Parser();
+        data = fs.readFileSync('./data/fastmerke.sos', 'utf8');
     });
-}(SOSI));
+
+
+    it('should read fastmerke.sos', function () {
+
+        var sosidata = parser.parse(data);
+        assert(sosidata.hode);
+        assert(sosidata.def);
+        assert(sosidata.objdef);
+        assert(sosidata.features);
+
+        assert(sosidata.features.length(), 1);
+
+
+        var fastmerke = sosidata.features.getById(1);
+        assert(fastmerke);
+        assert.equals(fastmerke.attributes.kvalitet.synbarhet, NaN);
+        assert.equals(fastmerke.attributes.fastmerkeSentrumRef, 'TB');
+        assert.equals(fastmerke.attributes.fastmerkeType.fastmerkeUnderlag, 1);
+        assert.equals(fastmerke.attributes.høydeOverBakken, 0.02);
+        assert(fastmerke.attributes.punktBeskrivelse.match(/BIL\.$/));
+    });
+
+});

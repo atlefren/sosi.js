@@ -1,10 +1,23 @@
 {
-    "name": "SOSI",
-    "version": "0.0.1",
-    "devDependencies": {
-        "grunt": "~0.4.1",
-        "grunt-contrib-uglify": "~0.2.0",
-        "grunt-contrib-concat": "~0.3.0",
-        "grunt-contrib-watch": "~0.4.3"
-    }
+  "name": "SOSI",
+  "version": "0.0.1",
+  "devDependencies": {
+    "buster": "^0.7.18",
+    "grunt": "~0.4.1",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-uglify": "~0.2.0",
+    "grunt-contrib-watch": "~0.4.3",
+    "gulp": "^3.9.1",
+    "gulp-busterjs": "^1.5.0",
+    "karma": "^0.13.21",
+    "karma-mocha": "^0.2.1",
+    "karma-referee": "^0.4.2",
+    "mocha": "^2.4.5",
+    "referee": "^1.2.0",
+    "referee-sinon": "^1.0.3",
+    "sinon": "^1.17.3"
+  },
+  "dependencies": {
+    "underscore": "^1.8.3"
+  }
 }
