@@ -65,6 +65,7 @@ var SOSIDemo = window.SOSIDemo || {};
             this.form = new Form();
             this.form.on("submit", this.parseSosi, this);
             this.sosiparser = new SOSI.Parser();
+            console.log(this.sosiparser);
             _.bindAll(this, "minimize", "maximize");
         },
 
@@ -86,6 +87,7 @@ var SOSIDemo = window.SOSIDemo || {};
                 }
 
                 var json = this.sosiparser.parse(sosidata).dumps("geojson");
+                console.log(json)
                 $("#jsondata")[0].innerText = JSON.stringify(json);
                 var layer = L.Proj.geoJson(
                     json,

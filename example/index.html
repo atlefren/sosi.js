@@ -95,15 +95,15 @@
 
 <div id="map" class="map_fullscreen"></div>
 
-<script src="../lib/jquery-1.10.2.min.js"></script>
-<script src="../lib/underscore-min.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 <script src="js/backbone-min.js"></script>
 <script src="leaflet/leaflet.js"></script>
 <script src="js/proj4.js"></script>
 <script src="js/proj4leaflet.js"></script>
 <script>Proj4js = proj4;</script>
 <script src="js/leafletUtils.js"></script>
-<script src="../dist/SOSI.min.js"></script>
+<script src="../dist/sosi.min.js"></script>
 <script src="js/views.js"></script>
 <script type="text/javascript">
     (function () {
@@ -114,24 +114,24 @@
     }());
 </script>
 <script type="text/javascript">
-  function openFile(evt) {
-    var file = evt.target.files[0];
-    var reader = new FileReader();
-    reader.onload = function() { 
-      $("#sosidata")[0].innerHTML = this.result;
-      //todo: handle non UTF-8 encodings
-      if (this.result.substr(0,5) == ".HODE") {
-        $("#parse")[0].click();
-      }
+    function openFile(evt) {
+        var file = evt.target.files[0];
+        var reader = new FileReader();
+        reader.onload = function() {
+            $("#sosidata")[0].innerHTML = this.result;
+            //todo: handle non UTF-8 encodings
+            if (this.result.substr(0,5) == ".HODE") {
+                $("#parse")[0].click();
+            }
+        }
+        reader.readAsText(file);
     }
-    reader.readAsText(file);
-  }
 
-  if (window.File && window.FileReader && window.FileList && window.Blob) {
-    //$("#buttons")[0].innerHTML += "<button class='btn btn-default' onclick='openFile()'>Open File</button>";
-    $("#buttons")[0].innerHTML = "<input type='file' id='fileselect' class='btn btn-default'/><br/>" + $("#buttons")[0].innerHTML;
-    $("#fileselect")[0].addEventListener('change',openFile, false);
-  }
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+        //$("#buttons")[0].innerHTML += "<button class='btn btn-default' onclick='openFile()'>Open File</button>";
+        $("#buttons")[0].innerHTML = "<input type='file' id='fileselect' class='btn btn-default'/><br/>" + $("#buttons")[0].innerHTML;
+        $("#fileselect")[0].addEventListener('change',openFile, false);
+    }
 </script>
 </body>
 </html>
