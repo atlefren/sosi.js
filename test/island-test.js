@@ -5,7 +5,7 @@ var _ = require('underscore');
 var referee = require('referee');
 var assert = referee.assert;
 var refute = referee.refute;
-var SOSI = require('../src/sosi');
+var SOSI = require('../index');
 var Polygon = require('../src/geometry/Polygon');
 var fs = require('fs');
 

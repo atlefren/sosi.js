@@ -1,6 +1,6 @@
 'use strict';
 
-var parser = require('./parser');
+var parser = require('./src/parser');
 
 var SOSI = {
     Parser: parser

@@ -1,6 +1,7 @@
 {
-  "name": "SOSI",
+  "name": "sosijs",
   "version": "0.0.1",
+  "main": "index.js",
   "devDependencies": {
     "browserify": "^13.0.0",
     "grunt": "~0.4.1",
