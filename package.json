@@ -1,6 +1,6 @@
 {
   "name": "sosijs",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Library for reading .SOS-files, dump to GeoJson or TopoJson",
   "main": "index.js",
   "directories": {
@@ -8,6 +8,10 @@
     "test": "test"
   },
   "dependencies": {
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "mocha": "^2.4.5",
     "browserify": "^13.0.0",
     "grunt": "^0.4.5",
     "grunt-contrib-concat": "^0.3.0",
@@ -24,16 +28,12 @@
     "referee": "^1.2.0",
     "buster": "^0.7.18",
     "grunt-buster": "^0.4.1",
-    "underscore": "^1.8.3",
     "karma-mocha": "^0.2.2",
     "vinyl-buffer": "^1.0.0",
     "sinon": "^1.17.3",
     "watchify": "^3.7.0",
     "referee-sinon": "^1.0.3",
     "vinyl-source-stream": "^1.1.0"
-  },
-  "devDependencies": {
-    "mocha": "^2.4.5"
   },
   "scripts": {
     "test": "mocha"
