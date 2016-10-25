@@ -1,6 +1,8 @@
 'use strict';
 
 var _ = require('underscore');
+var iconv = require('iconv-lite');
+
 var parseTree = require('./util/parseTree');
 var Base = require('./class/Base');
 var Head = require('./types/Head');
@@ -51,9 +53,39 @@ function splitOnNewline(data) {
     });
 }
 
+function getCharset(dataBuffer) {
+    var ascii = dataBuffer.toString('ascii', 0, 200);
+    var charsetLine = _.find(ascii.split('\n'), function (line) {
+        return line.indexOf('..TEGNSETT') === 0;
+    });
+
+    var charset = (charsetLine) 
+        ? charsetLine.replace('..TEGNSETT ', '').trim()
+        : 'DOSN8';
+
+    switch (charset) {
+        case 'DOSN8':
+            return 'cp865';
+            break;
+        case 'ANSI':
+            return 'ISO8859-1';
+            break;
+        default:
+            return charset;
+    };
+}
+
+function parseBuffer(data) {
+    var charset = getCharset(data);
+    return iconv.decode(data, charset);
+}
+
 var Parser = Base.extend({
 
     parse: function (data) {
+        if (Buffer.isBuffer(data)) {
+            data = parseBuffer(data);
+        }
         return new SosiData(parseTree(splitOnNewline(data), 1));
     },
 

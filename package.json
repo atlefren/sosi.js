@@ -8,6 +8,7 @@
     "test": "test"
   },
   "dependencies": {
+    "iconv-lite": "^0.4.13",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
