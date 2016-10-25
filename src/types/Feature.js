@@ -28,6 +28,12 @@ function createGeometry(geometryType, lines, origo, unit, srs) {
     return new geometryTypes[geometryType](lines, origo, unit, srs);
 }
 
+function endsWith(string, expr) {
+    if (!string) {
+        return false;
+    }
+    return string.length >= expr.length && string.substr(string.length - expr.length) === expr;
+}
 
 
 var Feature = Base.extend({
@@ -44,7 +50,7 @@ var Feature = Base.extend({
     parseData: function (data, origo, unit) {
 
         var split = _.reduce(data.lines, function (dict, line) {
-            if (line.indexOf('..NØ') !== -1) {
+            if (endsWith(line, '..NØ') || endsWith(line, '..NØH')) {
                 dict.foundGeom = true;
             }
             if (dict.foundGeom) {
@@ -72,6 +78,7 @@ var Feature = Base.extend({
             'foundGeom': false,
             'foundRef': false
         });
+
 
         this.attributes = parseFromLevel2(split.attributes);
         this.attributes = _.reduce(this.attributes, function (attrs, value, key) {

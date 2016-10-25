@@ -1,0 +1,51 @@
+.HODE
+..TEGNSETT ISO8859-10
+..SOSI-VERSJON 4.5
+..SOSI-NIVÅ 4
+..PRODUSENT "Kartverket"
+..EIER "Kartverket"
+..TRANSPAR
+...KOORDSYS 23
+...ORIGO-NØ 0 0
+...ENHET 0.01
+..OMRÅDE
+...MIN-NØ  6426048  -99560
+...MAX-NØ  7962750  1121941
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!
+.BUEP 5488:
+..OBJTYPE Kommunegrense
+..NØYAKTIGHETSKLASSE MindreNøyaktigeGrenserOgGrenserFraØK
+..OMTVISTET NEI
+..OPPHAV "Matrikkelen, Kommunegrenser-SOSI (MAT0016)"
+..DATAUTTAKSDATO 20160218
+..OPPDATERINGSDATO 20131027
+..IDENT
+...LOKALID 187962796
+...NAVNEROM NO.KARTVERKET.MATRIKKEL
+...VERSJONID 2013-10-27T01:00:00.0+0200
+..NØ
+659867778 23732092 ...KP 1
+..NØ
+659871199 23730443
+659874441 23728463 ...KP 1
+.KURVE 5489:
+..OBJTYPE Kommunegrense
+..NØYAKTIGHETSKLASSE MindreNøyaktigeGrenserOgGrenserFraØK
+..OMTVISTET NEI
+..OPPHAV "Matrikkelen, Kommunegrenser-SOSI (MAT0016)"
+..DATAUTTAKSDATO 20160218
+..OPPDATERINGSDATO 20131027
+..IDENT
+...LOKALID 187962794
+...NAVNEROM NO.KARTVERKET.MATRIKKEL
+...VERSJONID 2013-10-27T01:00:00.0+0200
+..NØ
+659874441 23728463 ...KP 1
+..NØ
+659877357 23726657 ...KP 1
+.SLUTT

@@ -52,4 +52,11 @@ describe('Bue', function () {
         assert(json);
     });
 
+    it('should handle buep error', function () {
+        var sosidata = parser.parse(fs.readFileSync('./data/buep.sos', 'utf8'));
+        var name = 'testdata';
+        var json =  sosidata.dumps('topojson', name);
+        assert(json);
+    });
+
 });

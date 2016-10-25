@@ -11,9 +11,11 @@ function cleanLines(lines) {
 
 var LineStringFromArc = LineString.extend({ // BUEP - an arc defined by three points on a circle
     initialize: function (lines, origo, unit, srs) {
+
         var p = _.map(cleanLines(lines), function (coord) {
             return new Point(coord, origo, unit, srs);
         });
+
         if (p.length !== 3) {
             throw new Error('BUEP er ikke definert med 3 punkter');
         }

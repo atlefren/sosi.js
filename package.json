@@ -1,6 +1,6 @@
 {
   "name": "sosijs",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Library for reading .SOS-files, dump to GeoJson or TopoJson",
   "main": "index.js",
   "directories": {
