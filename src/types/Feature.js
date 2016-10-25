@@ -10,7 +10,7 @@ var Polygon = require('../geometry/Polygon');
 var parseFromLevel2 = require('../util/parseFromLevel2');
 var specialAttributes = require('../util/specialAttributes');
 
-function createGeometry(geometryType, lines, origo, unit) {
+function createGeometry(geometryType, lines, origo, unit, srs) {
 
     var geometryTypes = {
         'PUNKT': Point,
@@ -25,7 +25,7 @@ function createGeometry(geometryType, lines, origo, unit) {
     if (!geometryTypes[geometryType]) {
         throw new Error('GeometryType ' + geometryType + ' is not handled (yet..?)');
     }
-    return new geometryTypes[geometryType](lines, origo, unit);
+    return new geometryTypes[geometryType](lines, origo, unit, srs);
 }
 
 
@@ -98,13 +98,20 @@ var Feature = Base.extend({
         };
     },
 
+    transform: function (to) {
+        this.geometry = this.geometry.transform(to);
+        this.srs = to;
+        return this;
+    },
+
     buildGeometry: function (features) {
         if (this.raw_data.geometryType === 'FLATE') {
-            this.geometry = new Polygon(this.attributes.REF, features);
+            this.geometry = new Polygon(this.attributes.REF, features, features.srs);
             this.geometry.center = new Point(
                 this.raw_data.geometry,
                 this.raw_data.origo,
-                this.raw_data.unit
+                this.raw_data.unit,
+                features.srs
             );
             this.attributes = _.omit(this.attributes, 'REF');
         } else {
@@ -112,7 +119,8 @@ var Feature = Base.extend({
                 this.raw_data.geometryType,
                 this.raw_data.geometry,
                 this.raw_data.origo,
-                this.raw_data.unit
+                this.raw_data.unit,
+                features.srs
             );
         }
         this.raw_data = null;

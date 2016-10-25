@@ -2,18 +2,20 @@
 var _ = require('underscore');
 var Base = require('../class/Base');
 var roundToDecimals = require('../util/round');
-
+var proj4 = require('proj4');
 
 var Point = Base.extend({
 
     knutepunkt: false,
 
-    initialize: function (line, origo, unit) {
+    initialize: function (line, origo, unit, srs) {
         if (_.isNumber(line)) { /* initialized directly with x and y */
             this.x = line;
             this.y = origo;
+            this.srs = unit;
             return;
         }
+        this.srs = srs;
 
         if (_.isArray(line)) {
             line = line[1];
@@ -38,6 +40,17 @@ var Point = Base.extend({
                 line.substring(line.indexOf('.KP'), line.length).split(' ')[1]
             );
         }
+    },
+
+    transform: function (to) {
+        if (to === this.srs) {
+            return this;
+        }
+        var transformed = proj4(this.srs, to, [this.x, this.y]);
+        this.x = transformed[0];
+        this.y = transformed[1];
+        this.srs = to;
+        return this;
     },
 
     setTiepoint: function (kode) {

@@ -21,6 +21,7 @@ var dumpTypes = {
 };
 
 var SosiData = Base.extend({
+    
     initialize: function (data) {
         this.hode = new Head(data['HODE'] || data['HODE 0']);
         this.def = new Def(data['DEF']); //Not sure if I will care about this
@@ -29,6 +30,11 @@ var SosiData = Base.extend({
             _.omit(data, ['HODE', 'HODE 0', 'DEF', 'OBJDEF', 'SLUTT']),
             this.hode
         );
+    },
+
+    transform: function (toSrid) {
+        this.features.transform(toSrid);
+        return this;
     },
 
     dumps: function (format) {

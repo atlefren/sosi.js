@@ -91,9 +91,11 @@ var Head = Base.extend({
         this.enhet = parseUnit(data);
         this.vertdatum = getString(data['TRANSPAR'], 'VERT-DATUM');
         if (data['TRANSPAR']['KOORDSYS']) {
-            this.srid = getSrid(data['TRANSPAR']['KOORDSYS']);
+            this.koordsys = data['TRANSPAR']['KOORDSYS'];
+            this.srid = getSrid(this.koordsys);
         } else {
-            this.srid = getSridFromGeosys(data['TRANSPAR']['GEOSYS']);
+            this.koordsys = data['TRANSPAR']['GEOSYS'];
+            this.srid = getSridFromGeosys();
         }
     }
 });

@@ -27,10 +27,11 @@ function parseRefs(refs) {
 }
 
 var Polygon = Base.extend({
-        initialize: function (refs, features) {
+        initialize: function (refs, features, srs) {
             var shell = refs;
             var holes = [];
             var index = refs.indexOf('(');
+            this.srs = srs;
             if (index !== -1) {
                 shell = refs.substr(0, index);
                 holes = refs.substr(index, refs.length);
@@ -62,6 +63,14 @@ var Polygon = Base.extend({
             });
             this.shellRefs = shell;
             this.holeRefs = holes;
+        },
+
+        transform: function (to) {
+            this.flate = _.map(this.flate, function (line) {
+                return line.transform(to);
+            });
+            this.srs = to;
+            return this;
         }
     });
 
