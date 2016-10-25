@@ -54,6 +54,19 @@ var Features = Base.extend({
         return _.size(this.features);
     },
 
+    filter: function (filterFunc, scope) {
+        _.each(this.features, this.ensureGeom, this);
+        this.features = _.filter(this.features, filterFunc, scope);
+    },
+
+    mapAttributes: function (mapFunction, scope) {
+        mapFunction = _.bind(mapFunction, scope);
+        this.features = _.map(this.features, function (feature) {
+            feature.attributes = mapFunction(feature.attributes);
+            return feature;
+        });
+    },
+
     at: function (i) {
         return this.getById(this.index[i]);
     },

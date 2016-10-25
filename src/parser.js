@@ -37,6 +37,16 @@ var SosiData = Base.extend({
         return this;
     },
 
+    filter: function (filterFunc, scope) {
+        this.features.filter(filterFunc, scope);
+        return this;
+    },
+
+    mapAttributes: function (mapFunction, scope) {
+        this.features.mapAttributes(mapFunction, scope);
+        return this;
+    },
+
     dumps: function (format) {
         if (dumpTypes[format]) {
             return new dumpTypes[format](this).dumps(_.rest(arguments));
