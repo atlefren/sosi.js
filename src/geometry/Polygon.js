@@ -6,7 +6,7 @@ var Base = require('../class/Base');
 function createPolygon(refs, features) {
     var flate =  _.flatten(_.map(refs, function (ref) {
         var id = Math.abs(ref);
-        var kurve = features.getById(id);
+        var kurve = features._getById(id);
         if (!kurve) {
             throw new Error('Fant ikke KURVE ' + id + ' for FLATE');
         }
@@ -54,7 +54,7 @@ var Polygon = Base.extend({
 
             this.holes = _.map(holes, function (hole) {
                 if (hole.length === 1) {
-                    var feature = features.getById(Math.abs(hole[0]));
+                    var feature = features._getById(Math.abs(hole[0]));
                     if (feature.geometryType === 'FLATE') {
                         return feature.geometry.flate;
                     }

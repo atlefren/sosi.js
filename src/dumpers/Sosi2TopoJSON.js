@@ -6,7 +6,7 @@ var LineString = require('../geometry/LineString');
 var Polygon = require('../geometry/Polygon');
 var writePoint = require('./writePoint');
 
-
+/*
 function mapArcs(refs, lines) {
     return _.map(refs, function (ref) {
         var index = lines[Math.abs(ref)].index;
@@ -15,6 +15,27 @@ function mapArcs(refs, lines) {
         } else {
             return -(Math.abs(index) + 1);
         }
+    });
+}
+*/
+
+function getIndex(arc, mapping) {
+    var arcId = Math.abs(arc);
+    var index = _.findWhere(mapping, {id: arcId}).index;
+    if (arc < 0) {
+        index = -index;
+    }
+    return index;
+}
+
+function mapArcs(arcs, mapping) {
+    return _.map(arcs, function (arcs) {
+        if (_.isArray(arcs)) {
+            return _.map(arcs, function (arc) {
+                return getIndex(arc, mapping);
+            });
+        }
+        return getIndex(arcs, mapping);
     });
 }
 
@@ -28,10 +49,15 @@ var Sosi2TopoJSON = Base.extend({
     dumps: function (name) {
         var points = this.getPoints();
         var lines = this.getLines();
+
         var polygons = this.getPolygons(lines);
-        var geometries = points.concat(_.map(lines, function (line) {
-            return line.geometry;
-        })).concat(polygons);
+
+        var geometries = points.concat(lines).concat(polygons);
+
+        var exclude = this.sosidata.features.exclude;
+        geometries = _.filter(geometries, function (geom) {
+            return exclude.indexOf(geom.properties.id) === -1;
+        });
 
         var data = {
             'type': 'Topology',
@@ -42,18 +68,67 @@ var Sosi2TopoJSON = Base.extend({
             'geometries': geometries
         };
 
-        var arcs = _.map(_.sortBy(lines, function (line) {return line.index; }), function (line) {
-            return line.arc;
+        var allArcs = _.chain(polygons.concat(lines))
+            .map(function (geom) {
+                return _.map(geom.arcs, function (arcs) {
+                    if (_.isArray(arcs)) {
+                        return _.map(arcs, function (arc) {
+                            return Math.abs(arc);
+                        });
+                    }
+                    return Math.abs(arcs);
+                });
+            })
+            .flatten()
+            .uniq()
+            .value();
+
+        var arcs = _.chain(this.getArcs())
+            .filter(function (arc) {
+                return allArcs.indexOf(arc.id) > -1;
+            })
+            .map(function (arc, index) {
+                arc.index = index;
+                return arc;
+            })
+            .value();
+
+        geometries = _.map(geometries, function (geometry) {
+            if (geometry.arcs) {
+                geometry.arcs = mapArcs(geometry.arcs, arcs);
+            }
+            return geometry;
         });
 
+        var usedArcs = _.chain(geometries)
+            .map(function (geometry) {
+                if (geometry.arcs) {
+                    return geometry.arcs;
+                }
+            })
+            .compact()
+            .flatten()
+            .map(function (arc) {
+                return Math.abs(arc);
+            })
+            .uniq()
+            .value();
+
+
         if (arcs.length) {
-            data.arcs = arcs;
+            data.arcs = _.chain(arcs)
+                .filter(function (arc) {
+                    return usedArcs.indexOf(arc.index) > -1;
+                })
+                .pluck('arc')
+                .value();
         }
+
         return data;
     },
 
     getByType: function (type) {
-        return _.filter(this.sosidata.features.all(), function (feature) {
+        return _.filter(this.sosidata.features._all(), function (feature) {
             return (feature.geometry instanceof type);
         });
     },
@@ -71,22 +146,27 @@ var Sosi2TopoJSON = Base.extend({
         });
     },
 
+    getArcs: function () {
+        var lines = this.getByType(LineString);
+        return _.map(lines, function (line) {
+            return {
+                id: line.id,
+                arc: _.map(line.geometry.kurve, writePoint)
+            };
+        });
+    },
+
     getLines: function () {
         var lines = this.getByType(LineString);
-        return _.reduce(lines, function (res, line, index) {
+        return _.map(lines, function (line) {
             var properties = _.clone(line.attributes);
             properties.id = line.id;
-            res[line.id] = {
-                'geometry': {
-                    'type': 'LineString',
-                    'properties': properties,
-                    'arcs': [index]
-                },
-                'arc': _.map(line.geometry.kurve, writePoint),
-                'index': index
+            return {
+                'type': 'LineString',
+                'properties': properties,
+                'arcs': [line.id]
             };
-            return res;
-        }, {});
+        });
     },
 
     getPolygons: function (lines) {
@@ -95,16 +175,17 @@ var Sosi2TopoJSON = Base.extend({
             var properties = _.clone(polygon.attributes);
             properties.id = polygon.id;
 
-            var arcs = [mapArcs(polygon.geometry.shellRefs, lines)];
+            var arcs = [polygon.geometry.shellRefs];
 
             arcs = arcs.concat(_.map(polygon.geometry.holeRefs, function (hole) {
                 if (hole.length === 1) {
                     var feature = this.sosidata.features.getById(Math.abs(hole[0]));
                     if (feature.geometry instanceof Polygon) {
-                        return mapArcs(feature.geometry.shellRefs, lines);
+                        return feature.geometry.shellRefs;
                     }
                 }
-                return mapArcs(hole, lines);
+
+                return hole;
             }, this));
 
             return {

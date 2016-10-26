@@ -48,8 +48,51 @@ describe('Flate', function () {
 
         var sosidata = parser.parse(data).filter(filter).mapAttributes(map);
         assert.equals(sosidata.features.all().length, 1);
+
         assert.equals(sosidata.features.all()[0].attributes.test, 'test');
         assert.equals(_.keys(sosidata.features.all()[0].attributes).length, 1);
+
+        assert.equals(sosidata.features.at(0).attributes.test, 'test');
+
+        assert.equals(sosidata.features.getById(651).attributes.test, 'test');
+    });
+
+    it('be able to dump to geojson after filter', function () {
+
+        var filter = function (feature) {
+            return feature.attributes.objekttypenavn === 'Tank';
+        };
+
+        var sosidata = parser.parse(data).filter(filter);
+        var json = sosidata.dumps('geojson');
+        assert(json);
+    });
+
+    it('be able to dump to topojson after filter', function () {
+
+        var filter = function (feature) {
+            return feature.attributes.objekttypenavn === 'Tank';
+        };
+
+        var sosidata = parser.parse(data).filter(filter);
+        var name = 'testdata';
+        var json =  sosidata.dumps('topojson', name);
+        assert(json);
+    });
+
+    it('should only include referenced lines in topojson after filter', function () {
+
+        var filter = function (feature) {
+            return feature.attributes.objekttypenavn === 'Tank';
+        };
+
+        var sosidata = parser.parse(fs.readFileSync('./data/flatetest2.sos', 'utf8')).filter(filter);
+        var name = 'testdata';
+        var json =  sosidata.dumps('topojson', name);
+        assert(json);
+        assert.equals(json.objects.testdata.geometries.length, 1);
+        assert.equals(json.arcs.length, 4);
+
     });
 });
 

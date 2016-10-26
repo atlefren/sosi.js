@@ -7,7 +7,7 @@ var mappings = require('../util/mappings');
 var Features = Base.extend({
 
     initialize: function (elements, head) {
-
+        this.exclude = [];
         this.head = head;
         this.index = [];
         this.srs = mappings.koordsysMap[this.head.koordsys].def;
@@ -55,32 +55,66 @@ var Features = Base.extend({
     },
 
     filter: function (filterFunc, scope) {
-        _.each(this.features, this.ensureGeom, this);
-        this.features = _.filter(this.features, filterFunc, scope);
+        //_.each(this.features, this.ensureGeom, this);
+        //this.features = _.filter(this.features, filterFunc, scope);
+        filterFunc = _.bind(filterFunc, scope);
+        this.exclude = _.compact(_.map(this.features, function (feature) {
+            if (!filterFunc(feature)) {
+                return feature.id;
+            }
+        }));
     },
 
     mapAttributes: function (mapFunction, scope) {
         mapFunction = _.bind(mapFunction, scope);
-        this.features = _.map(this.features, function (feature) {
-            feature.attributes = mapFunction(feature.attributes);
-            return feature;
-        });
+        this.features = _.reduce(this.features, function (acc, feature, key) {
+            if (this.exclude.indexOf(feature.id) < 0) {
+                feature.exposedAttributes = mapFunction(feature.attributes);
+            }
+            acc[key] = feature;
+            return acc;
+        }, {}, this);
     },
 
     at: function (i) {
-        return this.getById(this.index[i]);
+        var index = _.difference(this.index, this.exclude);
+        return this.getById(index[i]);
     },
 
     getById: function (id) {
+        if (this.exclude.indexOf(id) > -1) {
+            return undefined;
+        }
+        return this._getById(id);
+    },
+
+    _getById: function (id) {
         return this.ensureGeom(this.features[id]);
     },
 
     all: function (ordered) {
+        return this._all(ordered, true);
+    },
+
+    _all: function (ordered, exclude) {
         if (ordered) {
             /* order comes at a 25% performance loss */
-            return _.map(this.index, this.getById, this);
+            var ids = exclude ? _.difference(this.index, this.exclude) : this.index;
+            return _.map(ids, this.getById, this);
         } else {
-            return _.map(this.features, this.ensureGeom, this);
+            return _.chain(this.features)
+            .filter(function (feature) {
+                if (!exclude) {
+                    return true;
+                }
+                return this.exclude.indexOf(feature.id) < 0;
+            }, this)
+            .map(this.ensureGeom, this)
+            .map(function (feature) {
+                feature.attributes = feature.exposedAttributes || feature.attributes;
+                return feature;
+            })
+            .value();
         }
     }
 });
