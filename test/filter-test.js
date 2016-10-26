@@ -66,6 +66,7 @@ describe('Flate', function () {
         var sosidata = parser.parse(data).filter(filter);
         var json = sosidata.dumps('geojson');
         assert(json);
+        assert.equals(json.features.length, 1);
     });
 
     it('be able to dump to topojson after filter', function () {
