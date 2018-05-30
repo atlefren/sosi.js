@@ -3,6 +3,10 @@ var _ = require('underscore');
 var Base = require('../class/Base');
 var roundToDecimals = require('../util/round');
 var proj4 = require('proj4');
+if (proj4.default) {
+    //webpack hack
+    proj4 = proj4.default;
+}
 
 var Point = Base.extend({
 
