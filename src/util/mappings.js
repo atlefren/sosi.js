@@ -63,6 +63,59 @@ var koordsysMap = {
     //UTM sone 36 basert på WGS84
     66: {'srid': 'EPSG:32636', 'def': '+proj=utm +zone=35 +ellps=WGS84 +datum=WGS84 +units=m +no_defs'},
 
+    //Norsk Transversal Mercator sone 5 (basert på EUREF89)
+    205: {'srid': 'EPSG:5105', def: '+proj=tmerc +lat_0=58 +lon_0=5.5 +k=1 +x_0=100000 +y_0=1000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'},   
+    //Norsk Transversal Mercator sone 6 (basert på EUREF89)
+    206: {'srid': 'EPSG:5106', def: '+proj=tmerc +lat_0=58 +lon_0=6.5 +k=1 +x_0=100000 +y_0=1000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'},   
+    //Norsk Transversal Mercator sone 7 (basert på EUREF89)
+    207: {'srid': 'EPSG:5107', def: '+proj=tmerc +lat_0=58 +lon_0=7.5 +k=1 +x_0=100000 +y_0=1000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'},
+    //Norsk Transversal Mercator sone 8 (basert på EUREF89)
+    208: {'srid': 'EPSG:5108', def: '+proj=tmerc +lat_0=58 +lon_0=8.5 +k=1 +x_0=100000 +y_0=1000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'},   
+    //Norsk Transversal Mercator sone 9 (basert på EUREF89)
+    209: {'srid': 'EPSG:5109', def: '+proj=tmerc +lat_0=58 +lon_0=9.5 +k=1 +x_0=100000 +y_0=1000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'},   
+    //Norsk Transversal Mercator sone 10 (basert på EUREF89)
+    210: {'srid': 'EPSG:5110', def: '+proj=tmerc +lat_0=58 +lon_0=10.5 +k=1 +x_0=100000 +y_0=1000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'},   
+    //Norsk Transversal Mercator sone 11 (basert på EUREF89)
+    211: {'srid': 'EPSG:5111', def: '+proj=tmerc +lat_0=58 +lon_0=11.5 +k=1 +x_0=100000 +y_0=1000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'},   
+    //Norsk Transversal Mercator sone 12 (basert på EUREF89)
+    212: {'srid': 'EPSG:5112', def: '+proj=tmerc +lat_0=58 +lon_0=12.5 +k=1 +x_0=100000 +y_0=1000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'},   
+    //Norsk Transversal Mercator sone 13 (basert på EUREF89)
+    213: {'srid': 'EPSG:5113', def: '+proj=tmerc +lat_0=58 +lon_0=13.5 +k=1 +x_0=100000 +y_0=1000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'},   
+    //Norsk Transversal Mercator sone 14 (basert på EUREF89)
+    214: {'srid': 'EPSG:5114', def: '+proj=tmerc +lat_0=58 +lon_0=14.5 +k=1 +x_0=100000 +y_0=1000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'},   
+    //Norsk Transversal Mercator sone 15 (basert på EUREF89)
+    215: {'srid': 'EPSG:5115', def: '+proj=tmerc +lat_0=58 +lon_0=15.5 +k=1 +x_0=100000 +y_0=1000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'},   
+    //Norsk Transversal Mercator sone 16 (basert på EUREF89)
+    216: {'srid': 'EPSG:5116', def: '+proj=tmerc +lat_0=58 +lon_0=16.5 +k=1 +x_0=100000 +y_0=1000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'},   
+    //Norsk Transversal Mercator sone 17 (basert på EUREF89)
+    217: {'srid': 'EPSG:5117', def: '+proj=tmerc +lat_0=58 +lon_0=17.5 +k=1 +x_0=100000 +y_0=1000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'},   
+    //Norsk Transversal Mercator sone 18 (basert på EUREF89)
+    218: {'srid': 'EPSG:5118', def: '+proj=tmerc +lat_0=58 +lon_0=18.5 +k=1 +x_0=100000 +y_0=1000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'},   
+    //Norsk Transversal Mercator sone 19 (basert på EUREF89)
+    219: {'srid': 'EPSG:5119', def: '+proj=tmerc +lat_0=58 +lon_0=19.5 +k=1 +x_0=100000 +y_0=1000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'},   
+    //Norsk Transversal Mercator sone 20 (basert på EUREF89)
+    220: {'srid': 'EPSG:5120', def: '+proj=tmerc +lat_0=58 +lon_0=20.5 +k=1 +x_0=100000 +y_0=1000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'},   
+    //Norsk Transversal Mercator sone 21 (basert på EUREF89)
+    221: {'srid': 'EPSG:5121', def: '+proj=tmerc +lat_0=58 +lon_0=21.5 +k=1 +x_0=100000 +y_0=1000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'},   
+    //Norsk Transversal Mercator sone 22 (basert på EUREF89)
+    222: {'srid': 'EPSG:5122', def: '+proj=tmerc +lat_0=58 +lon_0=22.5 +k=1 +x_0=100000 +y_0=1000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'},   
+    //Norsk Transversal Mercator sone 23 (basert på EUREF89)
+    223: {'srid': 'EPSG:5123', def: '+proj=tmerc +lat_0=58 +lon_0=23.5 +k=1 +x_0=100000 +y_0=1000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'},   
+    //Norsk Transversal Mercator sone 24 (basert på EUREF89)
+    224: {'srid': 'EPSG:5124', def: '+proj=tmerc +lat_0=58 +lon_0=24.5 +k=1 +x_0=100000 +y_0=1000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'},   
+    //Norsk Transversal Mercator sone 25 (basert på EUREF89)
+    225: {'srid': 'EPSG:5125', def: '+proj=tmerc +lat_0=58 +lon_0=25.5 +k=1 +x_0=100000 +y_0=1000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'},   
+    //Norsk Transversal Mercator sone 26 (basert på EUREF89)
+    226: {'srid': 'EPSG:5126', def: '+proj=tmerc +lat_0=58 +lon_0=26.5 +k=1 +x_0=100000 +y_0=1000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'},   
+    //Norsk Transversal Mercator sone 27 (basert på EUREF89)
+    227: {'srid': 'EPSG:5127', def: '+proj=tmerc +lat_0=58 +lon_0=27.5 +k=1 +x_0=100000 +y_0=1000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'},   
+    //Norsk Transversal Mercator sone 28 (basert på EUREF89)
+    228: {'srid': 'EPSG:5128', def: '+proj=tmerc +lat_0=58 +lon_0=28.5 +k=1 +x_0=100000 +y_0=1000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'},   
+    //Norsk Transversal Mercator sone 29 (basert på EUREF89)
+    229: {'srid': 'EPSG:5129', def: '+proj=tmerc +lat_0=58 +lon_0=29.5 +k=1 +x_0=100000 +y_0=1000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'},   
+    //Norsk Transversal Mercator sone 30 (basert på EUREF89)
+    230: {'srid': 'EPSG:5130', def: '+proj=tmerc +lat_0=58 +lon_0=30.5 +k=1 +x_0=100000 +y_0=1000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs'},   
+
 
 
     50: {'srid': 'EPSG:4230', def: '+proj=longlat +ellps=intl +no_defs'},
