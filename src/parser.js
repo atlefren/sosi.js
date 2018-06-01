@@ -70,11 +70,12 @@ function splitOnNewline(data) {
 }
 
 function getCharset(dataBuffer) {
-    var ascii = dataBuffer.toString('ascii', 0, 200);
+
+    var ascii = dataBuffer.toString('ascii', 0, 250);
+
     var charsetLine = _.find(ascii.split('\n'), function (line) {
         return line.indexOf('..TEGNSETT') === 0;
     });
-
     var charset = (charsetLine) 
         ? charsetLine.replace('..TEGNSETT ', '').trim()
         : 'DOSN8';

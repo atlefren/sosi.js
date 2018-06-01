@@ -99,7 +99,7 @@ var Feature = Base.extend({
 
         this.raw_data = {
             geometryType: data.geometryType,
-            geometry: split.geom,
+            geometry: split.foundGeom ? split.geom : null,
             origo: origo,
             unit: unit
         };
@@ -114,12 +114,14 @@ var Feature = Base.extend({
     buildGeometry: function (features) {
         if (this.raw_data.geometryType === 'FLATE') {
             this.geometry = new Polygon(this.attributes.REF, features, features.srs);
-            this.geometry.center = new Point(
-                this.raw_data.geometry,
-                this.raw_data.origo,
-                this.raw_data.unit,
-                features.srs
-            );
+            if (this.raw_data.geometry) {
+                this.geometry.center = new Point(
+                    this.raw_data.geometry,
+                    this.raw_data.origo,
+                    this.raw_data.unit,
+                    features.srs
+                );
+            }
             this.attributes = _.omit(this.attributes, 'REF');
         } else {
             this.geometry = createGeometry(
