@@ -20,7 +20,7 @@ describe('Issue #4', function () {
 
     it('should be able to read transpar that is not shorthand', function () {
         var sosidata = parser.parse(data);
-        assert.equals(sosidata.hode.srid, 'EPSG:32632');
+        assert.equals(sosidata.hode.srid, 'EPSG:25832');
         assert.equals(sosidata.hode.origo.x, 0);
         assert.equals(sosidata.hode.origo.y, 0);
         assert.equals(sosidata.hode.enhet, 0.01);
