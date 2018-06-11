@@ -9,6 +9,9 @@ var specialAttributes = require('../util/specialAttributes');
 
 function getString(data, key) {
     var str = data[key] || '';
+    if (_.isArray(str)) {
+        str = str.join('\n');
+    }
     return str.replace(/'/g, '');
 }
 

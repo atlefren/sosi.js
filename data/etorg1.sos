@@ -1,0 +1,22 @@
+.HODE
+..TEGNSETT ISO8859-1
+..SOSI-VERSJON 4.5
+..SOSI-NIVÅ 4 !!!!!!!!!!!
+..TRANSPAR
+...KOORDSYS 5
+...ORIGO-NØ 100000 10000
+...ENHET 0.010
+...VERT-DATUM NN54 SJØ0
+..OMRÅDE
+...MIN-NØ 100000 10000
+...MAX-NØ 102400 13200
+..OBJEKTKATALOG  Regplanforslag 20120416 * Arealplan Reguleringsplanforslag
+..EIER "CAM"
+..PRODUSENT "Noe her"
+noe@noe.her
+.PUNKT 1:                                       !Geometritype PUNKT.
+..OBJTYPE Fastmerke
+! NB! Flere påkrevde egenskaper for Fastmerke er utelatt i dette eksempelet
+..NØ
+23456 2345
+.SLUTT
