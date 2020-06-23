@@ -106,7 +106,7 @@ Contributors
 In addition to myself (atlefren) some people have contributed code and/or input to this project:
 - Thomas Hirsch (relet)
 - Torbjørn Auglænd Vilhelmsen (torbjvi)
-- SigTill
+- Sigbjørn Tillerli Herstad (SigTil)
 - Marvin Bredal Lillehaug (computerlove)
 
 Disclaimer
